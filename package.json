@@ -1,0 +1,51 @@
+{
+  "name": "isomerlabs-website",
+  "version": "1.0.0",
+  "description": "Public website for Isomerlabs - Software Artisans",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/w0rks74710n/isomerlabs-website.git"
+  },
+  "keywords": [
+    "website",
+    "react",
+    "node",
+    "landingpage",
+    "software"
+  ],
+  "author": "Marco Salazar",
+  "license": "UNLICENCED",
+  "bugs": {
+    "url": "https://github.com/w0rks74710n/isomerlabs-website/issues"
+  },
+  "homepage": "https://github.com/w0rks74710n/isomerlabs-website#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "0.1.0-11",
+    "i": "^0.3.6",
+    "lodash": "^4.17.10",
+    "npm": "^6.4.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-particles-js": "^2.3.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.1",
+    "react-scroll-parallax": "^1.3.5",
+    "styled-components": "^3.3.3",
+    "webfontloader": "^1.6.28"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
