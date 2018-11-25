@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { debounce } from 'lodash'
 
+
 const SiteHeader = styled.header`
-  background: ${props => props.scroll || props.menuOpen ? 'rgba(236, 46, 46, .8);' : 'transparent;' }
+  background: ${props => props.scroll || props.menuOpen ? 'rgb(55, 63, 73);' : 'transparent;' }
   color: black;
   padding: 1em 0;
   position: fixed;
@@ -79,7 +80,7 @@ const MenuElementContent = styled.a`
   text-decoration: none;
   
   &:hover, &:focus {
-    background: #E4B363;
+    background: #f0f2f4;
     color: #464655;
   }
   
@@ -99,7 +100,7 @@ const Icon = styled(FontAwesomeIcon)`
   margin-right: 1em;
   width: 1.1em;
   text-align: right;
-  color: rgba(236, 46, 46, 0.8);
+  color: rgb(44, 51, 58);
   
   @media (min-width: 700px) {
     display: none;
