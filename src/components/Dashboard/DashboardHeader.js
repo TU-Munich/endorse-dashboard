@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const HeaderDiv = styled.div`
   overflow-x: hidden;
   overflow-y: hidden;
-	background: #23282e;
+  background: #23282e;
   height: 59px;
   width: 100%;
   display: flex;
-  flex-flow: row nowrap;	
+  flex-flow: row nowrap;
 `;
 
 const Dropdown = styled.li`

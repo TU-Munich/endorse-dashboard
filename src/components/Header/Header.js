@@ -5,7 +5,7 @@ import { debounce } from 'lodash'
 
 
 const SiteHeader = styled.header`
-  background: ${props => props.scroll || props.menuOpen ? 'rgb(55, 63, 73);' : 'transparent;' }
+  background: ${props => props.scroll || props.menuOpen ? 'rgb(242, 242, 242)' : 'transparent;' }
   color: black;
   padding: 1em 0;
   position: fixed;
@@ -75,7 +75,7 @@ const MenuElement = styled.li`
 const MenuElementContent = styled.a`
   color: black;
   display: block;
-  padding: 1em 1em 1em 1em;
+  padding: 10em 1em 1em 1em;
   text-transform: uppercase;
   text-decoration: none;
   

@@ -15,9 +15,10 @@ const NavSideMenu = styled.div`
   background-color: #2e353d;
   position: fixed;
   top: 0px;
-  width: 220px;
+  width: 200px;
   height: 100%;
   color: #e1ffff;
+  box-shadow: 1px 3px 4px black;
 `;
 
 const Logo = styled.img`
@@ -103,11 +104,15 @@ class DashboardSideBar extends Component {
         return (
             <SideBar>
                 <NavSideMenu>
-                    <Icon icon="laptop" style={{width: "70px", height: "70px" }} />EndorseLogo
+                    <img
+                        src={"https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png"}
+                        style={{width: "50px", height: "50px" }}
+                    />
+                    <h2 style={{display:"inline-block"}}>ENDORSE</h2>
 
                     <MenuList>
                         <NavSideMenuUL id="menu-content" className="menu-content collapse out">
-                            <ListItemA to="/dashboard">
+                            <ListItemA to={"/dashboard/dashboard/" +this.state.id}>
                                 <NavSideMenuLI>
                                     <Icon icon="info" /> Dashboard
                                 </NavSideMenuLI>
@@ -126,8 +131,8 @@ class DashboardSideBar extends Component {
                             </ListItemA>
 
                             <ListItemA to={"/dashboard/kibana_dashboard/" + this.state.id}>
-                                <NavSideMenuLI data-toggle="collapse" data-target="#settings" className="collapsed">
-                                    <Icon  icon="chart-line" /> Kibana Dashboard
+                                <NavSideMenuLI >
+                                    <Icon  icon="chart-line" />Kibana Graphs
                                 </NavSideMenuLI>
                             </ListItemA>
                         </NavSideMenuUL>
