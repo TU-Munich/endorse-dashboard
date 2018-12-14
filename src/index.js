@@ -16,10 +16,9 @@ WebFont.load({
 });
 
 ReactDOM.render(
-
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { debounce } from 'lodash'
-
+import ColorPalette from '../../constants/ColorPalette'
 
 const SiteHeader = styled.header`
-  background: ${props => props.scroll || props.menuOpen ? 'rgb(242, 242, 242)' : 'transparent;' }
+  background: ${ props => props.scroll || props.menuOpen ? ColorPalette.endorse_accent : 'transparent;' }
   color: black;
   padding: 1em 0;
   position: fixed;
@@ -27,11 +27,13 @@ const HeaderSection = styled.div`
 `;
 
 const Logo = styled.h1`
+  color: ${ props => props.scroll || props.menuOpen ? ColorPalette.endorse_white : ColorPalette.endorse_primary_dark }
   float: left;
   font-size: 1rem;
   margin: 0;
   text-transform: uppercase;
   font-weight: 700;
+  transition: all ease-in-out 300ms;
   
   & span {
     font-weight: 400;
@@ -75,7 +77,7 @@ const MenuElement = styled.li`
 const MenuElementContent = styled.a`
   color: black;
   display: block;
-  padding: 10em 1em 1em 1em;
+  padding: 1em 1em 1em 1em;
   text-transform: uppercase;
   text-decoration: none;
   
@@ -143,7 +145,6 @@ const Hamburger = styled.div`
   }
   
   &::before {
-    transform: ${props => props.menuOpen ? 'translateY(0px);' : 'translateY(-6px);'}
     content: '';
     display: block;
     background: black;
@@ -151,6 +152,7 @@ const Hamburger = styled.div`
     width: 1.75em;
     border-radius: 3px;
     transition: all ease-in-out 500ms;
+    transform: ${props => props.menuOpen ? 'translateY(0px);' : 'translateY(-6px);'}
   }
 `;
 
@@ -181,16 +183,11 @@ class Header extends Component {
   }
 
   handleScroll = debounce((event) => {
-    let scrollTop = window.pageYOffset
-
+    let scrollTop = window.pageYOffset;
     if (scrollTop > 10) {
-      this.setState({
-        scroll: true
-      });
+      this.setState({ scroll: true });
     } else {
-      this.setState({
-        scroll: false
-      });
+      this.setState({ scroll: false });
     }
   });
 
@@ -198,7 +195,7 @@ class Header extends Component {
     return(
       <SiteHeader scroll={this.state.scroll} menuOpen={this.state.menuOpen}>
         <HeaderSection className={'header-section'}>
-          <Logo className={'logo'}>ENDOR<span>SE</span></Logo>
+          <Logo scroll={this.state.scroll} menuOpen={this.state.menuOpen} className={'logo'}>ENDOR<span>SE</span></Logo>
           <SiteNav menuOpen={this.state.menuOpen} className={'site-nav'}>
             <Menu>
               <MenuElement><MenuElementContent href=""><Icon icon="home"/>Home</MenuElementContent></MenuElement>

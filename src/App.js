@@ -8,16 +8,14 @@ import Contact from './containers/Contact/Contact';
 class App extends Component {
 	render() {
 		return (
-            <Router>
-                <Switch>
-                    <Route path={"/home"} component = {Home}/>
-                    <Route path={"/contact"} component = {Contact}/>
-                    <Route path={"/dashboard"} component = {Dashboard}/>
-                    <Route path={"/"} component = {Home}/>
-
-                </Switch>
-            </Router>
-
+		  <Router>
+        <Switch>
+          <Route path={"/home"} component = {Home}/>
+          <Route path={"/contact"} component = {Contact}/>
+          <Route path={"/dashboard"} component = {Dashboard}/>
+          <Route path={"/"} component = {Home}/>
+        </Switch>
+      </Router>
 		);
 	}
 }

@@ -105,7 +105,7 @@ class DashboardHeader extends Component {
                 <Dropdown>
                     <DropdownToggle className="dropbtn">Menu</DropdownToggle>
                     <DropdownMenu className="dropdown-content">
-                        <StyledLink to={"/dashboard/" + this.state.id} >
+                        <StyledLink to={"/dashboard" + this.state.id} >
                             <DropdownListItem>
                                 <Icon icon="user"/>Account
                             </DropdownListItem>
