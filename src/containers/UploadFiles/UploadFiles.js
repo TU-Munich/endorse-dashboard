@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
-import { Formik, Form, Field, FieldArray } from "formik";
-
+import { FilePond, File } from 'react-filepond';
+import { nlpServiceBaseUrl } from '../../config';
 
 const ContainerDiv = styled.div`
   display: flex;
@@ -20,24 +20,6 @@ const UploadContainer = styled.div`
    text-align: center;
 `;
 
-const StyledForm =styled.form`
-    margin:20px;
-`;
-
-const StyledInputField = styled(Field)`
-    margin:3px;
-    border-radius:5px;
-    border-style:ridge; 
-    height:28px; 
-    width:30%;
-    `;
-
-const StyledButton = styled.button`
-    height:28px;
-    width:5%;
-    border-radius:5px;
-`;
-
 class UploadFiles extends Component {
 
     constructor(props) {
@@ -45,79 +27,53 @@ class UploadFiles extends Component {
 
         this.state = {
             loading: false,
-            data: []
+            data: [],
+            files: []
         };
+
         this.clickState = this.clickState.bind(this);
-        // this.selectFolder = this.selectFolder.bind(this);
     }
+
     clickState() {
         this.setState({data: 'Test'});
         console.log(this.state.files);
     }
 
+    handleFilePondInit() {
+      console.log('FilePond instance has initialised', this.pond);
+    }
+
     render() {
-        if (this.state.loading) {
-            return (<h2>Loading...</h2>);
-        }
+      if (this.state.loading) {
+        return (<h2>Loading...</h2>);
+      }
 
-        return (
-            <ContainerDiv>
-                <Card style={{height:"300%", padding:"10px 10px 10px"}}>
-                    <h1>Local File Processing</h1>
-                    <p>Please select the location of the files you want to fetch into the processing system.</p>
-                    <UploadContainer >
-                            <Formik
-                                initialValues={{ folders: [""] }}
-                                onSubmit={values =>
-                                    setTimeout(() => {
-                                        alert(JSON.stringify(values, null, 2));
-                                    }, 500)
-                                }
-                            render={({ values }) => (
-                                <Form >
-                                    <FieldArray
-                                        name="folders"
-                                        render={arrayHelpers => (
-                                            <div>
-                                                {values.folders && values.folders.length > 0 ? (
-                                                    values.folders.map((folder, index) => (
-                                                        <div key={index} style={{margin:"5px"}}>
-                                                            <StyledInputField
-                                                                name={`folders.${index}`}
-                                                                />
-                                                            <StyledButton
-                                                                type="button"
-                                                                onClick={() => arrayHelpers.remove(index)} // remove folder
-                                                            >
-                                                                -
-                                                            </StyledButton>
-                                                            <StyledButton
-                                                                type="button"
-                                                                onClick={() => arrayHelpers.insert(index, "")} // insert an empty string
-                                                            >
-                                                                +
-                                                            </StyledButton>
-                                                        </div>
-
-                                                    ))
-                                                ) : (
-                                                    <button type="button" onClick={() => arrayHelpers.push("")}>
-                                                        {/* show this when user has removed all friends from the list */}
-                                                    </button>
-                                                )}
-                                                <div>
-                                                    <button type="submit">Submit</button>
-                                                </div>
-                                            </div>
-                                        )}
-                                    />
-                                </Form>
-                            )}
-                        />
-                       </UploadContainer>
-                </Card>
-            </ContainerDiv>
-        );
+      return (
+        <ContainerDiv>
+          <Card style={{height:"300%", padding:"10px 10px 10px"}}>
+            <h1>Local File Processing</h1>
+            <p>Please select or drag the files you want to fetch into the processing system</p>
+            <UploadContainer >
+              <FilePond ref={ref => this.pond = ref}
+                        allowMultiple={true}
+                        maxFiles={10}
+                        server={nlpServiceBaseUrl + "/api/1/files/upload"}
+                        oninit={() => this.handleFilePondInit() }
+                        onupdatefiles={(fileItems) => {
+                          this.setState({
+                            files: fileItems.map(fileItem => fileItem.file)
+                          });
+                        }}>
+                {
+                  this.state.files.map(file => (
+                    <File key={file} src={file} origin="local" />
+                  ))
+                }
+              </FilePond>
+            </UploadContainer>
+          </Card>
+        </ContainerDiv>
+      );
     }
 }
 
