@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import 'filepond/dist/filepond.min.css';
 import Home from './containers/Home/Home';
 import Dashboard from './containers/Dashboard/Dashboard';
