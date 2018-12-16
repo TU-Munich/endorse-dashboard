@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
 import DashboardHeader from "../../components/Dashboard/DashboardHeader";
 import DashboardSideBar from "../../components/Dashboard/DashboardSideBar";
@@ -34,21 +34,21 @@ const Content = styled.div`
 `;
 
 class DashboardTemplate extends Component {
-    render() {
-        return (
-            <ContainerDiv>
-                <ContainerHeaderDiv>
-                    <DashboardHeader/>
-                </ContainerHeaderDiv>
-                <ContentsDiv>
-                    <DashboardSideBar/>
-                    <Content>
-                        <DashboardContent/>
-                    </Content>
-                </ContentsDiv>
-            </ContainerDiv>
-        );
-    }
+  render() {
+    return (
+      <ContainerDiv>
+        <ContainerHeaderDiv>
+          <DashboardHeader/>
+        </ContainerHeaderDiv>
+        <ContentsDiv>
+          <DashboardSideBar/>
+          <Content>
+            <DashboardContent/>
+          </Content>
+        </ContentsDiv>
+      </ContainerDiv>
+    );
+  }
 }
 
 export default DashboardTemplate;

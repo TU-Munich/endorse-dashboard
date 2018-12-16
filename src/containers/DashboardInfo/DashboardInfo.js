@@ -69,7 +69,7 @@ class DashboardInfo extends Component {
                        src={"https://es.seaicons.com/wp-content/uploads/2015/11/upload-icon1.png"}
                        alt={""}/>
                 </StyledCardContent>
-                <CardMedia style={{textAlign: "center", margin: "15px"}}>
+                <CardMedia style={{textAlign: "center", margin: "15px"}} src={""}>
                   <label style={{display: "inline-block", fontSize: "30px"}}>5,00</label>
                   <label style={{display: "block", fontSize: "10px"}}>files were analyzed </label>
                 </CardMedia>

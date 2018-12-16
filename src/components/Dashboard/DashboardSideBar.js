@@ -90,29 +90,28 @@ class DashboardSideBar extends Component {
     return (
       <SideBar>
         <NavSideMenu>
-          <Logo>ENDORSE</Logo>
-
+          <Logo>ENDOrSE</Logo>
           <MenuList>
             <NavSideMenuUL id="menu-content" className="menu-content collapse out">
-              <ListItemA to={"/dashboard" +this.state.id}>
+              <ListItemA to={"/dashboard/info"}>
                 <NavSideMenuLI>
                   <Icon icon="info" /> Dashboard
                 </NavSideMenuLI>
               </ListItemA>
 
-              <ListItemA to={"/dashboard/upload_files" + this.state.id}>
+              <ListItemA to={"/dashboard/upload_files"}>
                 <NavSideMenuLI>
                   <Icon  icon="upload" /> Upload Files
                 </NavSideMenuLI>
               </ListItemA>
 
-              <ListItemA to={"/dashboard/external_link" + this.state.id}>
+              <ListItemA to={"/dashboard/external_link"}>
                 <NavSideMenuLI>
                   <Icon  icon="cloud-upload-alt" /> External Link
                 </NavSideMenuLI>
               </ListItemA>
 
-              <ListItemA to={"/dashboard/kibana_dashboard" + this.state.id}>
+              <ListItemA to={"/dashboard/kibana_dashboard"}>
                 <NavSideMenuLI >
                   <Icon  icon="chart-line" />Kibana Graphs
                 </NavSideMenuLI>
