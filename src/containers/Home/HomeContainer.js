@@ -7,7 +7,7 @@ const HomeContainer = styled.div`
   width: 100%;
 `;
 
-class Home extends Component {
+class HomeContainer extends Component {
 
   render() {
     return(
@@ -19,4 +19,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default HomeContainer;

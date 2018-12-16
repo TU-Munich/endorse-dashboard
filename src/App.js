@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import 'filepond/dist/filepond.min.css';
-import Home from './containers/Home/Home';
-import Dashboard from './containers/Dashboard/Dashboard';
+import HomeContainer from './containers/Home/HomeContainer';
+import Dashboard from './containers/Dashboard/DashboardContainer';
 import Contact from './containers/Contact/Contact';
 import LoginContainer from './containers/Login/LoginContainer'
 
@@ -11,11 +11,11 @@ class App extends Component {
 		return (
 		  <Router>
         <Switch>
-          <Route path={"/home"} component = {Home}/>
+          <Route path={"/home"} component = {HomeContainer}/>
           <Route path={"/contact"} component = {Contact}/>
           <Route path={"/dashboard"} component = {Dashboard}/>
           <Route path={"/login"} component = {LoginContainer}/>
-          <Route path={"/"} component = {Home}/>
+          <Route path={"/"} component = {HomeContainer}/>
         </Switch>
       </Router>
 		);
