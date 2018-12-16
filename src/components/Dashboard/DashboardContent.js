@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import styled from "styled-components";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import UploadFiles from "./UploadFiles/UploadFiles";
 import ExternalLink from "./ExternalLink/ExternalLink";
 import KibanaDashboard from "./KibanaDashboard/KibanaDashboard";
@@ -19,6 +19,7 @@ class DashboardContent extends Component {
     return (
       <ContentContainer>
         <Switch>
+          <Redirect exact from={"/dashboard"} to={"/dashboard/info"} />
           <Route path={"/dashboard/info"} component={DashboardInfo}/>
           <Route path={"/dashboard/upload_files"} component={UploadFiles}/>
           <Route path={"/dashboard/external_link"} component={ExternalLink}/>
