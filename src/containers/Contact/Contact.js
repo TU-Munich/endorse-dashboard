@@ -18,7 +18,7 @@ const Title = styled.h3`
   text-indent: 40px;
 `;
 
-const Sub_Title = styled.h4`
+const SubTitle = styled.h4`
 	font-style: bold;
   font-size: 18px;
 	color: #424242;
@@ -44,7 +44,7 @@ class Contact extends Component {
                 <div>
                 <Article>
                     <Title>Welcome to Dashboard</Title>
-                    <Sub_Title>General Information:</Sub_Title>
+                    <SubTitle>General Information:</SubTitle>
                     <Paragraph>
                         Please read these Dashboard information
                         carefully before using dashboard specific functionalities and the ENDORSE
@@ -55,7 +55,7 @@ class Contact extends Component {
                         and compliance with Terms and Conditions. These Terms apply to all doctors who access or use this service.
                     </Paragraph>
 
-                    <Sub_Title>Services that you can use in Doctor Dashboard:</Sub_Title>
+                    <SubTitle>Services that you can use in Doctor Dashboard:</SubTitle>
                     <Paragraph>
                         For customizing profile information, add additional information into your public profile
                         please select "Customize Profile" tab from left side bar.

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import DashboardHeader from "../../components/Dashboard/DashboardHeader";
 import DashboardSideBar from "../../components/Dashboard/DashboardSideBar";
-import Dashboard_Content from "./Dashboard_Content";
+import DashboardContent from "./DashboardContent";
 
 
 const ContainerHeaderDiv = styled.div`
@@ -43,7 +43,7 @@ class DashboardTemplate extends Component {
                 <ContentsDiv>
                     <DashboardSideBar/>
                     <Content>
-                        <Dashboard_Content/>
+                        <DashboardContent/>
                     </Content>
                 </ContentsDiv>
             </ContainerDiv>
