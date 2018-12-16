@@ -117,7 +117,11 @@ class DashboardSideBar extends Component {
                                     <Icon icon="info" /> Dashboard
                                 </NavSideMenuLI>
                             </ListItemA>
-
+                            <ListItemA to={"/dashboard/project/" +this.state.id}>
+                                <NavSideMenuLI>
+                                    <Icon icon="info" /> Project
+                                </NavSideMenuLI>
+                            </ListItemA>
                             <ListItemA to={"/dashboard/upload_files/" + this.state.id}>
                                 <NavSideMenuLI>
                                     <Icon  icon="upload" /> Upload Files
