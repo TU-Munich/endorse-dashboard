@@ -57,7 +57,7 @@ class UploadFiles extends Component {
               <FilePond ref={ref => this.pond = ref}
                         allowMultiple={true}
                         maxFiles={10}
-                        server={nlpServiceBaseUrl + "/api/1/files/upload"}
+                        server={nlpServiceBaseUrl + "/files/upload"}
                         oninit={() => this.handleFilePondInit() }
                         onupdatefiles={(fileItems) => {
                           this.setState({

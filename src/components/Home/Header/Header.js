@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { debounce } from 'lodash'
-import ColorPalette from '../../constants/ColorPalette'
+import ColorPalette from '../../../constants/ColorPalette'
 
 const SiteHeader = styled.header`
   background: ${ props => props.scroll || props.menuOpen ? ColorPalette.endorse_accent : 'transparent;' }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Splash from '../../components/Splash/Splash'
-import Header from '../../components/Header/Header'
+import Splash from '../../components/Home/Splash/Splash'
+import Header from '../../components/Home/Header/Header'
 
 const HomeContainer = styled.div`
   width: 100%;
