@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import DashboardHeader from "../../components/Dashboard/DashboardHeader";
 import DashboardSideBar from "../../components/Dashboard/DashboardSideBar";
-import DashboardContent from "./DashboardContent";
+import DashboardContent from "../../components/Dashboard/DashboardContent";
 
 
 const ContainerHeaderDiv = styled.div`

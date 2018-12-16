@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
 import { FilePond, File } from 'react-filepond';
-import { nlpServiceBaseUrl } from '../../config';
+import { nlpServiceBaseUrl } from '../../../config';
 
 const ContainerDiv = styled.div`
   display: flex;
