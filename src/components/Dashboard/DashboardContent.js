@@ -6,7 +6,6 @@ import ExternalLink from "./ExternalLink/ExternalLink";
 import KibanaDashboard from "./KibanaDashboard/KibanaDashboard";
 import DashboardInfo from "./DashboardInfo/DashboardInfo";
 
-
 const ContentContainer = styled.div`
   width: 100%;
   overflow-y: auto;
