@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { debounce } from 'lodash'
 import ColorPalette from '../../../constants/ColorPalette'
+import { Link } from "react-router-dom";
 
 const SiteHeader = styled.header`
   background: ${ props => props.scroll || props.menuOpen ? ColorPalette.endorse_accent : 'transparent;' }
@@ -74,7 +75,7 @@ const MenuElement = styled.li`
   }
 `;
 
-const MenuElementContent = styled.a`
+const MenuElementContent = styled(Link)`
   color: black;
   display: block;
   padding: 1em 1em 1em 1em;
@@ -198,10 +199,10 @@ class Header extends Component {
           <Logo scroll={this.state.scroll} menuOpen={this.state.menuOpen} className={'logo'}>ENDOR<span>SE</span></Logo>
           <SiteNav menuOpen={this.state.menuOpen} className={'site-nav'}>
             <Menu>
-              <MenuElement><MenuElementContent href=""><Icon icon="home"/>Home</MenuElementContent></MenuElement>
-              <MenuElement><MenuElementContent href=""><Icon icon="compass"/>Services & Solutions</MenuElementContent></MenuElement>
-              <MenuElement><MenuElementContent href=""><Icon icon="phone"/>Contact</MenuElementContent></MenuElement>
-              <MenuElement><MenuElementContent href=""><Icon icon="handshake"/>Login</MenuElementContent></MenuElement>
+              <MenuElement><MenuElementContent to=""><Icon icon="home"/>Home</MenuElementContent></MenuElement>
+              <MenuElement><MenuElementContent to=""><Icon icon="compass"/>Services & Solutions</MenuElementContent></MenuElement>
+              <MenuElement><MenuElementContent to=""><Icon icon="phone"/>Contact</MenuElementContent></MenuElement>
+              <MenuElement><MenuElementContent to="/login"><Icon icon="handshake"/>Login</MenuElementContent></MenuElement>
             </Menu>
           </SiteNav>
           <MenuToggle menuOpen={this.state.menuOpen} className={'menu-toggle'} onClick={this.openMenu}>

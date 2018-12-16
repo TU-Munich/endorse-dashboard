@@ -11,7 +11,6 @@ class App extends Component {
 		return (
 		  <Router>
         <Switch>
-          <Route path={"/home"} component = {HomeContainer}/>
           <Route path={"/contact"} component = {Contact}/>
           <Route path={"/dashboard"} component = {Dashboard}/>
           <Route path={"/login"} component = {LoginContainer}/>
