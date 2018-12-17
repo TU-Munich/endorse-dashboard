@@ -62,7 +62,6 @@ class createProjectForm extends React.Component {
                         <TextField
                             id="projectName"
                             label="Project Name"
-                            lineDirection="center"
                             placeholder="Ex: Navigation Vision Manual"
                             fullWidth
                             onInput={this.onProjectNameChange.bind(this)}
@@ -72,7 +71,6 @@ class createProjectForm extends React.Component {
                         <TextField
                             id="owner"
                             label="Owner"
-                            lineDirection="center"
                             placeholder="Angela"
                             fullWidth
                             onInput={this.onOwnerChange.bind(this)}
@@ -82,7 +80,6 @@ class createProjectForm extends React.Component {
                         <TextField
                             id="email"
                             label="Email"
-                            lineDirection="center"
                             placeholder="angela@bmw.com"
                             fullWidth
                             onInput={this.onEmailChange.bind(this)}
@@ -90,7 +87,6 @@ class createProjectForm extends React.Component {
                         <TextField
                             id="description"
                             label="Description"
-                            lineDirection="center"
                             multiline
                             rowsMax="4"
                             placeholder="Internal survey regarding to manual inspiration"
@@ -104,7 +100,6 @@ class createProjectForm extends React.Component {
                         id="submit"
                         type="submit"
                         color="primary"
-                        alignItems="center"
                         onClick={this.onCreateButtonSubmit.bind(this)}
                     >
                         Create
