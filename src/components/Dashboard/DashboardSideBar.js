@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ColorPalette from '../../constants/ColorPalette'
+import ColorPalette from '../../constants/ColorPalette';
 
 const SideBar = styled.div`
   margin: 0px;
@@ -96,6 +96,11 @@ class DashboardSideBar extends Component {
               <ListItemA to={"/dashboard"}>
                 <NavSideMenuLI>
                   <Icon icon="info" /> Dashboard
+                </NavSideMenuLI>
+              </ListItemA>
+              <ListItemA to={"/dashboard/project"}>
+                <NavSideMenuLI>
+                  <Icon icon="info" /> Project
                 </NavSideMenuLI>
               </ListItemA>
 
