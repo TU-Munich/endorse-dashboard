@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-//import Project from "../Project/createProjectForm";
 import Project from "../Project/Project";
 import UploadFiles from "../UploadFiles/UploadFiles";
 import ExternalLink from "../ExternalLink/ExternalLink";

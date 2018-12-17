@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ColorPalette from '../../constants/ColorPalette'
 
 const SideBar = styled.div`
   margin: 0px;
@@ -21,16 +22,14 @@ const NavSideMenu = styled.div`
   box-shadow: 1px 3px 4px black;
 `;
 
-const Logo = styled.img`
-  background-color: #23282e;
-  display: block;
+const Logo = styled.h2`
   text-align: center;
-  margin: auto; 
-  padding: 10px; 
-  width: 100%;
+  margin-top: 14px;
+  margin-bottom: 13px;
 `;
 
 const MenuList = styled.div`
+  border-top: 1px solid ${ColorPalette.endorse_primary_dark};
 `;
 
 const NavSideMenuUL = styled.ul`
@@ -45,7 +44,6 @@ const NavSideMenuUL = styled.ul`
 
 const NavSideMenuLI = styled.li`
   padding-left: 0px;
-  border-left: 3px solid #2e353d;
   border-bottom: 1px solid #23282e;
   display: flex;
   
@@ -145,6 +143,44 @@ class DashboardSideBar extends Component {
             </SideBar>
         );
     }
+  }
+
+  render() {
+    return (
+      <SideBar>
+        <NavSideMenu>
+          <Logo>ENDOrSE</Logo>
+          <MenuList>
+            <NavSideMenuUL id="menu-content" className="menu-content collapse out">
+              <ListItemA to={"/dashboard"}>
+                <NavSideMenuLI>
+                  <Icon icon="info" /> Dashboard
+                </NavSideMenuLI>
+              </ListItemA>
+
+              <ListItemA to={"/dashboard/upload_files"}>
+                <NavSideMenuLI>
+                  <Icon  icon="upload" /> Upload Files
+                </NavSideMenuLI>
+              </ListItemA>
+
+              <ListItemA to={"/dashboard/external_link"}>
+                <NavSideMenuLI>
+                  <Icon  icon="cloud-upload-alt" /> External Link
+                </NavSideMenuLI>
+              </ListItemA>
+
+              <ListItemA to={"/dashboard/kibana_dashboard"}>
+                <NavSideMenuLI >
+                  <Icon  icon="chart-line" />Kibana Graphs
+                </NavSideMenuLI>
+              </ListItemA>
+            </NavSideMenuUL>
+          </MenuList>
+        </NavSideMenu>
+      </SideBar>
+    );
+  }
 }
 
 export default DashboardSideBar;
