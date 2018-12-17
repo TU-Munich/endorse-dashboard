@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Particles from 'react-particles-js'
-import ParticlesConfig from '../../constants/ParticlesConfig'
+import ParticlesConfig from '../../../constants/ParticlesConfig'
 import styled from 'styled-components'
-import Contact from "../../containers/Contact/Contact";
 
 const ParticlesCanvas = styled(Particles)`
   position: absolute; 

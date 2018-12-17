@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ColorPalette from '../../constants/ColorPalette'
 
 const SideBar = styled.div`
   margin: 0px;
@@ -21,16 +22,14 @@ const NavSideMenu = styled.div`
   box-shadow: 1px 3px 4px black;
 `;
 
-const Logo = styled.img`
-  background-color: #23282e;
-  display: block;
+const Logo = styled.h2`
   text-align: center;
-  margin: auto; 
-  padding: 10px; 
-  width: 100%;
+  margin-top: 14px;
+  margin-bottom: 13px;
 `;
 
 const MenuList = styled.div`
+  border-top: 1px solid ${ColorPalette.endorse_primary_dark};
 `;
 
 const NavSideMenuUL = styled.ul`
@@ -45,7 +44,6 @@ const NavSideMenuUL = styled.ul`
 
 const NavSideMenuLI = styled.li`
   padding-left: 0px;
-  border-left: 3px solid #2e353d;
   border-bottom: 1px solid #23282e;
   display: flex;
   
@@ -81,66 +79,49 @@ const Icon = styled(FontAwesomeIcon)`
   margin-left: 10px;
 `;
 class DashboardSideBar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: window.localStorage['id']
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: window.localStorage['id']
     }
+  }
 
-    componentDidMount () {
-        const script1 = document.createElement("script");
-        script1.src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js";
-        script1.async = true;
-        const script2 = document.createElement("script");
-        script2.src="//code.jquery.com/jquery-1.11.1.min.js";
-        script2.async = true;
+  render() {
+    return (
+      <SideBar>
+        <NavSideMenu>
+          <Logo>ENDOrSE</Logo>
+          <MenuList>
+            <NavSideMenuUL id="menu-content" className="menu-content collapse out">
+              <ListItemA to={"/dashboard"}>
+                <NavSideMenuLI>
+                  <Icon icon="info" /> Dashboard
+                </NavSideMenuLI>
+              </ListItemA>
 
-        document.body.appendChild(script1);
-        document.body.appendChild(script2);
-    }
+              <ListItemA to={"/dashboard/upload_files"}>
+                <NavSideMenuLI>
+                  <Icon  icon="upload" /> Upload Files
+                </NavSideMenuLI>
+              </ListItemA>
 
-    render() {
-        return (
-            <SideBar>
-                <NavSideMenu>
-                    <img
-                        src={"https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png"}
-                        style={{width: "50px", height: "50px" }}
-                    />
-                    <h2 style={{display:"inline-block"}}>ENDORSE</h2>
+              <ListItemA to={"/dashboard/external_link"}>
+                <NavSideMenuLI>
+                  <Icon  icon="cloud-upload-alt" /> External Link
+                </NavSideMenuLI>
+              </ListItemA>
 
-                    <MenuList>
-                        <NavSideMenuUL id="menu-content" className="menu-content collapse out">
-                            <ListItemA to={"/dashboard/dashboard/" +this.state.id}>
-                                <NavSideMenuLI>
-                                    <Icon icon="info" /> Dashboard
-                                </NavSideMenuLI>
-                            </ListItemA>
-
-                            <ListItemA to={"/dashboard/upload_files/" + this.state.id}>
-                                <NavSideMenuLI>
-                                    <Icon  icon="upload" /> Upload Files
-                                </NavSideMenuLI>
-                            </ListItemA>
-
-                            <ListItemA to={"/dashboard/external_link/" + this.state.id}>
-                                <NavSideMenuLI>
-                                    <Icon  icon="cloud-upload-alt" /> External Link
-                                </NavSideMenuLI>
-                            </ListItemA>
-
-                            <ListItemA to={"/dashboard/kibana_dashboard/" + this.state.id}>
-                                <NavSideMenuLI >
-                                    <Icon  icon="chart-line" />Kibana Graphs
-                                </NavSideMenuLI>
-                            </ListItemA>
-                        </NavSideMenuUL>
-                    </MenuList>
-                </NavSideMenu>
-            </SideBar>
-        );
-    }
+              <ListItemA to={"/dashboard/kibana_dashboard"}>
+                <NavSideMenuLI >
+                  <Icon  icon="chart-line" />Kibana Graphs
+                </NavSideMenuLI>
+              </ListItemA>
+            </NavSideMenuUL>
+          </MenuList>
+        </NavSideMenu>
+      </SideBar>
+    );
+  }
 }
 
 export default DashboardSideBar;

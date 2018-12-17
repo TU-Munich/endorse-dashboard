@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const HeaderDiv = styled.div`
   overflow-x: hidden;
@@ -17,8 +17,8 @@ const Dropdown = styled.li`
   display: block;
   text-decoration: none; 
   position: absolute; 
-  right: 75px;
-
+  right: 0px;
+  
   &:hover {
     cursor: pointer;
     & > .dropdown-content {
@@ -43,6 +43,7 @@ const DropdownMenu = styled.ul`
   cursor: pointer;
   visibility: hidden;
   display: block;
+  right: 0px;
   position: absolute;
   margin-top: 0;
   border: 1px solid rgba(0,0,0,.15);
@@ -58,7 +59,7 @@ const DropdownListItem = styled.li`
   margin-left: 0px;
   text-decoration: none;  
   padding: 12px; 
-  
+    
   &:hover {
     background-color: #f0f0f0;
     -webkit-transition: all .6s ease;
@@ -66,7 +67,7 @@ const DropdownListItem = styled.li`
     -o-transition: all .6s ease;
     -ms-transition: all .6s ease;
     transition: all .6s ease;
-	}	
+  }	
 `;
 
 const StyledLink = styled(Link)`
@@ -76,51 +77,51 @@ const StyledLink = styled(Link)`
 
 const Icon = styled(FontAwesomeIcon)`
   width: 55px;
-  height: 55px;
+  height: 45px;
   display: inline-block;
   vertical-align: middle;
   margin-left: 6px;
   margin-right: 6px;
 `;
 
-const UserGreeting = styled.h1 `
+const UserGreeting = styled.h1`
   margin: auto 230px;
   font-size: 16px;
   color: white;
 `;
 
 class DashboardHeader extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: window.localStorage['id'],
-            username: window.localStorage['username']
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: window.localStorage['id'],
+      username: window.localStorage['username']
     }
+  }
 
-    render() {
-        return (
-            <HeaderDiv>
-                <UserGreeting>Welcome, {this.state.username}</UserGreeting>
-                <Dropdown>
-                    <DropdownToggle className="dropbtn">Menu</DropdownToggle>
-                    <DropdownMenu className="dropdown-content">
-                        <StyledLink to={"/dashboard/" + this.state.id} >
-                            <DropdownListItem>
-                                <Icon icon="user"/>Account
-                            </DropdownListItem>
-                        </StyledLink>
+  render() {
+    return (
+      <HeaderDiv>
+        <UserGreeting>Welcome, {this.state.username}</UserGreeting>
+        <Dropdown>
+          <DropdownToggle className="dropbtn">Menu</DropdownToggle>
+          <DropdownMenu className="dropdown-content">
+            <StyledLink to={"/dashboard/info"}>
+              <DropdownListItem>
+                <Icon icon="user"/>Account
+              </DropdownListItem>
+            </StyledLink>
 
-                        <StyledLink to="/dashboard/logout">
-                            <DropdownListItem>
-                                <Icon icon="sign-out-alt" />Logout
-                            </DropdownListItem>
-                        </StyledLink>
-                    </DropdownMenu>
-                </Dropdown>
-            </HeaderDiv>
-        );
-    }
+            <StyledLink to="/dashboard/logout">
+              <DropdownListItem>
+                <Icon icon="sign-out-alt"/>Logout
+              </DropdownListItem>
+            </StyledLink>
+          </DropdownMenu>
+        </Dropdown>
+      </HeaderDiv>
+    );
+  }
 }
 
 export default DashboardHeader;
