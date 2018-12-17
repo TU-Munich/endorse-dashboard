@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import ProjectForm from "./createProjectForm";
 import Form from "./Form"; //Will research on formik later
 
+
 const ContainerDiv = styled.div`
   display: flex;
   flex-flow: column nowrap;	
@@ -35,6 +36,8 @@ class Project extends Component {
         <ContainerDiv>
           <ProjectForm />
         </ContainerDiv>
+        {/* <ContainerDiv> //For project overview
+        </ContainerDiv> */}
         
        
         </div>
