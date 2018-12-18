@@ -6,6 +6,7 @@ import ExternalLink from "./ExternalLink/ExternalLink";
 import KibanaDashboard from "./KibanaDashboard/KibanaDashboard";
 import DashboardInfo from "./DashboardInfo/DashboardInfo";
 import ProjectsOverview from "./Projects/Overview/ProjectsOverview";
+import CreateProject from "./Projects/CreateProjectForm/Project"
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -22,6 +23,7 @@ class DashboardContent extends Component {
           <Redirect exact from={"/dashboard"} to={"/dashboard/info"} />
           <Route path={"/dashboard/info"} component={DashboardInfo}/>
           <Route path={"/dashboard/projects"} component={ProjectsOverview}/>
+          <Route path={"/dashboard/create-project"} component={CreateProject}/>
           <Route path={"/dashboard/upload_files"} component={UploadFiles}/>
           <Route path={"/dashboard/external_link"} component={ExternalLink}/>
           <Route path={"/dashboard/kibana_dashboard"} component={KibanaDashboard}/>

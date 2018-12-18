@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import ProjectCard from "./ProjectCard";
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
@@ -16,6 +17,8 @@ const OverviewWrapper = styled.div`
 const PageTitle = styled.h1`
   text-align: center;
 `;
+
+const MyLink = props => <Link to="/dashboard/create-project" {...props} />;
 
 const FabStyle = theme => ({
   fab: {
@@ -49,7 +52,7 @@ class ProjectsOverview extends Component {
           <Grid item xs={4}>
             <ProjectCard/>
           </Grid>
-          <Fab color="primary" aria-label="Add" className={classes.fab}>
+          <Fab color="primary" aria-label="Add" className={classes.fab} component={MyLink}>
             <AddIcon className={'Inner'} />
           </Fab>
         </Grid>
