@@ -28,75 +28,75 @@ const LoginBoxAvatar = styled(Avatar)`
 `;
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
-        console.log(localStorage.getItem('token'));
-        this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.localStorageUpdated = this.localStorageUpdated.bind(this);
-        this.state = {token: localStorage.getItem('token')};
-    }
+  constructor(props) {
+    super(props);
+    console.log(localStorage.getItem('token'));
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.localStorageUpdated = this.localStorageUpdated.bind(this);
+    this.state = {token: localStorage.getItem('token')};
+  }
 
-    localStorageUpdated() {
-        if (localStorage.getItem('token')) {
-            this.updateState(null)
-        } else {
-            this.updateState("TOKEN")
-        }
+  localStorageUpdated() {
+    if (localStorage.getItem('token')) {
+      this.updateState(null)
+    } else {
+      this.updateState("TOKEN")
     }
+  }
 
-    updateState(value) {
-        this.setState({isLoggedIn: value})
-    }
+  updateState(value) {
+    this.setState({isLoggedIn: value})
+  }
 
-    handleLoginClick() {
-        localStorage.setItem('token', "TOKEN");
-        console.log("Login");
-        this.setState({
-            token: "TOKEN"
-        });
-    }
+  handleLoginClick() {
+    localStorage.setItem('token', "TOKEN");
+    console.log("Login");
+    this.setState({
+      token: "TOKEN"
+    });
+  }
 
-    render() {
-        return (
-            this.state.token ? (
-                <Redirect to="/dashboard"/>
-            ) : (
-                <LoginBox className="login-box">
-                    <CssBaseline/>
-                    <LoginBoxPaper className="login-box-paper">
-                        <LoginBoxAvatar className="login-box-avatar">
-                            <LockIcon/>
-                        </LoginBoxAvatar>
-                        <Typography component="h1" variant="h5">
-                            Sign in
-                        </Typography>
-                        <form>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus/>
-                            </FormControl>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="password">Password</InputLabel>
-                                <Input name="password" type="password" id="password" autoComplete="current-password"/>
-                            </FormControl>
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary"/>}
-                                label="Remember me"
-                            />
-                        </form>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            onClick={this.handleLoginClick}>
-                            Sign in
-                        </Button>
-                    </LoginBoxPaper>
-                </LoginBox>
-            )
-        )
-    }
+  render() {
+    return (
+      this.state.token ? (
+        <Redirect to="/dashboard"/>
+      ) : (
+        <LoginBox className="login-box">
+          <CssBaseline/>
+          <LoginBoxPaper className="login-box-paper">
+            <LoginBoxAvatar className="login-box-avatar">
+              <LockIcon/>
+            </LoginBoxAvatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <Input id="email" name="email" autoComplete="email" autoFocus/>
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input name="password" type="password" id="password" autoComplete="current-password"/>
+              </FormControl>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary"/>}
+                label="Remember me"
+              />
+            </form>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={this.handleLoginClick}>
+              Sign in
+            </Button>
+          </LoginBoxPaper>
+        </LoginBox>
+      )
+    )
+  }
 }
 
 export default Login
