@@ -13,9 +13,11 @@ import UploadFilesIcon from '@material-ui/icons/CloudUpload';
 import UploadLinksIcon from '@material-ui/icons/Link';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Button from "@material-ui/core/Button/Button";
+import {Link} from "react-router-dom";
 
 const colors = ['#FF0000', '#008000', '#808080'];
 const avatarColor = colors[Math.floor(Math.random() * colors.length)];
+const OpenDashboardLink = props => <Link to="/dashboard" {...props} />;
 
 class ProjectCard extends Component {
   constructor(props) {
@@ -56,7 +58,7 @@ class ProjectCard extends Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <Button size="small" color="primary" className={classes.button}>
+          <Button size="small" color="primary" className={classes.button} component={OpenDashboardLink}>
             Open Project
           </Button>
           <Tooltip title="Upload Files" aria-label="Upload Files to project">

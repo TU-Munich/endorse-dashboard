@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import DashboardHeader from "../../components/Dashboard/DashboardHeader";
 import ProjectsOverview from "../../components/Projects/Overview/ProjectsOverview";
+import CreateProject from "../../components/Projects/CreateProjectForm/Project";
+import {Redirect, Route, Switch} from "react-router-dom";
 
 
 const ContainerHeaderDiv = styled.div`
@@ -40,7 +42,11 @@ class ProjectsContainer extends Component {
         </ContainerHeaderDiv>
         <ContentsDiv>
           <Content>
-            <ProjectsOverview/>
+            <Switch>
+              <Redirect exact from={"/projects-overview"} to={"/projects-overview/all"} />
+              <Route path={"/projects-overview/all"} component={ProjectsOverview}/>
+              <Route path={"/projects-overview/create-project"} component={CreateProject}/>
+            </Switch>
           </Content>
         </ContentsDiv>
       </ContainerDiv>

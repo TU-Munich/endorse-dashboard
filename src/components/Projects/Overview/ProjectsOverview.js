@@ -19,7 +19,7 @@ const PageTitle = styled.h1`
   text-align: center;
 `;
 
-const MyLink = props => <Link to="/dashboard/create-project" {...props} />;
+const CreateProjectLink = props => <Link to="/projects-overview/create-project" {...props} />;
 
 class ProjectsOverview extends Component {
   constructor(props) {
@@ -66,7 +66,7 @@ class ProjectsOverview extends Component {
               <ProjectCard {...projectInfo} />
             </Grid>)
           }
-          <Fab color="primary" aria-label="Add" className={classes.fab} component={MyLink}>
+          <Fab color="primary" aria-label="Add" className={classes.fab} component={CreateProjectLink}>
             <AddIcon className={'Inner'} />
           </Fab>
         </Grid>
