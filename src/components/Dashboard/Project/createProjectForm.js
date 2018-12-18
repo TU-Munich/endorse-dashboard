@@ -52,7 +52,7 @@ class createProjectForm extends React.Component {
         //const { classes } = this.props;
 		return(
             <div className="container fluid">
-                    <Card style={{marginTop: 40, marginBottom: 25, width: 700, padding: 20, borderRadius: '10px'}}  className="md-block-centered">
+                    <Card style={{marginTop: 40, marginBottom: 25, width: 700, padding: 20, borderRadius: '10px', margin: 'auto'}}  className="md-block-centered">
                         <Typography variant="h6" gutterBottom>
                             Create New Project
                         </Typography>

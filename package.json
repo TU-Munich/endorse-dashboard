@@ -39,8 +39,6 @@
     "lodash": "^4.17.10",
     "npm": "^6.4.1",
     "react": "^16.4.1",
-    "react-charts": "^2.0.0-alpha.12",
-    "react-d3-graph": "^2.0.0-rc2",
     "react-dom": "^16.4.1",
     "react-file-viewer": "^0.5.0",
     "react-filepond": "^5.0.0",
