@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 const lodash = require('lodash');
 
-class ApiService {
+class HttpService {
 
   constructor(baseUrl, contentType, accept, authType, accessToken) {
     this._baseUrl = baseUrl;
@@ -52,4 +52,4 @@ class ApiService {
   }
 }
 
-export default ApiService;
+export default HttpService;

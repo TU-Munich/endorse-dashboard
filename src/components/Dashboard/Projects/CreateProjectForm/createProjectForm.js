@@ -6,10 +6,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import ApiService from '../../../../services/ApiService'
-import config from '../../../../config'
-
-let endorseNLPService = new ApiService(config.nlpServiceBaseUrl, 'application/json', '', '', '');
+import ProjectsService from '../../../../services/ProjectsService'
 
 class createProjectForm extends React.Component {
   constructor(props) {
@@ -47,15 +44,13 @@ class createProjectForm extends React.Component {
     const project = this.state;
     console.log(project);
     console.log('Success!');
-    endorseNLPService.post('/generic/projects-index/project', project).then((response) => {
-      console.log(response.status);
-      console.log(response.status_code);
-      let modal = response.status === 200 || response.status === 201 ?
+    ProjectsService.createProject(project).then((response) => {
+      let modalContent = response.status === 200 || response.status === 201 ?
         {title: 'Success', message: 'Project has been successfully created'} :
         {title: 'Error', message: 'An error has occurred while creating the project, please contact the system admin'};
       confirmAlert({
-        title: modal.title,
-        message: modal.message,
+        title: modalContent.title,
+        message: modalContent.message,
         buttons: [
           {
             label: 'Continue',
