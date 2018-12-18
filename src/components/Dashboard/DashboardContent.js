@@ -5,7 +5,7 @@ import UploadFiles from "./UploadFiles/UploadFiles";
 import ExternalLink from "./ExternalLink/ExternalLink";
 import KibanaDashboard from "./KibanaDashboard/KibanaDashboard";
 import DashboardInfo from "./DashboardInfo/DashboardInfo";
-import Project from "./Project/Project";
+import Project from "./Projects/CreateProjectForm/Project";
 
 const ContentContainer = styled.div`
   width: 100%;
