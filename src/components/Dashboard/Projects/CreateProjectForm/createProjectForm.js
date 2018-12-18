@@ -4,8 +4,10 @@ import './createProjectForm.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import ApiService from '../../../../services/ApiService'
+import config from '../../../../config'
 
+let endorseNLPService = new ApiService(config.nlpServiceBaseUrl, 'application/json', '', '', '');
 
 class createProjectForm extends React.Component {
   constructor(props) {
@@ -14,7 +16,8 @@ class createProjectForm extends React.Component {
       projectName: '',
       owner: '',
       email: '',
-      description: ''
+      description: '',
+      date: new Date()
     };
   }
 
@@ -45,8 +48,11 @@ class createProjectForm extends React.Component {
     const project = this.state;
     console.log(project);
     console.log('Success!');
-    // axios.post(Consts.BACKEND_ENDPOINT + 'generic/projects-index/project', project)
-    //     .then(response => console.log(response))
+    endorseNLPService.post('/generic/projects-index/project', project).then((response) => {
+      let modal = response.default_status === 200 ?
+        '' :
+        ''
+    })
   }
 
 
