@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 //import Card from '@material-ui/core/Card';
-import ProjectForm from "./createProjectForm";
+import ProjectForm from "./CreateProjectForm";
 //import Form from "./Form"; //Will research on formik later
 
 

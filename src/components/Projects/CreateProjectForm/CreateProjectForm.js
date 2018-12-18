@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import './createProjectForm.css';
+import './CreateProjectForm.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -54,7 +54,7 @@ class createProjectForm extends React.Component {
         buttons: [
           {
             label: 'Continue',
-            onClick: () => window.location.replace('/dashboard')
+            onClick: () => window.location.replace('/projects-overview')
           }
         ]
       });
