@@ -27,9 +27,8 @@ const ContentsDiv = styled.div`
 `;
 
 const Content = styled.div`
-  margin-left: 240px;
-  overflow-y: 100%;
-  width: 900%;
+  margin-left: 210px;
+  width: 100%;
   overflow-x: hidden;
 `;
 
