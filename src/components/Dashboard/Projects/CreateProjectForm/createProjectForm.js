@@ -4,6 +4,8 @@ import './createProjectForm.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import ApiService from '../../../../services/ApiService'
 import config from '../../../../config'
 
@@ -21,26 +23,23 @@ class createProjectForm extends React.Component {
     };
   }
 
-  //Should use arrow function for binding. So now is not bind yet due to error
-
-
   onProjectNameChange(event) {
-    this.setState({projectName: event.target.value})
+    this.setState({projectName: event.target.value});
     console.log(event.target.value)
   }
 
   onOwnerChange(event) {
-    this.setState({owner: event.target.value})
+    this.setState({owner: event.target.value});
     console.log(event.target.value)
   }
 
   onEmailChange(event) {
-    this.setState({email: event.target.value})
+    this.setState({email: event.target.value});
     console.log(event.target.value)
   }
 
   onDescriptionChange(event) {
-    this.setState({description: event.target.value})
+    this.setState({description: event.target.value});
     console.log(event.target.value)
   }
 
@@ -49,9 +48,21 @@ class createProjectForm extends React.Component {
     console.log(project);
     console.log('Success!');
     endorseNLPService.post('/generic/projects-index/project', project).then((response) => {
-      let modal = response.default_status === 200 ?
-        '' :
-        ''
+      console.log(response.status);
+      console.log(response.status_code);
+      let modal = response.status === 200 || response.status === 201 ?
+        {title: 'Success', message: 'Project has been successfully created'} :
+        {title: 'Error', message: 'An error has occurred while creating the project, please contact the system admin'};
+      confirmAlert({
+        title: modal.title,
+        message: modal.message,
+        buttons: [
+          {
+            label: 'Continue',
+            onClick: () => window.location.replace('/dashboard')
+          }
+        ]
+      });
     })
   }
 
