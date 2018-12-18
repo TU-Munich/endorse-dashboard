@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import UploadFilesIcon from '@material-ui/icons/CloudUpload';
 import UploadLinksIcon from '@material-ui/icons/Link';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import Button from "@material-ui/core/Button/Button";
 
 const colors = ['#FF0000', '#008000', '#808080'];
@@ -41,9 +41,11 @@ class ProjectCard extends Component {
             </Avatar>
           }
           action={
-            <IconButton>
-              <MoreVertIcon/>
-            </IconButton>
+            <Tooltip title="Save to favorites" aria-label="Save project to favorites">
+              <IconButton>
+                <FavoriteIcon/>
+              </IconButton>
+            </Tooltip>
           }
           title={this.state.projectName}
           subheader={this.state.date.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
