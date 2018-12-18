@@ -15,7 +15,6 @@ const ContainerDiv = styled.div`
 `;
 
 const UploadContainer = styled.div`
- 
    padding: 10px 8px 0px 8px;
    text-align: center;
 `;
