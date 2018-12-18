@@ -11,6 +11,7 @@ import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper/Paper";
 import Avatar from "@material-ui/core/Avatar/Avatar";
+import {Redirect} from 'react-router';
 
 const LoginBox = styled.div`
   margin-left: auto;
@@ -27,75 +28,75 @@ const LoginBoxAvatar = styled(Avatar)`
 `;
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.handleLoginClick = this.handleLoginClick.bind(this);
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
-    this.localStorageUpdated = this.localStorageUpdated.bind(this);
-    this.state = {token: localStorage.getItem('token')};
-  }
-
-  localStorageUpdated() {
-    if (localStorage.getItem('token')) {
-      this.updateState(null)
-    } else {
-      this.updateState("TOKEN")
+    constructor(props) {
+        super(props);
+        console.log(localStorage.getItem('token'));
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.localStorageUpdated = this.localStorageUpdated.bind(this);
+        this.state = {token: localStorage.getItem('token')};
     }
-  }
 
-  updateState(value) {
-    this.setState({isLoggedIn: value})
-  }
+    localStorageUpdated() {
+        if (localStorage.getItem('token')) {
+            this.updateState(null)
+        } else {
+            this.updateState("TOKEN")
+        }
+    }
 
-  handleLoginClick() {
-    localStorage.setItem('token', "TOKEN");
-    this.setState({
-      token: "TOKEN"
-    });
-  }
+    updateState(value) {
+        this.setState({isLoggedIn: value})
+    }
 
-  handleLogoutClick() {
-    localStorage.setItem('token', null);
-    this.setState({token: null});
-  }
+    handleLoginClick() {
+        localStorage.setItem('token', "TOKEN");
+        console.log("Login");
+        this.setState({
+            token: "TOKEN"
+        });
+    }
 
-  render() {
-    return(
-      <LoginBox className="login-box">
-        <CssBaseline/>
-        <LoginBoxPaper className="login-box-paper">
-          <LoginBoxAvatar className="login-box-avatar">
-            <LockIcon/>
-          </LoginBoxAvatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus/>
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password"/>
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary"/>}
-              label="Remember me"
-            />
-          </form>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={this.handleLoginClick}>
-            Sign in
-          </Button>
-        </LoginBoxPaper>
-      </LoginBox>
-    )
-  }
+    render() {
+        return (
+            this.state.token ? (
+                <Redirect to="/dashboard"/>
+            ) : (
+                <LoginBox className="login-box">
+                    <CssBaseline/>
+                    <LoginBoxPaper className="login-box-paper">
+                        <LoginBoxAvatar className="login-box-avatar">
+                            <LockIcon/>
+                        </LoginBoxAvatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                        <form>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <Input id="email" name="email" autoComplete="email" autoFocus/>
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input name="password" type="password" id="password" autoComplete="current-password"/>
+                            </FormControl>
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary"/>}
+                                label="Remember me"
+                            />
+                        </form>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleLoginClick}>
+                            Sign in
+                        </Button>
+                    </LoginBoxPaper>
+                </LoginBox>
+            )
+        )
+    }
 }
 
 export default Login

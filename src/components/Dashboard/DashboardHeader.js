@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const HeaderDiv = styled.div`
@@ -91,37 +91,51 @@ const UserGreeting = styled.h1`
 `;
 
 class DashboardHeader extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: window.localStorage['id'],
-      username: window.localStorage['username']
+    constructor(props) {
+        super(props);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.state = {
+            id: window.localStorage['id'],
+            username: window.localStorage['username'],
+            token: localStorage.getItem('token')
+        }
     }
-  }
 
-  render() {
-    return (
-      <HeaderDiv>
-        <UserGreeting>Welcome, {this.state.username}</UserGreeting>
-        <Dropdown>
-          <DropdownToggle className="dropbtn">Menu</DropdownToggle>
-          <DropdownMenu className="dropdown-content">
-            <StyledLink to={"/dashboard/info"}>
-              <DropdownListItem>
-                <Icon icon="user"/>Account
-              </DropdownListItem>
-            </StyledLink>
+    handleLogoutClick() {
+        console.log("logout");
+        localStorage.setItem('token', null);
+        console.log(localStorage.getItem('token'));
+        this.setState({token: null});
+    }
 
-            <StyledLink to="/dashboard/logout">
-              <DropdownListItem>
-                <Icon icon="sign-out-alt"/>Logout
-              </DropdownListItem>
-            </StyledLink>
-          </DropdownMenu>
-        </Dropdown>
-      </HeaderDiv>
-    );
-  }
+    render() {
+        return (
+            this.state.token ? (
+                <HeaderDiv>
+                    <UserGreeting>Welcome, {this.state.username}</UserGreeting>
+                    <Dropdown>
+                        <DropdownToggle className="dropbtn">Menu</DropdownToggle>
+                        <DropdownMenu className="dropdown-content">
+                            <StyledLink to={"/dashboard/info"}>
+                                <DropdownListItem>
+                                    <Icon icon="user"/>Account
+                                </DropdownListItem>
+                            </StyledLink>
+
+                            <StyledLink to="/dashboard/logout">
+                                <DropdownListItem onClick={this.handleLogoutClick}>
+                                    <Icon icon="sign-out-alt"/>Logout
+                                </DropdownListItem>
+                            </StyledLink>
+                        </DropdownMenu>
+                    </Dropdown>
+                </HeaderDiv>
+
+            ) : (
+                <Redirect to="/"/>
+            )
+        );
+    }
 }
 
 export default DashboardHeader;
