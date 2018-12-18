@@ -27,7 +27,8 @@ class UploadFiles extends Component {
     this.state = {
       loading: false,
       data: [],
-      files: []
+      files: [],
+      projectUUID: props.projectUUID
     };
 
     this.clickState = this.clickState.bind(this);
@@ -56,7 +57,7 @@ class UploadFiles extends Component {
             <FilePond ref={ref => this.pond = ref}
                       allowMultiple={true}
                       maxFiles={10}
-                      server={nlpServiceBaseUrl + "/files/upload"}
+                      server={nlpServiceBaseUrl + `/files/project/${this.state.projectUUID}/files`}
                       oninit={() => this.handleFilePondInit()}
                       onupdatefiles={(fileItems) => {
                         this.setState({
