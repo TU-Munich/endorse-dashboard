@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import ProjectService from '../../../../services/ProjectService'
+import ProjectService from '../../../services/ProjectService'
 
 class createProjectForm extends React.Component {
   constructor(props) {

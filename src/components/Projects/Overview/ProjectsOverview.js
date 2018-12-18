@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import ProjectService from '../../../../services/ProjectService'
+import ProjectService from '../../../services/ProjectService'
 
 const OverviewWrapper = styled.div`
   width: 100%;
