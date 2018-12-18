@@ -1,7 +1,7 @@
 import HttpService from "./HttpService";
 import config from "../config";
 
-export default class ProjectsService {
+export default class ProjectService {
   static endorseNLPService = new HttpService(config.nlpServiceBaseUrl, 'application/json', '', '', '');
   static projectsEndpoint() { return '/generic/projects-index/project' }
 

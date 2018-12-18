@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import ProjectsService from '../../../../services/ProjectsService'
+import ProjectService from '../../../../services/ProjectService'
 
 class createProjectForm extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class createProjectForm extends React.Component {
     const project = this.state;
     console.log(project);
     console.log('Success!');
-    ProjectsService.createProject(project).then((response) => {
+    ProjectService.createProject(project).then((response) => {
       let modalContent = response.status === 200 || response.status === 201 ?
         {title: 'Success', message: 'Project has been successfully created'} :
         {title: 'Error', message: 'An error has occurred while creating the project, please contact the system admin'};

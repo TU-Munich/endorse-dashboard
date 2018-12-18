@@ -1,7 +1,7 @@
 {
-  "name": "isomerlabs-website",
+  "name": "endorse-dashboard",
   "version": "1.0.0",
-  "description": "Public website for Isomerlabs - Software Artisans",
+  "description": "Public website and admin dashboard for ENDOrSE - End User Document Search Engine",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w0rks74710n/isomerlabs-website.git"
+    "url": "git+https://github.com/TU-Munich/endorse-dashboard"
   },
   "keywords": [
     "website",
@@ -23,9 +23,9 @@
   "author": "Marco Salazar",
   "license": "UNLICENCED",
   "bugs": {
-    "url": "https://github.com/w0rks74710n/isomerlabs-website/issues"
+    "url": "https://github.com/TU-Munich/endorse-dashboard/issues"
   },
-  "homepage": "https://github.com/w0rks74710n/isomerlabs-website#readme",
+  "homepage": "https://github.com/TU-Munich/endorse-dashboard#readme",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
     "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
