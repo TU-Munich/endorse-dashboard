@@ -35,6 +35,8 @@ class ProjectCard extends Component {
     const {classes} = this.props;
 
     const OpenDashboardLink = props => <Link to={`/dashboard/${this.state.projectUUID}`} {...props} />;
+    const OpenUploadFileLink = props => <Link to={`/dashboard/${this.state.projectUUID}/upload_files`} {...props} />;
+    const OpenCrawlURLLink = props => <Link to={`/dashboard/${this.state.projectUUID}/external_link`} {...props} />;
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -63,12 +65,12 @@ class ProjectCard extends Component {
             Open Project
           </Button>
           <Tooltip title="Upload Files" aria-label="Upload Files to project">
-            <IconButton>
-              <UploadFilesIcon/>
+            <IconButton component={OpenUploadFileLink}>
+              <UploadFilesIcon />
             </IconButton>
           </Tooltip>
           <Tooltip title="Crawl URL's" aria-label="Upload URL for web crawling to project">
-            <IconButton>
+            <IconButton component={OpenCrawlURLLink}>
               <UploadLinksIcon/>
             </IconButton>
           </Tooltip>

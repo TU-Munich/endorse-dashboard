@@ -59,7 +59,7 @@ class Login extends Component {
   render() {
     return (
       this.state.token ? (
-        <Redirect to="/dashboard"/>
+        <Redirect to="/projects-overview"/>
       ) : (
         <LoginBox className="login-box">
           <CssBaseline/>

@@ -19,7 +19,7 @@ class DashboardContent extends Component {
 
     this.state = {
       projectUUID: this.props.params.params.projectUUID
-    }
+    };
   }
 
   render() {
@@ -27,6 +27,8 @@ class DashboardContent extends Component {
       <ContentContainer>
         <Switch>
           <Redirect exact from={`/dashboard/${this.state.projectUUID}`} to={"/dashboard/info"} />
+          <Redirect exact from={`/dashboard/${this.state.projectUUID}/upload_files`} to={"/dashboard/upload_files"} />
+          <Redirect exact from={`/dashboard/${this.state.projectUUID}/external_link`} to={"/dashboard/external_link"} />
           <Route path={"/dashboard/info"} render={(props) => <DashboardInfo {...props} projectUUID={this.state.projectUUID} />}/>
           <Route path={"/dashboard/upload_files"} render={(props) => <UploadFiles {...props} projectUUID={this.state.projectUUID} />}/>
           <Route path={"/dashboard/external_link"} render={(props) => <ExternalLink {...props} projectUUID={this.state.projectUUID} />}/>

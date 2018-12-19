@@ -52,6 +52,7 @@ const DropdownMenu = styled.ul`
   background-color: #fff;
   -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  z-index: 1;
 `;
 
 const DropdownListItem = styled.li`
@@ -116,9 +117,9 @@ class DashboardHeader extends Component {
           <Dropdown>
             <DropdownToggle className="dropbtn">Menu</DropdownToggle>
             <DropdownMenu className="dropdown-content">
-              <StyledLink to={"/dashboard/info"}>
+              <StyledLink to={"/projects-overview"}>
                 <DropdownListItem>
-                  <Icon icon="user"/>Account
+                  <Icon icon="home"/>Projects
                 </DropdownListItem>
               </StyledLink>
 
