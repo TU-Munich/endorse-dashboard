@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ColorPalette from '../../constants/ColorPalette'
+import ColorPalette from '../../constants/ColorPalette';
 
 const SideBar = styled.div`
   margin: 0px;
@@ -79,13 +79,6 @@ const Icon = styled(FontAwesomeIcon)`
   margin-left: 10px;
 `;
 class DashboardSideBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: window.localStorage['id']
-    }
-  }
-
   render() {
     return (
       <SideBar>
@@ -93,7 +86,7 @@ class DashboardSideBar extends Component {
           <Logo>ENDOrSE</Logo>
           <MenuList>
             <NavSideMenuUL id="menu-content" className="menu-content collapse out">
-              <ListItemA to={"/dashboard"}>
+              <ListItemA to={"/dashboard/info"}>
                 <NavSideMenuLI>
                   <Icon icon="info" /> Dashboard
                 </NavSideMenuLI>

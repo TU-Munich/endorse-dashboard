@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import DashboardHeader from "../../components/Dashboard/DashboardHeader";
-import DashboardSideBar from "../../components/Dashboard/DashboardSideBar";
-import DashboardContent from "../../components/Dashboard/DashboardContent";
+import ProjectsOverview from "../../components/Projects/Overview/ProjectsOverview";
+import CreateProject from "../../components/Projects/CreateProjectForm/Project";
+import {Redirect, Route, Switch} from "react-router-dom";
+
 
 const ContainerHeaderDiv = styled.div`
   display: flex;
@@ -26,12 +28,12 @@ const ContentsDiv = styled.div`
 `;
 
 const Content = styled.div`
-  margin-left: 210px;
+  margin-left: 60px;
   width: 100%;
   overflow-x: hidden;
 `;
 
-class DashboardTemplate extends Component {
+class ProjectsContainer extends Component {
   render() {
     return (
       <ContainerDiv>
@@ -39,9 +41,12 @@ class DashboardTemplate extends Component {
           <DashboardHeader/>
         </ContainerHeaderDiv>
         <ContentsDiv>
-          <DashboardSideBar params={this.props.match}/>
           <Content>
-            <DashboardContent params={this.props.match} />
+            <Switch>
+              <Redirect exact from={"/projects-overview"} to={"/projects-overview/all"} />
+              <Route path={"/projects-overview/all"} component={ProjectsOverview}/>
+              <Route path={"/projects-overview/create-project"} component={CreateProject}/>
+            </Switch>
           </Content>
         </ContentsDiv>
       </ContainerDiv>
@@ -49,4 +54,4 @@ class DashboardTemplate extends Component {
   }
 }
 
-export default DashboardTemplate;
+export default ProjectsContainer;

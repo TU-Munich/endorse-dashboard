@@ -1,7 +1,7 @@
 {
-  "name": "isomerlabs-website",
+  "name": "endorse-dashboard",
   "version": "1.0.0",
-  "description": "Public website for Isomerlabs - Software Artisans",
+  "description": "Public website and admin dashboard for ENDOrSE - End User Document Search Engine",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w0rks74710n/isomerlabs-website.git"
+    "url": "git+https://github.com/TU-Munich/endorse-dashboard"
   },
   "keywords": [
     "website",
@@ -23,9 +23,9 @@
   "author": "Marco Salazar",
   "license": "UNLICENCED",
   "bugs": {
-    "url": "https://github.com/w0rks74710n/isomerlabs-website/issues"
+    "url": "https://github.com/TU-Munich/endorse-dashboard/issues"
   },
-  "homepage": "https://github.com/w0rks74710n/isomerlabs-website#readme",
+  "homepage": "https://github.com/TU-Munich/endorse-dashboard#readme",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
     "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
@@ -33,8 +33,9 @@
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
     "chart.js": "^2.7.3",
+    "axios": "^0.18.0",
     "filepond": "^3.3.2",
-    "formik": "^1.3.2",
+    "formik": "^1.4.1",
     "i": "^0.3.6",
     "lodash": "^4.17.10",
     "material-ui-image": "^3.0.3",
@@ -43,6 +44,7 @@
     "react-chartjs-2": "^2.7.4",
     "react-charts": "^2.0.0-alpha.12",
     "react-d3-graph": "^2.0.0-rc2",
+    "react-confirm-alert": "^2.0.7",
     "react-dom": "^16.4.1",
     "react-file-viewer": "^0.5.0",
     "react-filepond": "^5.0.0",

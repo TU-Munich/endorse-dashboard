@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
-import ColorPalette from '../../../constants/ColorPalette';
 // import AnalyticsService from '../../../services/AnalyticsService
 
 class SentimentChart extends Component {
