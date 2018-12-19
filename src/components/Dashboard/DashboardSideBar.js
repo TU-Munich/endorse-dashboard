@@ -79,13 +79,6 @@ const Icon = styled(FontAwesomeIcon)`
   margin-left: 10px;
 `;
 class DashboardSideBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: window.localStorage['id']
-    }
-  }
-
   render() {
     return (
       <SideBar>
@@ -93,14 +86,9 @@ class DashboardSideBar extends Component {
           <Logo>ENDOrSE</Logo>
           <MenuList>
             <NavSideMenuUL id="menu-content" className="menu-content collapse out">
-              <ListItemA to={"/dashboard"}>
+              <ListItemA to={"/dashboard/info"}>
                 <NavSideMenuLI>
                   <Icon icon="info" /> Dashboard
-                </NavSideMenuLI>
-              </ListItemA>
-              <ListItemA to={"/dashboard/project"}>
-                <NavSideMenuLI>
-                  <Icon icon="info" /> Project
                 </NavSideMenuLI>
               </ListItemA>
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
 
 const ContainerDiv = styled.div`
@@ -9,27 +9,27 @@ const ContainerDiv = styled.div`
 
 class KibanaDashboard extends Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            loading: true,
-            doctor_id: this.props.match.params.id,
-            data: []
-        };
+    this.state = {
+      loading: true,
+      projectUUID: this.props.projectUUID,
+      data: []
+    };
+  }
+
+  render() {
+    if (this.state.loading) {
+      return (<h2>Loading...</h2>);
     }
 
-    render() {
-        if (this.state.loading) {
-            return (<h2>Loading...</h2>);
-        }
-
-        return (
-            <ContainerDiv>
-                <h1>Kibana Dashboard</h1>
-            </ContainerDiv>
-        );
-    }
+    return (
+      <ContainerDiv>
+        <h1>Kibana Dashboard</h1>
+      </ContainerDiv>
+    );
+  }
 }
 
 export default KibanaDashboard;

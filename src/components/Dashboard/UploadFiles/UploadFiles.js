@@ -7,7 +7,7 @@ import {nlpServiceBaseUrl} from '../../../config';
 const ContainerDiv = styled.div`
   display: flex;
   flex-flow: column nowrap;	
-  margin: 10px; 
+  margin: 50px; 
    
   text-align: center;
   margin-top:20px;
@@ -15,7 +15,6 @@ const ContainerDiv = styled.div`
 `;
 
 const UploadContainer = styled.div`
- 
    padding: 10px 8px 0px 8px;
    text-align: center;
 `;
@@ -28,7 +27,8 @@ class UploadFiles extends Component {
     this.state = {
       loading: false,
       data: [],
-      files: []
+      files: [],
+      projectUUID: this.props.projectUUID
     };
 
     this.clickState = this.clickState.bind(this);
@@ -57,7 +57,7 @@ class UploadFiles extends Component {
             <FilePond ref={ref => this.pond = ref}
                       allowMultiple={true}
                       maxFiles={10}
-                      server={nlpServiceBaseUrl + "/files/upload"}
+                      server={nlpServiceBaseUrl + `/files/project/${this.state.projectUUID}/files`}
                       oninit={() => this.handleFilePondInit()}
                       onupdatefiles={(fileItems) => {
                         this.setState({
