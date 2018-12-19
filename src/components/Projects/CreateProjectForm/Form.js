@@ -6,7 +6,7 @@ const Basic = () => (
   <div>
     <h1>Any place in your app!</h1>
     <Formik
-      initialValues={{projectName: '', owner: '', email: '', description: ''}}
+      initialValues={{name: '', owner: '', email: '', description: ''}}
       validate={values => {
         let errors = {};
         if (!values.email) {

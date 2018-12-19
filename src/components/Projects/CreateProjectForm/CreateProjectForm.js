@@ -12,7 +12,7 @@ class createProjectForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectName: '',
+      name: '',
       owner: '',
       email: '',
       description: '',
@@ -20,8 +20,8 @@ class createProjectForm extends React.Component {
     };
   }
 
-  onProjectNameChange(event) {
-    this.setState({projectName: event.target.value});
+  onNameChange(event) {
+    this.setState({name: event.target.value});
     console.log(event.target.value)
   }
 
@@ -75,11 +75,11 @@ class createProjectForm extends React.Component {
             <Grid container spacing={24}>
               <Grid item xs={12} md={6}>
                 <TextField
-                  id="projectName"
+                  id="name"
                   label="Project Name"
                   placeholder="Ex: Navigation Vision Manual"
                   fullWidth
-                  onInput={this.onProjectNameChange.bind(this)}
+                  onInput={this.onNameChange.bind(this)}
                 />
               </Grid>
               <Grid item xs={12} md={6}>

@@ -27,7 +27,7 @@ class ProjectCard extends Component {
       description: props._source.description,
       email: props._source.email,
       owner: props._source.owner,
-      projectName: props._source.projectName
+      name: props._source.name
     };
   }
 
@@ -42,7 +42,7 @@ class ProjectCard extends Component {
         <CardHeader
           avatar={
             <Avatar aria-label="Project" className={classes.avatar}>
-              {this.state.projectName ? this.state.projectName.substring(0, 1) : 'X'}
+              {this.state.name ? this.state.name.substring(0, 1) : 'X'}
             </Avatar>
           }
           action={
@@ -52,7 +52,7 @@ class ProjectCard extends Component {
               </IconButton>
             </Tooltip>
           }
-          title={this.state.projectName}
+          title={this.state.name}
           subheader={this.state.date.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
         />
         <CardContent>
