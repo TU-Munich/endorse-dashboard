@@ -104,9 +104,9 @@ class DashboardSideBar extends Component {
                 </NavSideMenuLI>
               </ListItemA>
 
-              <ListItemA to={"/dashboard/kibana_dashboard"}>
+              <ListItemA to={"/dashboard/visualization_charts"}>
                 <NavSideMenuLI >
-                  <Icon  icon="chart-line" />Kibana Graphs
+                  <Icon  icon="chart-line" />Visualizations
                 </NavSideMenuLI>
               </ListItemA>
             </NavSideMenuUL>
