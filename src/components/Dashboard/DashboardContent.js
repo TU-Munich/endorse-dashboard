@@ -3,7 +3,6 @@ import styled from "styled-components";
 import {Redirect, Route, Switch} from "react-router-dom";
 import UploadFiles from "./UploadFiles/UploadFiles";
 import ExternalLink from "./ExternalLink/ExternalLink";
-import KibanaDashboard from "./KibanaDashboard/KibanaDashboard";
 import DashboardInfo from "./DashboardInfo/DashboardInfo";
 import VisualizationCharts from "./VisualizationCharts/VisualizationCharts";
 
