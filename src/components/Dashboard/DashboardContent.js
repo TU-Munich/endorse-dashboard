@@ -5,6 +5,7 @@ import UploadFiles from "./UploadFiles/UploadFiles";
 import ExternalLink from "./ExternalLink/ExternalLink";
 import KibanaDashboard from "./KibanaDashboard/KibanaDashboard";
 import DashboardInfo from "./DashboardInfo/DashboardInfo";
+import VisualizationCharts from "./VisualizationCharts/VisualizationCharts";
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -32,7 +33,7 @@ class DashboardContent extends Component {
           <Route path={"/dashboard/info"} render={(props) => <DashboardInfo {...props} projectUUID={this.state.projectUUID} />}/>
           <Route path={"/dashboard/upload_files"} render={(props) => <UploadFiles {...props} projectUUID={this.state.projectUUID} />}/>
           <Route path={"/dashboard/external_link"} render={(props) => <ExternalLink {...props} projectUUID={this.state.projectUUID} />}/>
-          <Route path={"/dashboard/kibana_dashboard"} render={(props) => <KibanaDashboard {...props} projectUUID={this.state.projectUUID} />}/>
+          <Route path={"/dashboard/visualization_charts"} render={(props) => <VisualizationCharts {...props} projectUUID={this.state.projectUUID} />}/>
         </Switch>
       </ContentContainer>
     );

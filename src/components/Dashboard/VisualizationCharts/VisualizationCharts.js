@@ -1,12 +1,20 @@
 import React, {Component} from "react";
-import SentimentChart from './SentimentChart';
+import SentimentDoughnutChart from './SentimentDoughnutChart';
+import SentimentRadarChart from "./SentimentRadarChart";
+import styled from 'styled-components';
+
+const ChartTitle = styled.h1`
+  text-align: center;
+`;
 
 class VisualizationCharts extends Component {
   render() {
     return (
       <div>
-        <h1>Doughnut Example</h1>
-        <SentimentChart/>
+        <ChartTitle>Doughnut</ChartTitle>
+        <SentimentDoughnutChart/>
+        <ChartTitle>Radar</ChartTitle>
+        <SentimentRadarChart/>
       </div>
     );
   }

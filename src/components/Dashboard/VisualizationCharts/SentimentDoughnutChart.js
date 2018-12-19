@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
 // import AnalyticsService from '../../../services/AnalyticsService
 
-class SentimentChart extends Component {
+class SentimentDoughnutChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,4 +57,4 @@ class SentimentChart extends Component {
   }
 }
 
-export default SentimentChart;
+export default SentimentDoughnutChart;
