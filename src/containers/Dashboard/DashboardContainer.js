@@ -4,7 +4,6 @@ import DashboardHeader from "../../components/Dashboard/DashboardHeader";
 import DashboardSideBar from "../../components/Dashboard/DashboardSideBar";
 import DashboardContent from "../../components/Dashboard/DashboardContent";
 
-
 const ContainerHeaderDiv = styled.div`
   display: flex;
   flex-flow: column nowrap;	
@@ -40,9 +39,9 @@ class DashboardTemplate extends Component {
           <DashboardHeader/>
         </ContainerHeaderDiv>
         <ContentsDiv>
-          <DashboardSideBar/>
+          <DashboardSideBar params={this.props.match}/>
           <Content>
-            <DashboardContent/>
+            <DashboardContent params={this.props.match} />
           </Content>
         </ContentsDiv>
       </ContainerDiv>

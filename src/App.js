@@ -13,7 +13,7 @@ class App extends Component {
 		  <Router>
         <Switch>
           <Route path={"/contact"} component = {Contact}/>
-          <Route path={"/dashboard"} component = {Dashboard}/>
+          <Route path={"/dashboard/:projectUUID"} component = {Dashboard}/>
           <Route path={"/projects-overview"} component = {Projects}/>
           <Route path={"/login"} component = {Login}/>
           <Route path={"/"} component = {Home}/>

@@ -56,7 +56,6 @@ const StyledCardContent = styled.div`
 
 class DashboardInfo extends Component {
   render() {
-
     return (
       <div>
         <Grid style={{width: "33.33%", gridColumnGap: "33%", margin: "20px 0px"}}>

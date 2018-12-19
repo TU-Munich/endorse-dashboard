@@ -14,7 +14,7 @@ class ExternalLink extends Component {
 
     this.state = {
       loading: true,
-      doctor_id: this.props.match.params.id,
+      projectUUID: this.props.projectUUID,
       data: []
     };
   }

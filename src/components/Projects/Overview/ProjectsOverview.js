@@ -40,7 +40,7 @@ class ProjectsOverview extends Component {
     });
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({
       loading: true
     }, () => { this.fetchProjects() });

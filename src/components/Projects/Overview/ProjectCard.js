@@ -17,7 +17,6 @@ import {Link} from "react-router-dom";
 
 const colors = ['#FF0000', '#008000', '#808080'];
 const avatarColor = colors[Math.floor(Math.random() * colors.length)];
-const OpenDashboardLink = props => <Link to="/dashboard" {...props} />;
 
 class ProjectCard extends Component {
   constructor(props) {
@@ -34,6 +33,8 @@ class ProjectCard extends Component {
 
   render() {
     const {classes} = this.props;
+
+    const OpenDashboardLink = props => <Link to={`/dashboard/${this.state.projectUUID}`} {...props} />;
     return (
       <Card className={classes.card}>
         <CardHeader

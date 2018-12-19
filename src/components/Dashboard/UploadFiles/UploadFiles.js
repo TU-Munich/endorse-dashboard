@@ -28,8 +28,9 @@ class UploadFiles extends Component {
       loading: false,
       data: [],
       files: [],
-      projectUUID: props.projectUUID
+      projectUUID: this.props.projectUUID
     };
+    console.log(this.state);
 
     this.clickState = this.clickState.bind(this);
   }
