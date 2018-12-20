@@ -118,7 +118,7 @@ class DashboardSideBar extends Component {
                                 </NavSideMenuLI>
                             </ListItemA>
 
-                            <ListItem href="http://localhost:5601">
+                            <ListItem href="http://localhost:5601" target="_blank">
                                 <Icon icon="chart-line"/> Kibana
                             </ListItem>
                         </NavSideMenuUL>

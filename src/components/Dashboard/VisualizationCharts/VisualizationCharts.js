@@ -11,9 +11,9 @@ class VisualizationCharts extends Component {
   render() {
     return (
       <div>
-        <ChartTitle>Doughnut</ChartTitle>
+        <ChartTitle>Named Entities</ChartTitle>
         <SentimentDoughnutChart/>
-        <ChartTitle>Radar</ChartTitle>
+        <ChartTitle>Sentiment</ChartTitle>
         <SentimentRadarChart/>
       </div>
     );

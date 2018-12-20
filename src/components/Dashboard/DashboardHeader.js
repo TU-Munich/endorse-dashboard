@@ -104,7 +104,7 @@ class DashboardHeader extends Component {
 
   handleLogoutClick() {
     console.log("logout");
-    localStorage.setItem('token', null);
+    localStorage.removeItem('token');
     console.log(localStorage.getItem('token'));
     this.setState({token: null});
   }
@@ -133,7 +133,7 @@ class DashboardHeader extends Component {
         </HeaderDiv>
 
       ) : (
-        <Redirect to="/"/>
+        <Redirect to="/login"/>
       )
     );
   }

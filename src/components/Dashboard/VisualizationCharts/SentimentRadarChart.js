@@ -20,7 +20,7 @@ class SentimentRadarChart extends Component{
     // let chartData = [sentimentData.compound, sentimentData.neg, sentimentData.neu, sentimentData.pos];
     let chartData = sentimentData;
     return {
-      labels: ['Compound', 'Negative', 'Neutral', 'Positive'],
+      labels: ['Negative', 'Neutral', 'Positive'],
       datasets: [{
         label: "Project Data",
         data: chartData,
@@ -36,7 +36,7 @@ class SentimentRadarChart extends Component{
 
   fetchSentimentData() {
     let chartData;
-    chartData = ['-7.406099999999999', '0.019231671554252202', '0.8160439882697946', '0.026894428152492666'];
+    chartData = ['0.2', '0.8', '0.5'];
     /*AnalyticsService.getSentimentData().then((response) => {
       chartData = prepareChartData(response.data.hits.hits[0].total);
       this.setState({
