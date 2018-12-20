@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import ColorPalette from '../../constants/ColorPalette';
 
 const SideBar = styled.div`
@@ -70,6 +70,13 @@ const ListItemA = styled(Link)`
   color: #e1ffff;
 `;
 
+const ListItem = styled.a`
+  text-align: center;
+  display: inline;
+  text-decoration: none;
+  color: #e1ffff;
+`;
+
 const Icon = styled(FontAwesomeIcon)`
   display: inline-block;
   height: 55px;
@@ -78,43 +85,48 @@ const Icon = styled(FontAwesomeIcon)`
   margin-right: 15px;
   margin-left: 10px;
 `;
+
 class DashboardSideBar extends Component {
-  render() {
-    return (
-      <SideBar>
-        <NavSideMenu>
-          <Logo>ENDOrSE</Logo>
-          <MenuList>
-            <NavSideMenuUL id="menu-content" className="menu-content collapse out">
-              <ListItemA to={"/dashboard/info"}>
-                <NavSideMenuLI>
-                  <Icon icon="info" /> Dashboard
-                </NavSideMenuLI>
-              </ListItemA>
+    render() {
+        return (
+            <SideBar>
+                <NavSideMenu>
+                    <Logo>ENDOSE</Logo>
+                    <MenuList>
+                        <NavSideMenuUL id="menu-content" className="menu-content collapse out">
+                            <ListItemA to={"/dashboard/info"}>
+                                <NavSideMenuLI>
+                                    <Icon icon="info"/> Dashboard
+                                </NavSideMenuLI>
+                            </ListItemA>
 
-              <ListItemA to={"/dashboard/upload_files"}>
-                <NavSideMenuLI>
-                  <Icon  icon="upload" /> Upload Files
-                </NavSideMenuLI>
-              </ListItemA>
+                            <ListItemA to={"/dashboard/upload_files"}>
+                                <NavSideMenuLI>
+                                    <Icon icon="upload"/> Upload Files
+                                </NavSideMenuLI>
+                            </ListItemA>
 
-              <ListItemA to={"/dashboard/external_link"}>
-                <NavSideMenuLI>
-                  <Icon  icon="cloud-upload-alt" /> External Link
-                </NavSideMenuLI>
-              </ListItemA>
+                            <ListItemA to={"/dashboard/external_link"}>
+                                <NavSideMenuLI>
+                                    <Icon icon="cloud-upload-alt"/> External Link
+                                </NavSideMenuLI>
+                            </ListItemA>
 
-              <ListItemA to={"/dashboard/visualization_charts"}>
-                <NavSideMenuLI >
-                  <Icon  icon="chart-line" />Visualizations
-                </NavSideMenuLI>
-              </ListItemA>
-            </NavSideMenuUL>
-          </MenuList>
-        </NavSideMenu>
-      </SideBar>
-    );
-  }
+                            <ListItemA to={"/dashboard/visualization_charts"}>
+                                <NavSideMenuLI>
+                                    <Icon icon="chart-line"/>Visualizations
+                                </NavSideMenuLI>
+                            </ListItemA>
+
+                            <ListItem href="http://localhost:5601">
+                                <Icon icon="chart-line"/> Kibana
+                            </ListItem>
+                        </NavSideMenuUL>
+                    </MenuList>
+                </NavSideMenu>
+            </SideBar>
+        );
+    }
 }
 
 export default DashboardSideBar;

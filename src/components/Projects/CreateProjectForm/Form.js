@@ -29,8 +29,8 @@ const Basic = () => (
       {({isSubmitting}) => (
         <Form>
 
-          <Field type="text" name="projectName"/>
-          <ErrorMessage name="projectName" component="div"/>
+          <Field type="text" name="name"/>
+          <ErrorMessage name="name" component="div"/>
           <Field type="text" name="owner"/>
           <ErrorMessage name="owner" component="div"/>
           <Field type="email" name="email"/>
