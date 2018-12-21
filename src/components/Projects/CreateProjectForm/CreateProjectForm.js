@@ -76,8 +76,8 @@ class createProjectForm extends React.Component {
               <Grid item xs={12} md={6}>
                 <TextField
                   id="name"
-                  label="Project Name"
-                  placeholder="Ex: Navigation Vision Manual"
+                  label="Project name"
+                  placeholder="e.g.: Project 2020"
                   fullWidth
                   onInput={this.onNameChange.bind(this)}
                 />
@@ -86,7 +86,7 @@ class createProjectForm extends React.Component {
                 <TextField
                   id="owner"
                   label="Owner"
-                  placeholder="Angela"
+                  placeholder="e.g. Angela"
                   fullWidth
                   onInput={this.onOwnerChange.bind(this)}
                 />
@@ -95,7 +95,7 @@ class createProjectForm extends React.Component {
             <TextField
               id="email"
               label="Email"
-              placeholder="angela@bmw.com"
+              placeholder="e.g. angela@bmw.com"
               fullWidth
               onInput={this.onEmailChange.bind(this)}
             />
@@ -104,7 +104,7 @@ class createProjectForm extends React.Component {
               label="Description"
               multiline
               rowsMax="4"
-              placeholder="Internal survey regarding to manual inspiration"
+              placeholder="e.g. this is a project about ..."
               type="description"
               fullWidth
               onInput={this.onDescriptionChange.bind(this)}
