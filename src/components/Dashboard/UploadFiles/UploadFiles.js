@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import Card from '@material-ui/core/Card';
+import { Card, Button } from '@material-ui/core';
 import {FilePond, File} from 'react-filepond';
+import TagFiles from './TagFiles'
 import {nlpServiceBaseUrl} from '../../../config';
 
 const ContainerDiv = styled.div`
@@ -19,6 +20,11 @@ const UploadContainer = styled.div`
    text-align: center;
 `;
 
+const AddTagsButton = styled(Button)`
+  text-align: center;
+  float: right;
+`;
+
 class UploadFiles extends Component {
 
   constructor(props) {
@@ -28,7 +34,8 @@ class UploadFiles extends Component {
       loading: false,
       data: [],
       files: [],
-      projectUUID: this.props.projectUUID
+      projectUUID: this.props.projectUUID,
+      addTagsVisible: false
     };
 
     this.clickState = this.clickState.bind(this);
@@ -41,6 +48,14 @@ class UploadFiles extends Component {
 
   handleFilePondInit() {
     console.log('FilePond instance has initialised', this.pond);
+  }
+
+  handleAddTagsClick() {
+    this.setState({
+      addTagsVisible: !this.state.addTagsVisible
+    }, () => {
+      console.log(this.state.addTagsVisible)
+    })
   }
 
   render() {
@@ -57,7 +72,8 @@ class UploadFiles extends Component {
             <FilePond ref={ref => this.pond = ref}
                       allowMultiple={true}
                       maxFiles={10}
-                      server={nlpServiceBaseUrl + `/files/project/${this.state.projectUUID}/file`}
+                      server={""}
+                      //server={nlpServiceBaseUrl + `/files/project/${this.state.projectUUID}/file`}
                       oninit={() => this.handleFilePondInit()}
                       onupdatefiles={(fileItems) => {
                         this.setState({
@@ -67,11 +83,22 @@ class UploadFiles extends Component {
               {
                 this.state.files.map(file => (
                   <File key={file} src={file} origin="local"/>
-                ))
+                )) && console.log(this.state.files)
               }
             </FilePond>
+            {this.state.files.length > 0 &&
+              <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
+                Add Tags
+              </AddTagsButton>
+            }
           </UploadContainer>
         </Card>
+        <br />
+        {this.state.addTagsVisible && this.state.files.length > 0 &&
+          <Card style={{padding: "10px 10px 10px"}}>
+            <TagFiles files={this.state.files} />
+          </Card>
+        }
       </ContainerDiv>
     );
   }
