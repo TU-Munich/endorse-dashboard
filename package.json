@@ -32,8 +32,8 @@
     "@fortawesome/react-fontawesome": "0.1.0-11",
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
-    "chart.js": "^2.7.3",
     "axios": "^0.18.0",
+    "chart.js": "^2.7.3",
     "filepond": "^3.3.2",
     "formik": "^1.4.1",
     "i": "^0.3.6",
@@ -43,8 +43,8 @@
     "react": "^16.4.1",
     "react-chartjs-2": "^2.7.4",
     "react-charts": "^2.0.0-alpha.12",
-    "react-d3-graph": "^2.0.0-rc2",
     "react-confirm-alert": "^2.0.7",
+    "react-d3-graph": "^2.0.0-rc2",
     "react-dom": "^16.4.1",
     "react-file-viewer": "^0.5.0",
     "react-filepond": "^5.0.0",
@@ -56,7 +56,8 @@
     "react-scroll-to-component": "^1.0.2",
     "react-ui-cards": "^1.4.0",
     "styled-components": "^3.3.3",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "yarn": "^1.13.0"
   },
   "browserslist": [
     ">0.2%",
