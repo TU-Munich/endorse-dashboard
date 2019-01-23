@@ -12,7 +12,9 @@
 }
 
 .react-tags.is-focused {
-    border-color: #B1B1B1;
+    border-bottom: 1px solid #26a69a;
+    -webkit-box-shadow: 0 1px 0 0 #26a69a;
+    box-shadow: 0 1px 0 0 #26a69a;
 }
 
 .react-tags__selected {

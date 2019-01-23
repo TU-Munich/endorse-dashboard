@@ -25,6 +25,11 @@ const AddTagsButton = styled(Button)`
   float: right;
 `;
 
+const AddMoreFilesButton = styled(Button)`
+  text-align: center;
+  float: right;
+`;
+
 class UploadFiles extends Component {
 
   constructor(props) {
@@ -86,6 +91,12 @@ class UploadFiles extends Component {
                 )) && console.log(this.state.files)
               }
             </FilePond>
+            {
+              this.state.files.length > 9 &&
+              <AddMoreFilesButton variant="contained" color="secondary" onClick={() => { this.handleAddTagsClick()}}>
+                Add Tags
+              </AddMoreFilesButton>
+            }
             {this.state.files.length > 0 &&
               <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
                 Add Tags

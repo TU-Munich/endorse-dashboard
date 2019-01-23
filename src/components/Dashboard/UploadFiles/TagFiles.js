@@ -22,7 +22,7 @@ class TagFiles extends Component {
        <TagsContainer>
          {
            this.state.files.map(file =>
-             <FileCard key={file} file={file} />
+             <FileCard key={file.name} file={file} />
            )
          }
        </TagsContainer>
