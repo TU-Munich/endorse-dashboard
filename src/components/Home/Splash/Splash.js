@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Particles from 'react-particles-js'
-import ParticlesConfig from '../../constants/ParticlesConfig'
+import ParticlesConfig from '../../../constants/ParticlesConfig'
 import styled from 'styled-components'
 
 const ParticlesCanvas = styled(Particles)`
@@ -45,6 +45,7 @@ class Splash extends Component {
           </WelcomeMessage>
         </WelcomeBanner>
       </div>
+
     )
   }
 }

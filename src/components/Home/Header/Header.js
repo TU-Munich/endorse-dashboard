@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { debounce } from 'lodash'
+import ColorPalette from '../../../constants/ColorPalette'
+import { Link } from "react-router-dom";
 
 const SiteHeader = styled.header`
-  background: ${props => props.scroll || props.menuOpen ? 'rgba(236, 46, 46, .8);' : 'transparent;' }
+  background: ${ props => props.scroll || props.menuOpen ? ColorPalette.endorse_accent : 'transparent;' }
   color: black;
   padding: 1em 0;
   position: fixed;
@@ -26,11 +28,13 @@ const HeaderSection = styled.div`
 `;
 
 const Logo = styled.h1`
+  color: ${ props => props.scroll || props.menuOpen ? ColorPalette.endorse_white : ColorPalette.endorse_primary_dark }
   float: left;
   font-size: 1rem;
   margin: 0;
   text-transform: uppercase;
   font-weight: 700;
+  transition: all ease-in-out 300ms;
   
   & span {
     font-weight: 400;
@@ -71,7 +75,7 @@ const MenuElement = styled.li`
   }
 `;
 
-const MenuElementContent = styled.a`
+const MenuElementContent = styled(Link)`
   color: black;
   display: block;
   padding: 1em 1em 1em 1em;
@@ -79,7 +83,7 @@ const MenuElementContent = styled.a`
   text-decoration: none;
   
   &:hover, &:focus {
-    background: #E4B363;
+    background: #f0f2f4;
     color: #464655;
   }
   
@@ -99,7 +103,7 @@ const Icon = styled(FontAwesomeIcon)`
   margin-right: 1em;
   width: 1.1em;
   text-align: right;
-  color: rgba(236, 46, 46, 0.8);
+  color: rgb(44, 51, 58);
   
   @media (min-width: 700px) {
     display: none;
@@ -142,7 +146,6 @@ const Hamburger = styled.div`
   }
   
   &::before {
-    transform: ${props => props.menuOpen ? 'translateY(0px);' : 'translateY(-6px);'}
     content: '';
     display: block;
     background: black;
@@ -150,6 +153,7 @@ const Hamburger = styled.div`
     width: 1.75em;
     border-radius: 3px;
     transition: all ease-in-out 500ms;
+    transform: ${props => props.menuOpen ? 'translateY(0px);' : 'translateY(-6px);'}
   }
 `;
 
@@ -180,16 +184,11 @@ class Header extends Component {
   }
 
   handleScroll = debounce((event) => {
-    let scrollTop = window.pageYOffset
-
+    let scrollTop = window.pageYOffset;
     if (scrollTop > 10) {
-      this.setState({
-        scroll: true
-      });
+      this.setState({ scroll: true });
     } else {
-      this.setState({
-        scroll: false
-      });
+      this.setState({ scroll: false });
     }
   });
 
@@ -197,13 +196,13 @@ class Header extends Component {
     return(
       <SiteHeader scroll={this.state.scroll} menuOpen={this.state.menuOpen}>
         <HeaderSection className={'header-section'}>
-          <Logo className={'logo'}>ENDOR<span>SE</span></Logo>
+          <Logo scroll={this.state.scroll} menuOpen={this.state.menuOpen} className={'logo'}>ENDOR<span>SE</span></Logo>
           <SiteNav menuOpen={this.state.menuOpen} className={'site-nav'}>
             <Menu>
-              <MenuElement><MenuElementContent href=""><Icon icon="home"/>Home</MenuElementContent></MenuElement>
-              <MenuElement><MenuElementContent href=""><Icon icon="compass"/>Services & Solutions</MenuElementContent></MenuElement>
-              <MenuElement><MenuElementContent href=""><Icon icon="phone"/>Contact</MenuElementContent></MenuElement>
-              <MenuElement><MenuElementContent href=""><Icon icon="handshake"/>Login</MenuElementContent></MenuElement>
+              <MenuElement><MenuElementContent to=""><Icon icon="home"/>Home</MenuElementContent></MenuElement>
+              <MenuElement><MenuElementContent to=""><Icon icon="compass"/>Services & Solutions</MenuElementContent></MenuElement>
+              <MenuElement><MenuElementContent to=""><Icon icon="phone"/>Contact</MenuElementContent></MenuElement>
+              <MenuElement><MenuElementContent to="/login"><Icon icon="handshake"/>Login</MenuElementContent></MenuElement>
             </Menu>
           </SiteNav>
           <MenuToggle menuOpen={this.state.menuOpen} className={'menu-toggle'} onClick={this.openMenu}>
