@@ -1,5 +1,4 @@
 import React from 'react'
-import NlpServices from '../../../services/NlpService';
 import { Chart } from 'react-charts';
 import ChartConfig from "./ChartConfig";
 

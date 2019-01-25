@@ -1,5 +1,6 @@
 import React from 'react'
 import { ResizableBox } from 'react-resizable';
+import NlpServices from '../../../services/NlpService';
 //
 
 const options = {
@@ -56,7 +57,7 @@ export default class ChartConfig extends React.Component {
     tooltipAlign: 'top',
     groupMode: 'primary',
     snapCursor: true,
-    datums: 5,
+    datums: 10,
   };
   constructor (props) {
     super(props);
@@ -79,15 +80,10 @@ export default class ChartConfig extends React.Component {
       resizable,
       width,
       height,
-      canRandomize,
       style,
       className,
     } = this.props;
 
-    const randomizeData = () =>
-      this.setState({
-        data: this.makeData(),
-      });
 
     return (
       <div>

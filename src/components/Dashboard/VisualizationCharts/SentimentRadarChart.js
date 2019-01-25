@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {Radar} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
+import NlpServices from '../../../services/NlpService';
+
 
 class SentimentRadarChart extends Component{
   constructor(props) {
@@ -16,47 +18,57 @@ class SentimentRadarChart extends Component{
     }, () => {this.fetchSentimentData()})
   }
 
-  prepareChartData(sentimentData) {
-    // let chartData = [sentimentData.compound, sentimentData.neg, sentimentData.neu, sentimentData.pos];
-    let chartData = sentimentData;
+  prepareChartData(documentAnalysis) {
+    const chartLabels = documentAnalysis[0];
+    const chartData = documentAnalysis[1];
+    console.log(chartLabels);
+    console.log(chartData);
     return {
-      labels: ['Negative', 'Neutral', 'Positive'],
+      labels: chartLabels,
       datasets: [{
         label: "Project Data",
         data: chartData,
-        backgroundColor: 'rgba(179,181,198,0.2)',
-        borderColor: 'rgba(179,181,198,1)',
-        pointBackgroundColor: 'rgba(179,181,198,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(179,181,198,1)',
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: 'rgba(75,192,192,0.4)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'rgba(75,192,192,1)',
+        pointBackgroundColor: '#fff',
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+        pointHoverBorderColor: 'rgba(220,220,220,1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10
       }]
     }
   };
-
   fetchSentimentData() {
-    let chartData;
-    chartData = ['0.2', '0.8', '0.5'];
-    /*AnalyticsService.getSentimentData().then((response) => {
-      chartData = prepareChartData(response.data.hits.hits[0].total);
+    NlpServices.getDataResults(this.props.projectUUID).then((response) => {
+      let chartData = this.parseDocumentsIn(response);
       this.setState({
         data: chartData,
         loading: false
       })
-    })*/
-    this.setState({
-      data: chartData,
-      loading: false
-    })
-  };
+    });
+  }
+  parseDocumentsIn(rawAnalysis) {
+    let documentAnalysis = rawAnalysis.data;
+    return documentAnalysis
+  }
+
 
   render() {
     if (this.state.loading) {
       return <h2>Loading...</h2>
     }
-    console.log(this.state);
     return (
-      <Radar data={this.prepareChartData(this.state.data)}/>
+      <Line data={this.prepareChartData(this.state.data)}/>
     );
   }
 
