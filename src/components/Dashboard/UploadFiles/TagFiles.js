@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Card, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import FileCard from './FileCard'
-import {File} from "react-filepond";
 
 const TagsContainer = styled.div`
-   padding: 10px 8px 0px 8px;
    text-align: center;
 `;
 
@@ -20,11 +18,15 @@ class TagFiles extends Component {
    render() {
      return(
        <TagsContainer>
-         {
-           this.state.files.map(file =>
-             <FileCard key={file.name} file={file} />
-           )
-         }
+         <Grid container spacing={8}>
+           {
+             this.state.files.map(file =>
+               <Grid key={file.name} item xs={12} sm={12} md={6} lg={4}>
+                 <FileCard file={file} />
+               </Grid>
+             )
+           }
+         </Grid>
        </TagsContainer>
      )
    }

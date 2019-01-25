@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Tag from "./Tag/Tag";
 
@@ -45,11 +42,12 @@ FileCard.propTypes = {
 
 const styles = {
   card: {
-    minWidth: 275,
     minHeight: 135,
     textAlign: 'left',
     overflow: '-webkit-paged-y',
     marginBottom: 10,
+    marginLeft: 5,
+    marginRight: 5
   },
   cardContent: {
     paddingBottom: 0,

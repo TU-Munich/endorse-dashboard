@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Card, Button } from '@material-ui/core';
-import {FilePond, File} from 'react-filepond';
+import { FilePond, File } from 'react-filepond';
 import TagFiles from './TagFiles'
-import {nlpServiceBaseUrl} from '../../../config';
+import { nlpServiceBaseUrl } from '../../../config';
 
 const ContainerDiv = styled.div`
   display: flex;
   flex-flow: column nowrap;	
-  margin: 50px; 
+  margin: 10px; 
    
   text-align: center;
   margin-top:20px;
-  max-width: 90%;	
+  max-width: 100%;	
 `;
 
 const UploadContainer = styled.div`
@@ -38,7 +38,11 @@ class UploadFiles extends Component {
     this.state = {
       loading: false,
       data: [],
-      files: [],
+      files: [{name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"},
+        {name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"},
+        {name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"},
+        {name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"},
+        {name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"}],
       projectUUID: this.props.projectUUID,
       addTagsVisible: false
     };
@@ -77,8 +81,7 @@ class UploadFiles extends Component {
             <FilePond ref={ref => this.pond = ref}
                       allowMultiple={true}
                       maxFiles={10}
-                      server={""}
-                      //server={nlpServiceBaseUrl + `/files/project/${this.state.projectUUID}/file`}
+                      server={nlpServiceBaseUrl + `/files/project/${this.state.projectUUID}/file`}
                       oninit={() => this.handleFilePondInit()}
                       onupdatefiles={(fileItems) => {
                         this.setState({
@@ -94,21 +97,19 @@ class UploadFiles extends Component {
             {
               this.state.files.length > 9 &&
               <AddMoreFilesButton variant="contained" color="secondary" onClick={() => { this.handleAddTagsClick()}}>
-                Add Tags
+                Upload more
               </AddMoreFilesButton>
             }
             {this.state.files.length > 0 &&
               <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
-                Add Tags
+                Add tags
               </AddTagsButton>
             }
           </UploadContainer>
         </Card>
         <br />
         {this.state.addTagsVisible && this.state.files.length > 0 &&
-          <Card style={{padding: "10px 10px 10px"}}>
-            <TagFiles files={this.state.files} />
-          </Card>
+          <TagFiles files={this.state.files} />
         }
       </ContainerDiv>
     );

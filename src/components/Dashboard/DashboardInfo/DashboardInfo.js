@@ -105,7 +105,7 @@ class DashboardInfo extends Component {
           </CardDiv>
         </Grid>
         <CardDiv>
-          <Card style={{width: "93%"}}>
+          <Card style={{width: "100%"}}>
             <Article>
               <Title>Welcome to ENDORSE</Title>
               <SubTitle>General Information:</SubTitle>

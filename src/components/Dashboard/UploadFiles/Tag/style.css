@@ -8,7 +8,6 @@
     font-size: 14px;
     line-height: 1;
     cursor: text;
-    height: 41px;
 }
 
 .react-tags.is-focused {
@@ -24,7 +23,7 @@
 .react-tags__selected-tag {
     display: inline-block;
     box-sizing: border-box;
-    margin: 6px 6px 6px 6px;
+    margin: 6px 6px 0 0;
     padding: 6px 8px;
     border: 0;
     border-radius: 5px;

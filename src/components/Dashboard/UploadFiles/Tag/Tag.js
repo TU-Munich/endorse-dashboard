@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
-import { Card, Button } from '@material-ui/core'
 import './style.css'
 const ReactTags = require('react-tag-autocomplete');
 

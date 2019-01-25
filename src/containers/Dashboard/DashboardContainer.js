@@ -26,7 +26,7 @@ const ContentsDiv = styled.div`
 `;
 
 const Content = styled.div`
-  margin-left: 210px;
+  margin-left: 200px;
   width: 100%;
   overflow-x: hidden;
 `;
