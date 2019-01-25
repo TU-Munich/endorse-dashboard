@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
+import NlpServices from "../../../services/NlpService";
 
 // import AnalyticsService from '../../../services/AnalyticsService
 
@@ -30,11 +31,12 @@ class SentimentDoughnutChart extends Component {
         })
     }
 
-    prepareChartData(sentimentData) {
+    prepareChartData(documentAnalysis) {
         // let chartData = [sentimentData.compound, sentimentData.neg, sentimentData.neu, sentimentData.pos];
-        let chartData = sentimentData;
+      const chartLabels = documentAnalysis[0];
+      const chartData = documentAnalysis[1];
         return {
-            labels: ['PERSON', 'EVENT', 'DATE', 'ORG'],
+            labels: chartLabels,
             datasets: [{
                 data: chartData,
                 backgroundColor: ["#0091ac", '#e4e4e4', '#0d386e', '#8187b1'],
@@ -43,21 +45,20 @@ class SentimentDoughnutChart extends Component {
         }
     };
 
-    fetchSentimentData() {
-        let chartData;
-        chartData = ['13', '21', '5', '15'];
-        /*AnalyticsService.getSentimentData().then((response) => {
-          chartData = prepareChartData(response.data.hits.hits[0].total);
-          this.setState({
-            data: chartData,
-            loading: false
-          })
-        })*/
-        this.setState({
-            data: chartData,
-            loading: false
-        })
-    };
+  fetchSentimentData() {
+    NlpServices.getDataResults(this.props.projectUUID).then((response) => {
+      let chartData = this.parseDocumentsIn(response);
+      this.setState({
+        data: chartData,
+        loading: false
+      })
+    });
+  }
+
+  parseDocumentsIn(rawAnalysis) {
+    let documentAnalysis = rawAnalysis.data;
+    return documentAnalysis
+  }
 
     render() {
         if (this.state.loading) {

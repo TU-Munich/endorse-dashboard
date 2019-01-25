@@ -1,6 +1,5 @@
 import React from 'react'
 import { ResizableBox } from 'react-resizable';
-import NlpServices from '../../../services/NlpService';
 //
 
 const options = {

@@ -26,17 +26,14 @@ class VisualizationCharts extends Component {
     return (
       <div>
         <ContainerDiv>
-          <Card style={{height: "300%", padding: "10px 10px 10px"}}>
+          <Card style={{marginBottom:"20px"}}>
             <ChartTitle>Visualizations</ChartTitle>
-            <Grid style={{ display:"-webkit-box"}}>
-              {/*<ChartTitle>Named Entities</ChartTitle>
-                <SentimentDoughnutChart/>
-                <ChartTitle>Sentiment</ChartTitle>
-                <SentimentRadarChart/>*/}
-
+          </Card>
+          <Card style={{marginBottom:"20px"}}>
               <SentimentRadarChart projectUUID={this.props.projectUUID}/>
-
-            </Grid>
+          </Card>
+          <Card style={{marginBottom:"20px"}}>
+            <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
           </Card>
         </ContainerDiv>
       </div>

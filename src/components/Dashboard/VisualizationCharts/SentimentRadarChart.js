@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Line} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 import NlpServices from '../../../services/NlpService';
-
 
 class SentimentRadarChart extends Component{
   constructor(props) {
@@ -11,7 +10,6 @@ class SentimentRadarChart extends Component{
       data: []
     }
   }
-
   componentWillMount() {
     this.setState({
       loading: true
@@ -61,16 +59,13 @@ class SentimentRadarChart extends Component{
     let documentAnalysis = rawAnalysis.data;
     return documentAnalysis
   }
-
-
   render() {
     if (this.state.loading) {
       return <h2>Loading...</h2>
     }
     return (
-      <Line data={this.prepareChartData(this.state.data)}/>
+      <Bar data={this.prepareChartData(this.state.data)}/>
     );
   }
-
 }
 export default SentimentRadarChart;
