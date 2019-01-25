@@ -39,7 +39,8 @@ class Tag extends Component {
   handleAddition (tag) {
     console.log(tag);
     const tags = [].concat(this.state.tags, tag);
-    this.setState({ tags })
+    this.setState({ tags });
+    console.log(this.props.document_id)
   }
 
   render () {

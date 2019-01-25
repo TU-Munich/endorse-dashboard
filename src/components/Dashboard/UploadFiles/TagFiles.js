@@ -5,23 +5,22 @@ import FileCard from './FileCard'
 
 const TagsContainer = styled.div`
    text-align: center;
+   opacity: ${props => props.addTagsVisible ? '1;' : '0;'}
+   transition: opacity .2s ease-out; 
 `;
 
 class TagFiles extends Component {
    constructor(props) {
      super(props);
-     this.state = {
-       files: this.props.files
-     }
    }
 
    render() {
      return(
-       <TagsContainer>
+       <TagsContainer addTagsVisible={this.props.visible}>
          <Grid container spacing={8}>
            {
-             this.state.files.map(file =>
-               <Grid key={file.name} item xs={12} sm={12} md={6} lg={4}>
+             this.props.files.map((file, i) =>
+               <Grid key={i} item xs={12} sm={12} md={6} lg={4}>
                  <FileCard file={file} />
                </Grid>
              )

@@ -38,21 +38,30 @@ class UploadFiles extends Component {
     this.state = {
       loading: false,
       data: [],
-      files: [{name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"},
-        {name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"},
-        {name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"},
-        {name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"},
-        {name: "Mobile Application Analysis", lastModifiedDate: Date(), type: "application/pdf"}],
+      files: [],
+      uploadComplete: false,
       projectUUID: this.props.projectUUID,
       addTagsVisible: false
     };
 
-    this.clickState = this.clickState.bind(this);
-  }
-
-  clickState() {
-    this.setState({data: 'Test'});
-    console.log(this.state.files);
+    this.serverConfig = {
+      url: nlpServiceBaseUrl,
+      process: {
+        url: `/files/project/${this.props.projectUUID}/file`,
+        method: 'POST',
+        onload: (response) => {
+          this.state.files.map((file) => {
+            let jsonResponse = JSON.parse(response);
+            if (file.name.replace(/ /g,"_") === jsonResponse.name) {
+              file["_id"] = jsonResponse.result._id
+            }
+          });
+          this.setState({
+            uploadComplete: true
+          });
+        },
+      }
+    }
   }
 
   handleFilePondInit() {
@@ -62,8 +71,6 @@ class UploadFiles extends Component {
   handleAddTagsClick() {
     this.setState({
       addTagsVisible: !this.state.addTagsVisible
-    }, () => {
-      console.log(this.state.addTagsVisible)
     })
   }
 
@@ -81,7 +88,7 @@ class UploadFiles extends Component {
             <FilePond ref={ref => this.pond = ref}
                       allowMultiple={true}
                       maxFiles={10}
-                      server={nlpServiceBaseUrl + `/files/project/${this.state.projectUUID}/file`}
+                      server={this.serverConfig}
                       oninit={() => this.handleFilePondInit()}
                       onupdatefiles={(fileItems) => {
                         this.setState({
@@ -91,7 +98,7 @@ class UploadFiles extends Component {
               {
                 this.state.files.map(file => (
                   <File key={file} src={file} origin="local"/>
-                )) && console.log(this.state.files)
+                ))
               }
             </FilePond>
             {
@@ -100,7 +107,7 @@ class UploadFiles extends Component {
                 Upload more
               </AddMoreFilesButton>
             }
-            {this.state.files.length > 0 &&
+            {this.state.files.length > 0 && this.state.uploadComplete &&
               <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
                 Add tags
               </AddTagsButton>
@@ -108,9 +115,7 @@ class UploadFiles extends Component {
           </UploadContainer>
         </Card>
         <br />
-        {this.state.addTagsVisible && this.state.files.length > 0 &&
-          <TagFiles files={this.state.files} />
-        }
+        <TagFiles files={this.state.files} visible={this.state.addTagsVisible} />
       </ContainerDiv>
     );
   }

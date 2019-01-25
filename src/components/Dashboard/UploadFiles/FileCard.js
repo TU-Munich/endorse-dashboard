@@ -9,14 +9,10 @@ import Tag from "./Tag/Tag";
 class FileCard extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
 
   render() {
     const {classes} = this.props;
-    console.log(classes);
-    console.log(this.props);
-
     return (
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
@@ -30,7 +26,7 @@ class FileCard extends Component {
             Application Type: {this.props.file.type}
           </Typography>
         </CardContent>
-        <Tag />
+        <Tag document_id={this.props.file._id}/>
       </Card>
     )
   }
