@@ -7,9 +7,9 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
+import { withStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
 
 const ContainerDiv = styled.div`
   display: flex;
@@ -31,19 +31,33 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+const sources = [
+  'New York Times',
+  'Bloomberg',
+  'Washington Post',
+  'Reuters',
 ];
-
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 450,
+    maxWidth: 700,
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: theme.spacing.unit / 4,
+  },
+  noLabel: {
+    marginTop: theme.spacing.unit * 3,
+  },
+});
 
 
 class ExternalLink extends Component {
@@ -54,100 +68,43 @@ class ExternalLink extends Component {
     this.state = {
       loading: false,
       projectUUID: this.props.projectUUID,
-      links: [{link:""}],
-      name: []
+      source: [],
+      period:"",
+      query:""
     };
 
   }
-  handleChange = (e) => {
-    let className = "link"
-      let links = [...this.state.links]
-      //let index = e.target.id
-      links[e.target.id][className] = e.target.value
-      this.setState({ links }, () => console.log(this.state.links))
-   
+  handleSearchChange = (event) => {
+    this.setState({ query: event.target.value });
   }
-  // handleChange = event => {
-  //   this.setState({ name: event.target.value });
-  // };
-
-  handleChangeMultiple = event => {
-    const { options } = event.target;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    this.setState({
-      name: value,
-    });
+  handlePeriodChange = (event) => {
+    this.setState({ period: event.target.value });
   };
-  moreLinks = (e) => {
-      this.setState((prevState) => ({
-        links: [...prevState.links,{link:""}],
-      }));
-    }
+  handleChangeMultiple = (event) => {
+    this.setState({ source: event.target.value });
+  };
   handleSubmit = (e) => { 
-    console.log(this.state.links)
+    console.log(this.state)
     e.preventDefault() }
 
   render() {
     
-    let links = this.state.links
     if (this.state.loading) {
       return (<h2>Loading...</h2>);
     }
+
     const { classes } = this.props;
-    
     return (
       <ContainerDiv>
         <Card style={{height: "300%", padding: "10px 10px 10px"}}>
           <h1>External Link</h1>
-          <p>Please paste the links you want to analysis</p>
-          <form onSubmit={this.handleSubmit} onChange={this.handleChange} >
-          <div>
+          <p>Collect related articles from major news websites</p>
+          <form onSubmit={this.handleSubmit} onChange={this.handleSearchChange} >
           <TextField
-                  label="Search Bar"
+                  label="Search"
                   //data-id={idx}
-                  id="query"
-                  placeholder="Ex:bitcoin trend"
-                  margin="normal"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  />
-          <FormControl >
-          <InputLabel htmlFor="select-multiple-checkbox"></InputLabel>
-          <Select
-            multiple
-            value={this.state.name}
-            onChange={this.handleChange}
-            input={<Input id="select-multiple-checkbox" />}
-            renderValue={selected => selected.join(', ')}
-            MenuProps={MenuProps}
-          >
-            {names.map(name => (
-              <MenuItem key={name} value={name}>
-                <Checkbox checked={this.state.name.indexOf(name) > -1} />
-                <ListItemText primary={name} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        </div>
-          {
-          links.map((val, idx)=> {
-            let linkId = `Link${idx+1}`
-            return (
-              <div key={idx}>
-                <TextField
-                  label={linkId}
-                  data-id={idx}
-                  id={String(idx)}
-                  //id={linkId}
-                  placeholder="https://bloomberg.com/search/"
+                  id="search"
+                  placeholder="Enter the keyword you would like to search"
                   fullWidth
                   margin="normal"
                   variant="outlined"
@@ -155,29 +112,59 @@ class ExternalLink extends Component {
                     shrink: true,
                   }}
                   />
-              </div>
-            )})
-          }
-        <Button 
-        variant="contained"  
-        onClick={this.moreLinks}
-        >
-        More
-        </Button>
+          <div className={classes.root}>
+            {/* Period select component */}
+            <FormControl className={classes.formControl}> 
+              <InputLabel htmlFor="age-simple">Period</InputLabel>
+                <Select
+                  value={this.state.period}
+                  onChange={this.handlePeriodChange}
+                >
+                  <MenuItem value={10}>Past 24 hours</MenuItem>
+                  <MenuItem value={20}>Past Week</MenuItem>
+                  <MenuItem value={30}>Past Month</MenuItem>
+                </Select>
+            </FormControl>
+            
+            {/* Sources select component */}
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="select-multiple-chip">Source</InputLabel>
+              <Select
+                multiple
+                value={this.state.source}
+                onChange={this.handleChangeMultiple}
+                input={<Input id="select-multiple-chip" />}
+                renderValue={selected => (
+                  <div className={classes.chips}>
+                    {selected.map(value => (
+                      <Chip key={value} label={value} className={classes.chip} />
+                    ))}
+                  </div>
+                )}
+                MenuProps={MenuProps}
+              >
+                {sources.map(source => (
+                  <MenuItem key={source} value={source} >
+                    {source}
+                  </MenuItem>
+                ))}
+                
+              </Select>
+            </FormControl>
+          </div>
+        
+        </form>
         <Button 
         variant="contained" 
         color="primary" 
         onClick={this.handleSubmit}
         >
-        Submit
+        Search
         </Button>
-        </form>
         </Card>
-          
-
       </ContainerDiv>
     );
   }
 }
 
-export default ExternalLink;
+export default withStyles(styles)(ExternalLink);
