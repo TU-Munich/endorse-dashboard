@@ -10,10 +10,6 @@ const TagsContainer = styled.div`
 `;
 
 class TagFiles extends Component {
-   constructor(props) {
-     super(props);
-   }
-
    render() {
      return(
        <TagsContainer addTagsVisible={this.props.visible}>

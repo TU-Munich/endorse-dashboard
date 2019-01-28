@@ -39,6 +39,7 @@ class UploadFiles extends Component {
       loading: false,
       data: [],
       files: [],
+      preFiles: [],
       uploadComplete: false,
       projectUUID: this.props.projectUUID,
       addTagsVisible: false
@@ -50,14 +51,16 @@ class UploadFiles extends Component {
         url: `/files/project/${this.props.projectUUID}/file`,
         method: 'POST',
         onload: (response) => {
-          this.state.files.map((file) => {
+          this.state.preFiles.map((preFile) => {
             let jsonResponse = JSON.parse(response);
-            if (file.name.replace(/ /g,"_") === jsonResponse.name) {
-              file["_id"] = jsonResponse.result._id
+            if (preFile.name.replace(/ /g,"_") === jsonResponse.name) {
+              preFile["_id"] = jsonResponse.result._id
             }
           });
+
           this.setState({
-            uploadComplete: true
+            uploadComplete: true,
+            files: this.state.preFiles
           });
         },
       }
@@ -87,16 +90,17 @@ class UploadFiles extends Component {
           <UploadContainer>
             <FilePond ref={ref => this.pond = ref}
                       allowMultiple={true}
+                      allowRevert={false}
                       maxFiles={10}
                       server={this.serverConfig}
                       oninit={() => this.handleFilePondInit()}
                       onupdatefiles={(fileItems) => {
                         this.setState({
-                          files: fileItems.map(fileItem => fileItem.file)
+                          preFiles: fileItems.map(fileItem => fileItem.file)
                         });
                       }}>
               {
-                this.state.files.map(file => (
+                this.state.preFiles.map(file => (
                   <File key={file} src={file} origin="local"/>
                 ))
               }
