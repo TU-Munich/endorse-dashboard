@@ -19,18 +19,6 @@ class TagFiles extends Component {
         suggestions: existingTags
       })
     });
-
-    this.onTagsUpdated = this.onTagsUpdated.bind(this);
-  }
-
-  onTagsUpdated(success) {
-    if (success) {
-      DocumentService.getAllTags().then((existingTags) => {
-        this.setState({
-          suggestions: existingTags
-        })
-      });
-    }
   }
 
   render() {
@@ -40,7 +28,7 @@ class TagFiles extends Component {
           {
             this.props.files.map((file, i) =>
               <Grid key={i} item xs={12} sm={12} md={6} lg={4}>
-                <FileCard file={file} suggestions={this.state.suggestions} onTagsUpdated={this.onTagsUpdated}/>
+                <FileCard file={file} suggestions={this.state.suggestions} />
               </Grid>
             )
           }

@@ -40,7 +40,6 @@ class Tag extends Component {
       this.updateTags().then((response) => {
         console.log(response);
         console.log("updated!");
-        this.props.onTagsUpdated(true)
       })
     });
   }

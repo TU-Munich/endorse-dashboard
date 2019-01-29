@@ -54,14 +54,18 @@ class UploadFiles extends Component {
           this.state.preFiles.map((preFile) => {
             let jsonResponse = JSON.parse(response);
             if (preFile.name.replace(/ /g,"_") === jsonResponse.name) {
-              preFile["_id"] = jsonResponse.result._id
+              preFile["_id"] = jsonResponse.result._id;
+              this.setState({
+                files: [].concat(this.state.files, preFile)
+              });
             }
           });
 
-          this.setState({
-            uploadComplete: true,
-            files: this.state.preFiles
-          });
+          if (this.state.files.length === this.state.preFiles.length) {
+            this.setState({
+              uploadComplete: true
+            });
+          }
         },
       }
     }
