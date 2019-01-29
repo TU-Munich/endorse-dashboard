@@ -39,8 +39,10 @@ class SentimentDoughnutChart extends Component {
             labels: chartLabels,
             datasets: [{
                 data: chartData,
-                backgroundColor: ["#0091ac", '#e4e4e4', '#0d386e', '#8187b1'],
-                hoverBackgroundColor: ['#0091ac', '#e4e4e4', '#0d386e', '#8187b1']
+                backgroundColor: ["#474653", '#4241A3', '#155787', '#70AFA9',
+                  '#FAF7DC', '#3066BE', '#119DA4', '#91C3E0', '#907AD6', '#4273C3'],
+                hoverBackgroundColor: ['#99989F', '#6463B3', '#3F759C', '#8ABDB8',
+                  '#FAF8E2', '#5581C9', '#3CAEB4', '#A5CDE5','#B8AAE4','#7B9DD5']
             }]
         }
     };

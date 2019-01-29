@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
 import {Grid} from 'react-md';
 import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
+import SentimentRadarChart from "../VisualizationCharts/SentimentRadarChart";
+import SentimentDoughnutChart from "../VisualizationCharts/SentimentDoughnutChart";
+import SentimetLineChart from "../VisualizationCharts/SentimetLineChart";
+import SentimentAreaChart from "../VisualizationCharts/SentimentAreaChart";
 
 const Article = styled.article`
     margin: auto;
@@ -65,7 +69,7 @@ class DashboardInfo extends Component {
                 <StyledCardContent>
                   <label>Local Search</label>
                   <img style={{width: "10%", height: "10%", marginLeft: "50%",}}
-                       src={"https://es.seaicons.com/wp-content/uploads/2015/11/upload-icon1.png"}
+                       src={"https://www.freeiconspng.com/uploads/upload-icon-3.png"}
                        alt={""}/>
                 </StyledCardContent>
                 <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
@@ -78,7 +82,7 @@ class DashboardInfo extends Component {
               <Card>
                 <StyledCardContent>
                   <label>External Search</label>
-                  <img style={{width: "11%", height: "20%", marginLeft: "44%", marginTop: "7px"}}
+                  <img style={{width: "10%", height: "10%", marginLeft: "44%"}}
                        src={"https://www.freeiconspng.com/uploads/upload-icon-3.png"}
                        alt={""}/>
                 </StyledCardContent>
@@ -93,7 +97,7 @@ class DashboardInfo extends Component {
                 <StyledCardContent>
                   <label>Local Search</label>
                   <img style={{width: "10%", height: "10%", marginLeft: "50%",}}
-                       src={"https://es.seaicons.com/wp-content/uploads/2015/11/upload-icon1.png"}
+                       src={"https://www.freeiconspng.com/uploads/upload-icon-3.png"}
                        alt={""}/>
                 </StyledCardContent>
                 <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
@@ -107,23 +111,19 @@ class DashboardInfo extends Component {
         <CardDiv>
           <Card style={{width: "93%"}}>
             <Article>
-              <Title>Welcome to ENDORSE</Title>
-              <SubTitle>General Information:</SubTitle>
-              <Paragraph>
-                Please read these Dashboard information
-                carefully before using dashboard specific functionalities. Add description of our web application , main
-                objective, etc.
-              </Paragraph>
-              <Paragraph>
-                Add some relevant information about ENDORSE
-              </Paragraph>
-              <SubTitle>Services that you can use in our Dashboard:</SubTitle>
-              <Paragraph>
-                Add more information
-              </Paragraph>
-              <Paragraph>
-                More Info
-              </Paragraph>
+              <Title style={{marginBottom:"10%"}}>Project Overview</Title>
+              <div style={{width: "50%", display:"inline-block", marginBottom:"7%"}}>
+                <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+              </div>
+              <div style={{width: "50%",  display:"inline-block", marginBottom:"7%"}}>
+                <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
+              </div>
+              <div style={{width: "50%",  display:"inline-block"}}>
+                <SentimetLineChart projectUUID={this.props.projectUUID}/>
+              </div>
+              <div style={{width: "50%",  display:"inline-block"}}>
+                <SentimentAreaChart projectUUID={this.props.projectUUID}/>
+              </div>
             </Article>
           </Card>
         </CardDiv>

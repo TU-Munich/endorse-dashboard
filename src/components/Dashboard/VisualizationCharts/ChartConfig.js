@@ -36,10 +36,8 @@ export default class ChartConfig extends React.Component {
   static defaultProps = {
     count: 1,
     resizable: true,
-    width: 350,
+    width: 420,
     height: 270,
-    marginLeft: "30px",
-    marginRight: "30px",
     canRandomize: true,
     dataType: 'time',
     show: [],
@@ -141,6 +139,8 @@ export default class ChartConfig extends React.Component {
     )
   }
 }
+
+
 
 function makeData (dataType, series, datums) {
   return [...[series || "1","2", "3"]].map((d,i) =>
