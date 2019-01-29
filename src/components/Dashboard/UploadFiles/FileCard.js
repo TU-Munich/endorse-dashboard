@@ -22,7 +22,7 @@ class FileCard extends Component {
             Application Type: {this.props.file.type}
           </Typography>
         </CardContent>
-        <Tag document_id={this.props.file._id}/>
+        <Tag document_id={this.props.file._id} suggestions={this.props.suggestions} onTagsUpdated={this.props.onTagsUpdated}/>
       </Card>
     )
   }

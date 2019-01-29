@@ -16,14 +16,12 @@ class Tag extends Component {
 
     this.state = {
       tags: [],
-      suggestions: []
+      suggestions: this.props.suggestions
     };
 
     this.handleAddition = this.handleAddition.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
-
-
 
   handleDelete (i) {
     const tags = this.state.tags.slice(0);
@@ -37,32 +35,28 @@ class Tag extends Component {
   }
 
   handleAddition (tag) {
-    console.log(tag);
     const tags = [].concat(this.state.tags, tag);
     this.setState({ tags }, () => {
       this.updateTags().then((response) => {
         console.log(response);
         console.log("updated!");
+        this.props.onTagsUpdated(true)
       })
     });
-    console.log(this.props.document_id)
   }
 
   updateTags() {
     let body = [];
-
-    this.state.tags.map((tag) => {
-      body.push({"tag": tag.name})
-    });
-
-    let payload = {
-      "tags": body
-    };
-
-    return DocumentService.updateDocument(this.props.document_id, payload)
+    this.state.tags.map((tag) => {body.push({"tag": tag.name})});
+    let payload = {"tags": body};
+    return DocumentService.updateDocument(this.props.document_id, payload);
   }
 
   render () {
+    if (!this.props.document_id) {
+      return
+    }
+
     return (
       <ReactTags
         tags={this.state.tags}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 import FileCard from './FileCard'
+import DocumentService from "../../../services/DocumentService";
 
 const TagsContainer = styled.div`
    text-align: center;
@@ -10,21 +11,43 @@ const TagsContainer = styled.div`
 `;
 
 class TagFiles extends Component {
-   render() {
-     return(
-       <TagsContainer addTagsVisible={this.props.visible}>
-         <Grid container spacing={8}>
-           {
-             this.props.files.map((file, i) =>
-               <Grid key={i} item xs={12} sm={12} md={6} lg={4}>
-                 <FileCard file={file} />
-               </Grid>
-             )
-           }
-         </Grid>
-       </TagsContainer>
-     )
-   }
+  constructor(props) {
+    super(props);
+
+    DocumentService.getAllTags().then((existingTags) => {
+      this.setState({
+        suggestions: existingTags
+      })
+    });
+
+    this.onTagsUpdated = this.onTagsUpdated.bind(this);
+  }
+
+  onTagsUpdated(success) {
+    if (success) {
+      DocumentService.getAllTags().then((existingTags) => {
+        this.setState({
+          suggestions: existingTags
+        })
+      });
+    }
+  }
+
+  render() {
+    return(
+      <TagsContainer addTagsVisible={this.props.visible}>
+        <Grid container spacing={8}>
+          {
+            this.props.files.map((file, i) =>
+              <Grid key={i} item xs={12} sm={12} md={6} lg={4}>
+                <FileCard file={file} suggestions={this.state.suggestions} onTagsUpdated={this.onTagsUpdated}/>
+              </Grid>
+            )
+          }
+        </Grid>
+      </TagsContainer>
+    )
+  }
 }
 
 export default TagFiles
