@@ -23,32 +23,15 @@ const Title = styled.h3`
   text-indent: 40px;
 `;
 
-const SubTitle = styled.h4`
-  font-style: bold;
-  font-size: 18px;
-	color: #424242;
-	margin-top:20px;
-  text-indent: 25px;
-`;
-
-const Paragraph = styled.p`
-  text-align: justify;		
-  text-justify: inter-word;
-  font-style: normal;
-  font-size: 14px;
-  color: #424242;
-`;
 const CardDiv = styled.div`
   text-align: justify;
   display: -webkit-box;  
   border-radius: 30%;
   padding: 10px 10px;
 `;
-
 const CellDiv = styled.div`
   margin-right:10%;
 `;
-
 const StyledCardContent = styled.div`
   border-bottom: 2px solid #f2f2f2;
   padding:5px;
