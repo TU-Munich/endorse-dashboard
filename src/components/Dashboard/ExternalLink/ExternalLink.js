@@ -10,6 +10,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
+import { confirmAlert } from 'react-confirm-alert';
+import CrawlerService from '../../../services/CrawlerService';
 
 const ContainerDiv = styled.div`
   display: flex;
@@ -85,7 +87,25 @@ class ExternalLink extends Component {
   };
   handleSubmit = (e) => { 
     console.log(this.state)
-    e.preventDefault() }
+    let crawlingRequest = this.state;
+
+    CrawlerService.executeCrawling(crawlingRequest).then((response) => {
+      let modalContent = response.status === 200 || response.status === 201 ?
+        {title: 'Success', message: 'Related articles are crawling!'} :
+        {title: 'Error', message: 'An error has occurred while executing search, please contact the system admin'};
+      confirmAlert({
+        title: modalContent.title,
+        message: modalContent.message,
+        buttons: [
+          {
+            label: 'Continue',
+            onClick: () => window.location.replace('/dashboard/info')
+          }
+        ]
+      });
+    })
+    e.preventDefault() 
+  }
 
   render() {
     
@@ -97,7 +117,7 @@ class ExternalLink extends Component {
     return (
       <ContainerDiv>
         <Card style={{height: "300%", padding: "10px 10px 10px"}}>
-          <h1>External Link</h1>
+          <h1>Crawler</h1>
           <p>Collect related articles from major news websites</p>
           <form onSubmit={this.handleSubmit} onChange={this.handleSearchChange} >
           <TextField
