@@ -5,18 +5,27 @@ import SentimetLineChart from "./SentimetLineChart";
 import styled from 'styled-components';
 import Card from "@material-ui/core/Card/Card";
 import {Grid} from "react-md";
+import CardHeader from "@material-ui/core/es/CardHeader/CardHeader";
+import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
+import SentimentAreaChart from "./SentimentAreaChart";
 
-const ChartTitle = styled.h1`
+const OverviewWrapper = styled.div`
+  width: 100%;
+  flex-grow: 1;
+  margin: 1px;
+`;
+
+const PageTitle = styled.h1`
   text-align: center;
 `;
-const ContainerDiv = styled.div`
-  display: flex;
-  flex-flow: column nowrap;	
-  margin: 50px; 
-  text-align: center;
-  margin-top:20px;
-  max-width: 90%;	
+const DivCards = styled.div`
+  width: 50%;
+  height: 50%;
+  display:inline-block;
+  padding-right : 15px;
+  margin-bottom: 3%;
 `;
+
 
 class VisualizationCharts extends Component {
   constructor(props) {
@@ -24,19 +33,35 @@ class VisualizationCharts extends Component {
   }
   render() {
     return (
-      <div>
-        <ContainerDiv>
-          <Card style={{marginBottom:"20px"}}>
-            <ChartTitle>Visualizations</ChartTitle>
-          </Card>
-          <Card style={{marginBottom:"20px"}}>
-              <SentimentRadarChart projectUUID={this.props.projectUUID}/>
-          </Card>
-          <Card style={{marginBottom:"20px"}}>
-            <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
-          </Card>
-        </ContainerDiv>
-      </div>
+      <OverviewWrapper>
+        <Grid container spacing={0}>
+          <Grid item xs={6}>
+            <PageTitle>
+              Document Visualization
+            </PageTitle>
+            <DivCards>
+              <Card>
+                <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+              </Card>
+            </DivCards>
+            <DivCards>
+              <Card >
+                <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
+              </Card>
+            </DivCards>
+            <DivCards>
+              <Card>
+                <SentimetLineChart projectUUID={this.props.projectUUID}/>
+              </Card>
+            </DivCards>
+            <DivCards>
+              <Card >
+                <SentimentAreaChart projectUUID={this.props.projectUUID}/>
+              </Card>
+            </DivCards>
+          </Grid>
+        </Grid>
+      </OverviewWrapper>
     );
   }
 }

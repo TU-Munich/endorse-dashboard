@@ -36,8 +36,9 @@ export default class ChartConfig extends React.Component {
   static defaultProps = {
     count: 1,
     resizable: true,
-    width: 420,
+    width: 450,
     height: 270,
+    marginLeft: '10px',
     canRandomize: true,
     dataType: 'time',
     show: [],

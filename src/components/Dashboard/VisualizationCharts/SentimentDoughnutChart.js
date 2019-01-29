@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
 import NlpServices from "../../../services/NlpService";
 
-// import AnalyticsService from '../../../services/AnalyticsService
 
 class SentimentDoughnutChart extends Component {
     constructor(props) {

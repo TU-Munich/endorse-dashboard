@@ -58,6 +58,12 @@ const StyledCardContent = styled.div`
   margin-right: 10px;
 `;
 
+const DivCards = styled.div`
+    width: 50%;
+    display: inline-block;
+    margin-bottom: 7%;
+`;
+
 class DashboardInfo extends Component {
   render() {
     return (
@@ -109,21 +115,21 @@ class DashboardInfo extends Component {
           </CardDiv>
         </Grid>
         <CardDiv>
-          <Card style={{width: "93%"}}>
+          <Card style={{width: "100%"}}>
             <Article>
               <Title style={{marginBottom:"10%"}}>Project Overview</Title>
-              <div style={{width: "50%", display:"inline-block", marginBottom:"7%"}}>
+              <DivCards>
                 <SentimentRadarChart projectUUID={this.props.projectUUID}/>
-              </div>
-              <div style={{width: "50%",  display:"inline-block", marginBottom:"7%"}}>
+              </DivCards>
+              <DivCards>
                 <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
-              </div>
-              <div style={{width: "50%",  display:"inline-block"}}>
+              </DivCards>
+              <DivCards>
                 <SentimetLineChart projectUUID={this.props.projectUUID}/>
-              </div>
-              <div style={{width: "50%",  display:"inline-block"}}>
+              </DivCards>
+              <DivCards>
                 <SentimentAreaChart projectUUID={this.props.projectUUID}/>
-              </div>
+              </DivCards>
             </Article>
           </Card>
         </CardDiv>
