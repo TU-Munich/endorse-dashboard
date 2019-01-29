@@ -8,6 +8,7 @@ import {Grid} from "react-md";
 import CardHeader from "@material-ui/core/es/CardHeader/CardHeader";
 import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import SentimentAreaChart from "./SentimentAreaChart";
+import CardContent from "@material-ui/core/es/CardContent/CardContent";
 
 const OverviewWrapper = styled.div`
   width: 100%;
@@ -26,7 +27,6 @@ const DivCards = styled.div`
   margin-bottom: 3%;
 `;
 
-
 class VisualizationCharts extends Component {
   constructor(props) {
     super(props);
@@ -39,24 +39,48 @@ class VisualizationCharts extends Component {
             <PageTitle>
               Document Visualization
             </PageTitle>
+            <div>
+
+            </div>
             <DivCards>
+
               <Card>
-                <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+                <CardMedia style={{backgroundColor:"#fbfbfb"}}>
+                  <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+                </CardMedia>
+                  <CardContent style={{fontSize:"small"}}>
+                    Document Name Entity Recognition
+                  </CardContent>
               </Card>
             </DivCards>
             <DivCards>
               <Card >
-                <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
+                <CardMedia style={{backgroundColor:"#fbfbfb"}}>
+                  <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
+                </CardMedia>
+                <CardContent>
+                  Document Sentiment Values
+                </CardContent>
               </Card>
             </DivCards>
             <DivCards>
               <Card>
-                <SentimetLineChart projectUUID={this.props.projectUUID}/>
+                <CardMedia style={{backgroundColor:"#fbfbfb"}}>
+                  <SentimetLineChart projectUUID={this.props.projectUUID}/>
+                </CardMedia>
+                <CardContent>
+                  Document Sentiment Values
+                </CardContent>
               </Card>
             </DivCards>
             <DivCards>
               <Card >
-                <SentimentAreaChart projectUUID={this.props.projectUUID}/>
+                <CardMedia style={{backgroundColor:"#fbfbfb"}}>
+                  <SentimentAreaChart projectUUID={this.props.projectUUID}/>
+                </CardMedia>
+                <CardContent>
+                  Document Sentiment Values
+                </CardContent>
               </Card>
             </DivCards>
           </Grid>
