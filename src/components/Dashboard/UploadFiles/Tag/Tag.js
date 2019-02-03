@@ -46,7 +46,7 @@ class Tag extends Component {
 
   updateTags() {
     let body = [];
-    this.state.tags.map((tag) => {body.push({"tag": tag.name})});
+    this.state.tags.forEach((tag) => {body.push({"tag": tag.name})});
     let payload = {"tags": body};
     return DocumentService.updateDocument(this.props.document_id, payload);
   }

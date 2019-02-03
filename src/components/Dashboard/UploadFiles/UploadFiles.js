@@ -51,7 +51,7 @@ class UploadFiles extends Component {
         url: `/files/project/${this.props.projectUUID}/file`,
         method: 'POST',
         onload: (response) => {
-          this.state.preFiles.map((preFile) => {
+          this.state.preFiles.forEach((preFile) => {
             let jsonResponse = JSON.parse(response);
             if (preFile.name.replace(/ /g,"_") === jsonResponse.name) {
               preFile["_id"] = jsonResponse.result._id;
