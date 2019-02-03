@@ -143,4 +143,25 @@ export default class DocumentService {
 
     return {total}
   }
+  static async getDocumentsCount(projectUUID) {
+    let query = {
+      "size":"0",
+      "query": {
+        "term": {"project_uuid": projectUUID}
+      },
+      "aggs": {
+        "docsTotal":{
+          "terms": {
+            "field": "project_uuid.keyword"
+          }
+        }
+      }
+    };
+    let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
+    let totalDocuments =[];
+    response.data.aggregations.docsTotal.buckets.map((bucket) => {
+      totalDocuments.push(bucket.doc_count);
+    });
+    return {totalDocuments};
+  }
 }
