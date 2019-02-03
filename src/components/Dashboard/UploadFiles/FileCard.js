@@ -16,7 +16,7 @@ class FileCard extends Component {
             {this.props.file.name}
           </Typography>
           <Typography className={classes.fileMeta} color="textSecondary">
-            Date: {Date(this.props.file.lastModifiedDate)}
+            Date: {this.props.file.lastModifiedDate.toString()}
           </Typography>
           <Typography className={classes.fileMeta} color="textSecondary">
             Application Type: {this.props.file.type}

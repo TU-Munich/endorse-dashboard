@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './style.css'
 import DocumentService from '../../../../services/DocumentService'
+import { confirmAlert } from 'react-confirm-alert'
 const ReactTags = require('react-tag-autocomplete');
 
 const KeyCodes = {
@@ -9,6 +10,16 @@ const KeyCodes = {
 };
 
 const delimiters = [KeyCodes.tab, KeyCodes.enter];
+
+const alert = (title, message) => confirmAlert({
+  title: title,
+  message: message,
+  buttons: [
+    {
+      label: 'Ok'
+    }
+  ]
+});
 
 class Tag extends Component {
   constructor (props) {
@@ -28,8 +39,9 @@ class Tag extends Component {
     tags.splice(i, 1);
     this.setState({ tags }, () => {
       this.updateTags().then((response) => {
-        console.log(response);
-        console.log("updated!");
+        if (response.status !== 200) {
+          alert('Ops...', 'Something went wrong, please try again.')
+        }
       })
     })
   }
@@ -38,8 +50,9 @@ class Tag extends Component {
     const tags = [].concat(this.state.tags, tag);
     this.setState({ tags }, () => {
       this.updateTags().then((response) => {
-        console.log(response);
-        console.log("updated!");
+        if (response.status !== 200) {
+          alert('Ops...', 'Something went wrong, please try again.')
+        }
       })
     });
   }
