@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Bar} from 'react-chartjs-2';
-import NlpServices from '../../../services/NlpService';
+import DocumentService from '../../../services/DocumentService';
 
-class SentimentRadarChart extends Component{
+class SentimentBarChart extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -17,15 +17,14 @@ class SentimentRadarChart extends Component{
   }
 
   prepareChartData(documentAnalysis) {
-    const chartLabels = documentAnalysis[0];
-    const chartData = documentAnalysis[1];
-    console.log(chartLabels);
-    console.log(chartData);
+    console.log(documentAnalysis);
+    const chartKeyword = documentAnalysis.keyword;
+    const chartCount = documentAnalysis.counts;
     return {
-      labels: chartLabels,
+      labels: chartKeyword,
       datasets: [{
         label: "Name Entity Recognition",
-        data: chartData,
+        data: chartCount,
         fill: false,
         lineTension: 0.1,
         backgroundColor: 'rgba(75,192,192,0.4)',
@@ -46,18 +45,14 @@ class SentimentRadarChart extends Component{
     }
   };
   fetchSentimentData() {
-    NlpServices.getDataResults(this.props.projectUUID).then((response) => {
-      let chartData = this.parseDocumentsIn(response);
+    DocumentService.getNerCount(this.props.projectUUID).then((response) => {
       this.setState({
-        data: chartData,
+        data: response,
         loading: false
-      })
+      });
     });
   }
-  parseDocumentsIn(rawAnalysis) {
-    let documentAnalysis = rawAnalysis.data;
-    return documentAnalysis
-  }
+
   render() {
     if (this.state.loading) {
       return <h2>Loading...</h2>
@@ -67,4 +62,4 @@ class SentimentRadarChart extends Component{
     );
   }
 }
-export default SentimentRadarChart;
+export default SentimentBarChart;

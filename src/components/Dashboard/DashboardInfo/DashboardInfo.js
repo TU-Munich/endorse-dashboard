@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
 import {Grid} from 'react-md';
 import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
-import SentimentRadarChart from "../VisualizationCharts/SentimentRadarChart";
+import SentimentBarChart from "../VisualizationCharts/SentimentBarChart";
 import SentimentDoughnutChart from "../VisualizationCharts/SentimentDoughnutChart";
 import SentimetLineChart from "../VisualizationCharts/SentimetLineChart";
 import SentimentAreaChart from "../VisualizationCharts/SentimentAreaChart";
@@ -102,7 +102,7 @@ class DashboardInfo extends Component {
             <Article>
               <Title style={{marginBottom:"10%"}}>Project Overview</Title>
               <DivCards>
-                <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+                <SentimentBarChart projectUUID={this.props.projectUUID}/>
               </DivCards>
               <DivCards>
                 <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>

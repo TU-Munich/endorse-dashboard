@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import SentimentDoughnutChart from './SentimentDoughnutChart';
-import SentimentRadarChart from "./SentimentRadarChart";
+import SentimentBarChart from "./SentimentBarChart";
 import SentimetLineChart from "./SentimetLineChart";
 import styled from 'styled-components';
 import Card from "@material-ui/core/Card/Card";
@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Input from "@material-ui/core/es/Input/Input";
 import RadarChart from "./RadarChart";
+import SimilarityBubbleChart from "./SimilarityBubbleChart";
 
 
 const OverviewWrapper = styled.div`
@@ -105,19 +106,18 @@ class VisualizationCharts extends Component {
 
             <DivCards>
               <Card>
-                <CardMedia style={{backgroundColor:"#fbfbfb"}}>
-                  <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
+                  <SentimentBarChart projectUUID={this.props.projectUUID}/>
                 </CardMedia>
                   <CardContent style={{fontSize:"medium"}}>
                     Document Name Entity Recognition:
-
                     <div style={{display:"-webkit-box"}}>
                     <FormCont>
-                      <InputLabel htmlFor="filter_id" style={{fontSize:"small"}}>Data No.: </InputLabel>
+                      <InputLabel htmlFor="filter_id" style={{fontSize:"small"}}>Amount: </InputLabel>
                       <Select style={{width:"20%", fontSize:"small"}}>
-                        <MenuItem  selected value={"5"}>Top 5</MenuItem>
-                        <MenuItem value={"10"}>Top 10</MenuItem>
-                        <MenuItem value={"15"}>Top 15</MenuItem>
+                        <MenuItem  selected value={"5"}>5</MenuItem>
+                        <MenuItem value={"10"}>10</MenuItem>
+                        <MenuItem value={"15"}>15</MenuItem>
                       </Select>
                     </FormCont>
                     <FormCont>
@@ -130,28 +130,29 @@ class VisualizationCharts extends Component {
             </DivCards>
             <DivCards>
               <Card >
-                <CardMedia style={{backgroundColor:"#fbfbfb"}}>
+                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
                   <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
                 </CardMedia>
-                <CardContent>
-                  Document Sentiment Values
+                <CardContent style={{fontSize:"medium"}}>
+                  Project Documents Labels
+                  <div style={{display:"-webkit-box"}}>
+                    <FormCont>
+                      <InputLabel htmlFor="filter_id" style={{fontSize:"small"}}>Amount: </InputLabel>
+                      <Select style={{width:"20%", fontSize:"small"}}>
+                        <MenuItem value={"5"}>5</MenuItem>
+                        <MenuItem value={"10"}>10</MenuItem>
+                        <MenuItem value={"10"}>15</MenuItem>
+                      </Select>
+                    </FormCont>
+                  </div>
                 </CardContent>
               </Card>
             </DivCards>
-            <DivCards>
-              <Card>
-                <CardMedia style={{backgroundColor:"#fbfbfb"}}>
-                  <SentimetLineChart projectUUID={this.props.projectUUID}/>
-                </CardMedia>
-                <CardContent>
-                  Document Sentiment Values
-                </CardContent>
-              </Card>
-            </DivCards>
+
             <DivCards>
               <Card >
-                <CardMedia style={{backgroundColor:"#fbfbfb"}}>
-                  <RadarChart projectUUID={this.props.projectUUID}/>
+                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
+                  <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
                 </CardMedia>
                 <CardContent>
                   Document Sentiment Values

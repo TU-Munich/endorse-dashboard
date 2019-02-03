@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
-import NlpServices from "../../../services/NlpService";
+import DocumentService from "../../../services/DocumentService";
 
 
 class SentimentDoughnutChart extends Component {
@@ -8,32 +8,20 @@ class SentimentDoughnutChart extends Component {
         super(props);
         this.state = {
             loading: true,
-            data: [],
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            min: 0
-                        }
-                    }]
-                }
-            }
+            data: []
         }
     }
 
     componentWillMount() {
         this.setState({
-            loading: true
-        }, () => {
-            this.fetchSentimentData()
-        })
+          loading: true
+        }, () => {this.fetchSentimentData()})
     }
 
     prepareChartData(documentAnalysis) {
-        // let chartData = [sentimentData.compound, sentimentData.neg, sentimentData.neu, sentimentData.pos];
-      const chartLabels = documentAnalysis[0];
-      const chartData = documentAnalysis[1];
+      console.log(documentAnalysis);
+      const chartLabels = documentAnalysis.labels;
+      const chartData = documentAnalysis.labelCounts;
         return {
             labels: chartLabels,
             datasets: [{
@@ -47,25 +35,18 @@ class SentimentDoughnutChart extends Component {
     };
 
   fetchSentimentData() {
-    NlpServices.getDataResults(this.props.projectUUID).then((response) => {
-      let chartData = this.parseDocumentsIn(response);
+    DocumentService.getLabelsCount(this.props.projectUUID).then((response) => {
       this.setState({
-        data: chartData,
+        data: response,
         loading: false
-      })
+      });
     });
-  }
-
-  parseDocumentsIn(rawAnalysis) {
-    let documentAnalysis = rawAnalysis.data;
-    return documentAnalysis
   }
 
     render() {
         if (this.state.loading) {
             return <h2>Loading...</h2>
         }
-        console.log(this.state);
         return (
             <Doughnut data={this.prepareChartData(this.state.data)}/>
         );
