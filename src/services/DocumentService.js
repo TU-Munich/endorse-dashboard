@@ -11,7 +11,7 @@ export default class DocumentService {
   }
 
   static async getAllTags() {
-    let tags = [];
+    let tags = [{name: 'Innovation'}];
     var body = {
       "_source": ["tags"],
       "size": "0",
