@@ -10,6 +10,7 @@ import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import SentimentAreaChart from "./SentimentAreaChart";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
+import { Slider } from 'material-ui-slider';
 
 const OverviewWrapper = styled.div`
   width: 100%;
@@ -34,29 +35,28 @@ const FormCont = styled.form`
     fontsize: 10px;
 `;
 
+
 class VisualizationCharts extends Component {
+  state = {
+    sliderValue: 10,
+  };
 
   constructor(props) {
     super(props);
   }
-  state = {
-    selectedValue: 'crawl',
-  };
 
-  handleChange = event => {
-    this.setState({ selectedValue: event.target.value });
-  };
 
   render() {
+    const { sliderValue } = this.state;
     return (
       <OverviewWrapper>
             <PageTitle>
-              Document Visualization
+              Project Visualization
             </PageTitle>
-            <div style={{width:"50%", backgroundColor:"#fbfbfb", left:"25%", position:"relative"}}>
+            <div style={{width:"55%", backgroundColor:"#fbfbfb", left:"25%", position:"relative"}}>
               <div style={{display:"-webkit-box", paddingLeft:"15px"}}>
                 <FormCont>
-                  <InputLabel htmlFor="filter_id">Source data</InputLabel>
+                  <InputLabel htmlFor="filter_id">Source data: </InputLabel>
                   <Select style={{width:"80px"}}>
                     <MenuItem value={"uploaded"}>Uploaded</MenuItem>
                     <MenuItem value={"crawled"}>Crawled</MenuItem>
@@ -71,14 +71,15 @@ class VisualizationCharts extends Component {
                   <MenuItem value={"sentiment"}>Sentiment</MenuItem>
                 </Select>
               </FormCont>
-                <FormCont>
-                  <InputLabel htmlFor="count_id">No. Data</InputLabel>
-                  <Select style={{width:"80px"}}>
-                    <MenuItem value={"1"}>Name Entity Recognition</MenuItem>
-                    <MenuItem value={"2"}>Sentences</MenuItem>
-                    <MenuItem value={"3"}>Labels</MenuItem>
-                    <MenuItem value={"4"}>Sentiment</MenuItem>
-                  </Select>
+                <FormCont style={{marginTop:"1%"}}>
+                  <InputLabel htmlFor="count_id">Amount:</InputLabel>
+                  <Slider
+                    value={sliderValue}
+                    min={1}
+                    max={10}
+                    style={{width:"80px", position: "absolute"}}
+                    onChange={this.handleChange}
+                  />
                 </FormCont>
               </div>
             </div><br/>
