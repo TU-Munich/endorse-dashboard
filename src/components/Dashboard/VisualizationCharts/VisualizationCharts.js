@@ -10,7 +10,10 @@ import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import SentimentAreaChart from "./SentimentAreaChart";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
-import { Slider } from 'material-ui-slider';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Input from "@material-ui/core/es/Input/Input";
+
 
 const OverviewWrapper = styled.div`
   width: 100%;
@@ -32,54 +35,69 @@ const DivCards = styled.div`
 const FormCont = styled.form`
     margin: theme.spacing.unit;
     padding: 5px;
-    fontsize: 10px;
+    fontsize: small;
 `;
 
 
 class VisualizationCharts extends Component {
-  state = {
-    sliderValue: 10,
-  };
 
   constructor(props) {
     super(props);
+    this.state = {
+      startDate: new Date(),
+      endDate: new Date(),
+      value: 'uploaded'
+    };
+    this.handleStartDateChange = this.handleStartDateChange.bind(this);
+    this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    this.handleSelectChange= this.handleSelectChange.bind(this);
+  }
+
+  handleStartDateChange(date) {
+    this.setState({
+      startDate: date
+    });
+  }
+
+  handleEndDateChange(date) {
+    this.setState({
+      endDate: date
+    });
+  }
+
+  handleSelectChange(event) {
+    this.setState({value: event.target.value});
   }
 
 
   render() {
-    const { sliderValue } = this.state;
     return (
       <OverviewWrapper>
             <PageTitle>
               Project Visualization
             </PageTitle>
-            <div style={{width:"55%", backgroundColor:"#fbfbfb", left:"25%", position:"relative"}}>
+            <div style={{width:"60%", backgroundColor:"#fbfbfb", left:"25%", position:"relative"}}>
               <div style={{display:"-webkit-box", paddingLeft:"15px"}}>
                 <FormCont>
                   <InputLabel htmlFor="filter_id">Source data: </InputLabel>
-                  <Select style={{width:"80px"}}>
+                  <Select style={{width:"90px", fontSize:"small"}}
+                          value={this.state.value}
+                          onChange={this.handleSelectChange}>
                     <MenuItem value={"uploaded"}>Uploaded</MenuItem>
                     <MenuItem value={"crawled"}>Crawled</MenuItem>
                   </Select>
                 </FormCont>
-              <FormCont>
-                <InputLabel htmlFor="filter_id">Filter by:</InputLabel>
-                <Select style={{width:"80px"}}>
-                  <MenuItem value={"ner"}>Name Entity Recognition</MenuItem>
-                  <MenuItem value={"sentences"}>Sentences</MenuItem>
-                  <MenuItem value={"label"}>Labels</MenuItem>
-                  <MenuItem value={"sentiment"}>Sentiment</MenuItem>
-                </Select>
-              </FormCont>
                 <FormCont style={{marginTop:"1%"}}>
-                  <InputLabel htmlFor="count_id">Amount:</InputLabel>
-                  <Slider
-                    value={sliderValue}
-                    min={1}
-                    max={10}
-                    style={{width:"80px", position: "absolute"}}
-                    onChange={this.handleChange}
-                  />
+                <InputLabel>From:</InputLabel>
+                <DatePicker
+                  selected={this.state.startDate}
+                  onChange={this.handleStartDateChange}/>
+                </FormCont>
+                <FormCont style={{marginTop:"1%"}}>
+                  <InputLabel>To:</InputLabel>
+                  <DatePicker
+                    selected={this.state.endDate}
+                    onChange={this.handleEndDateChange}/>
                 </FormCont>
               </div>
             </div><br/>
@@ -89,8 +107,23 @@ class VisualizationCharts extends Component {
                 <CardMedia style={{backgroundColor:"#fbfbfb"}}>
                   <SentimentRadarChart projectUUID={this.props.projectUUID}/>
                 </CardMedia>
-                  <CardContent style={{fontSize:"small"}}>
-                    Document Name Entity Recognition
+                  <CardContent style={{fontSize:"medium"}}>
+                    Document Name Entity Recognition:
+
+                    <div style={{display:"-webkit-box"}}>
+                    <FormCont>
+                      <InputLabel htmlFor="filter_id" style={{fontSize:"small"}}>Data No.: </InputLabel>
+                      <Select style={{width:"20%", fontSize:"small"}}>
+                        <MenuItem  selected value={"5"}>Top 5</MenuItem>
+                        <MenuItem value={"10"}>Top 10</MenuItem>
+                        <MenuItem value={"15"}>Top 15</MenuItem>
+                      </Select>
+                    </FormCont>
+                    <FormCont>
+                      <InputLabel htmlFor="filter_id" style={{fontSize:"small"}}>Labels: </InputLabel>
+                      <Input style={{width:"80px"}}/>
+                    </FormCont>
+                    </div>
                   </CardContent>
               </Card>
             </DivCards>
