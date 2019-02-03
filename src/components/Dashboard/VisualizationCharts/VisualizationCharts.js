@@ -13,7 +13,7 @@ import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Input from "@material-ui/core/es/Input/Input";
-import RadarChart from "./RadarChart";
+import SentimentRadarChart from "./SentimentRadarChart";
 import SimilarityBubbleChart from "./SimilarityBubbleChart";
 
 
@@ -148,14 +148,23 @@ class VisualizationCharts extends Component {
                 </CardContent>
               </Card>
             </DivCards>
-
+        <DivCards>
+          <Card >
+            <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
+              <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+            </CardMedia>
+            <CardContent>
+              Document Sentiment Values
+            </CardContent>
+          </Card>
+        </DivCards>
             <DivCards>
               <Card >
                 <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
                   <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
                 </CardMedia>
                 <CardContent>
-                  Document Sentiment Values
+                  Document Similarity
                 </CardContent>
               </Card>
             </DivCards>
