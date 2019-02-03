@@ -13,6 +13,7 @@ import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Input from "@material-ui/core/es/Input/Input";
+import RadarChart from "./RadarChart";
 
 
 const OverviewWrapper = styled.div`
@@ -150,7 +151,7 @@ class VisualizationCharts extends Component {
             <DivCards>
               <Card >
                 <CardMedia style={{backgroundColor:"#fbfbfb"}}>
-                  <SentimentAreaChart projectUUID={this.props.projectUUID}/>
+                  <RadarChart projectUUID={this.props.projectUUID}/>
                 </CardMedia>
                 <CardContent>
                   Document Sentiment Values
