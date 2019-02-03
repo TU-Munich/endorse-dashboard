@@ -5,8 +5,9 @@ import {Grid} from 'react-md';
 import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import SentimentBarChart from "../VisualizationCharts/SentimentBarChart";
 import SentimentDoughnutChart from "../VisualizationCharts/SentimentDoughnutChart";
-import SentimetLineChart from "../VisualizationCharts/SentimetLineChart";
-import SentimentAreaChart from "../VisualizationCharts/SentimentAreaChart";
+import SentimentRadarChart from "../VisualizationCharts/SentimentRadarChart";
+import SimilarityBubbleChart from "../VisualizationCharts/SimilarityBubbleChart";
+import DocumentService from '../../../services/DocumentService';
 
 const Article = styled.article`
     margin: auto;
@@ -48,6 +49,14 @@ const DivCards = styled.div`
 `;
 
 class DashboardInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      data: []
+    }
+  }
+
   render() {
     return (
       <div>
@@ -108,10 +117,10 @@ class DashboardInfo extends Component {
                 <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
               </DivCards>
               <DivCards>
-                <SentimetLineChart projectUUID={this.props.projectUUID}/>
+                <SentimentRadarChart projectUUID={this.props.projectUUID}/>
               </DivCards>
               <DivCards>
-                <SentimentAreaChart projectUUID={this.props.projectUUID}/>
+                <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
               </DivCards>
             </Article>
           </Card>

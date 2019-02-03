@@ -48,11 +48,15 @@ class VisualizationCharts extends Component {
     this.state = {
       startDate: new Date(),
       endDate: new Date(),
-      value: 'uploaded'
+      value: 'uploaded',
+      amountBar: '5',
+      amountDoughnut: '5'
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.handleSelectChange= this.handleSelectChange.bind(this);
+    this.handleAmountBarChange= this.handleAmountBarChange.bind(this);
+    this.handleAmountDoughnutChange= this.handleAmountDoughnutChange.bind(this);
   }
 
   handleStartDateChange(date) {
@@ -62,13 +66,19 @@ class VisualizationCharts extends Component {
   }
 
   handleEndDateChange(date) {
-    this.setState({
-      endDate: date
-    });
+    this.setState({endDate: date});
   }
 
   handleSelectChange(event) {
     this.setState({value: event.target.value});
+  }
+
+  handleAmountBarChange(event) {
+    this.setState({amountBar: event.target.value});
+  }
+
+  handleAmountDoughnutChange(event) {
+    this.setState({amountDoughnut: event.target.value});
   }
 
 
@@ -113,16 +123,14 @@ class VisualizationCharts extends Component {
                     Document Name Entity Recognition:
                     <div style={{display:"-webkit-box"}}>
                     <FormCont>
-                      <InputLabel htmlFor="filter_id" style={{fontSize:"small"}}>Amount: </InputLabel>
-                      <Select style={{width:"20%", fontSize:"small"}}>
-                        <MenuItem  selected value={"5"}>5</MenuItem>
+                      <InputLabel style={{fontSize:"small"}}>Amount: </InputLabel>
+                      <Select style={{width:"40%", fontSize:"small"}}
+                              value={this.state.amountBar}
+                              onChange={this.handleAmountBarChange}>
+                        <MenuItem value={"5"}>5</MenuItem>
                         <MenuItem value={"10"}>10</MenuItem>
                         <MenuItem value={"15"}>15</MenuItem>
                       </Select>
-                    </FormCont>
-                    <FormCont>
-                      <InputLabel htmlFor="filter_id" style={{fontSize:"small"}}>Labels: </InputLabel>
-                      <Input style={{width:"80px"}}/>
                     </FormCont>
                     </div>
                   </CardContent>
@@ -137,8 +145,10 @@ class VisualizationCharts extends Component {
                   Project Documents Labels
                   <div style={{display:"-webkit-box"}}>
                     <FormCont>
-                      <InputLabel htmlFor="filter_id" style={{fontSize:"small"}}>Amount: </InputLabel>
-                      <Select style={{width:"20%", fontSize:"small"}}>
+                      <InputLabel style={{fontSize:"small"}}>Amount: </InputLabel>
+                      <Select style={{width:"40%", fontSize:"small"}}
+                              value={this.state.amountDoughnut}
+                              onChange={this.handleAmountDoughnutChange}>
                         <MenuItem value={"5"}>5</MenuItem>
                         <MenuItem value={"10"}>10</MenuItem>
                         <MenuItem value={"10"}>15</MenuItem>
