@@ -108,6 +108,9 @@ export default class DocumentService {
   static async getSentimentCount(projectUUID) {
     let query = {
       "size": "0",
+      "query": {
+        "term": {"project_uuid": projectUUID}
+      },
       "aggs": {
         "neg":{
           "terms": {
@@ -126,19 +129,18 @@ export default class DocumentService {
       }
     };
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
-    let positive = [];
-    let negative = [];
-    let neutral =[];
+    let total =[];
 
     response.data.aggregations.neg.buckets.map((bucket) => {
-      negative.push(bucket.key);
+      total.push(bucket.key);
     });
     response.data.aggregations.pos.buckets.map((bucket) => {
-      positive.push(bucket.key);
+      total.push(bucket.key);
     });
     response.data.aggregations.neu.buckets.map((bucket) => {
-      neutral.push(bucket.key);
+      total.push(bucket.key);
     });
-    return {negative, positive, neutral}
+
+    return {total}
   }
 }

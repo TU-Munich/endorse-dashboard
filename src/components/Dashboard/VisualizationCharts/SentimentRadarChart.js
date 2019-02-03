@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Radar} from 'react-chartjs-2';
+import DocumentService from '../../../services/DocumentService';
 
-class RadarChart extends Component{
+class SentimentRadarChart extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -9,16 +10,16 @@ class RadarChart extends Component{
       data: []
     }
   }
-
   componentWillMount() {
     this.setState({
       loading: true
     }, () => {this.fetchSentimentData()})
   }
 
-  prepareChartData(sentimentData) {
-    // let chartData = [sentimentData.compound, sentimentData.neg, sentimentData.neu, sentimentData.pos];
-    let chartData = sentimentData;
+  prepareChartData(documentAnalysis) {
+    console.log(documentAnalysis);
+    let chartData = documentAnalysis.total;
+    console.log(chartData);
     return {
       labels: ['Positive', 'Negative', 'Neutral'],
       datasets: [{
@@ -38,19 +39,12 @@ class RadarChart extends Component{
   };
 
   fetchSentimentData() {
-    let chartData;
-    chartData = ['0.045287035405635834', '0.003675926011055708', '0.8769537210464478'];
-    /*AnalyticsService.getSentimentData().then((response) => {
-      chartData = prepareChartData(response.data.hits.hits[0].total);
+    DocumentService.getSentimentCount(this.props.projectUUID).then((response) => {
       this.setState({
-        data: chartData,
+        data: response,
         loading: false
-      })
-    })*/
-    this.setState({
-      data: chartData,
-      loading: false
-    })
+      });
+    });
   };
 
   render() {
@@ -64,4 +58,4 @@ class RadarChart extends Component{
   }
 
 }
-export default RadarChart;
+export default SentimentRadarChart;
