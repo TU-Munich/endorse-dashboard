@@ -91,7 +91,7 @@ class DashboardSideBar extends Component {
         return (
             <SideBar>
                 <NavSideMenu>
-                    <Logo>ENDOSE</Logo>
+                    <Logo>ENDORSE</Logo>
                     <MenuList>
                         <NavSideMenuUL id="menu-content" className="menu-content collapse out">
                             <ListItemA to={"/dashboard/info"}>
