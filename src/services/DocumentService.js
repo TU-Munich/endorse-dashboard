@@ -18,8 +18,8 @@ export default class DocumentService {
       "aggs": {"tags": {"terms": {"field": "tags.tag.keyword", "size": "1000" }}}
     };
     let response = await this.documentService.post(this.documentsQueryEndpoint(), body);
-    response.data.aggregations.tags.buckets.map((bucket) => {
-      tags.push({name: bucket.key})
+    response.data.aggregations.tags.buckets.forEach((bucket) => {
+      tags.push({name: bucket.key});
     });
     return tags;
   }
@@ -41,7 +41,7 @@ export default class DocumentService {
     };
 
     let response = await this.documentService.post(this.documentsQueryEndpoint(), body);
-    response.data.aggregations.tags.buckets.map((bucket) => {
+    response.data.aggregations.tags.buckets.forEach((bucket) => {
       tags.push({name: bucket.key})
     });
     return tags;
