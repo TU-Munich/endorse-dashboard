@@ -2,16 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import styled from 'styled-components'
+import ResultsList from './ResultsList'
 import DocumentService from '../../../services/DocumentService'
-import Grid from "@material-ui/core/Grid/Grid";
-import ProjectCard from "../../Projects/Overview/ProjectCard";
+import ColorPalette from '../../../constants/ColorPalette'
 
 const styles = {
   root: {
@@ -38,7 +37,20 @@ const styles = {
 const Tags = styled.div`
   margin: auto;
   align-items: center;
-  width: 98%;
+  width: 90%;
+  text-align: center;
+`;
+
+const ResultsTitle = styled.h2`
+  padding-left: 10px;
+  margin: 10px 0;
+`;
+
+const Results = styled.div`
+  margin: 10px 20px;
+  background: ${ ColorPalette.endorse_white };
+  color: ${ ColorPalette.endorse_primary_dark };
+  box-shadow: 0px 1px 5px 1px rgba(100,100,100, .4);
 `;
 
 class DocumentSearch extends Component {
@@ -108,6 +120,10 @@ class DocumentSearch extends Component {
             )
           }
         </Tags>
+        <ResultsTitle>Search results:</ResultsTitle>
+        <Results>
+          <ResultsList/>
+        </Results>
       </div>
     )
   }

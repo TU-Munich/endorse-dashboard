@@ -1,5 +1,5 @@
 const ColorPalette = {
-  endorse_white: '#fdf8f0',
+  endorse_white: '#FFFFFF',
   endorse_white_transparent: 'rgba(253, 248, 240, .9);',
   endorse_primary_dark: '#23282e',
   endorse_primary_dark_transparent: 'rgba(0, 0, 30, .6);',
