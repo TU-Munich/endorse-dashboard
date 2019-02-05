@@ -108,7 +108,7 @@ class DashboardSideBar extends Component {
 
                             <ListItemA to={"/dashboard/crawl"}>
                                 <NavSideMenuLI>
-                                    <Icon icon="cloud-upload-alt"/> Crawl
+                                    <Icon icon="cloud-upload-alt"/> Crawler
                                 </NavSideMenuLI>
                             </ListItemA>
 

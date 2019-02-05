@@ -12,6 +12,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import { confirmAlert } from 'react-confirm-alert';
 import CrawlerService from '../../../services/CrawlerService';
+import { Progress } from 'react-sweet-progress';
+import "react-sweet-progress/lib/style.css";
+import socketIOClient from "socket.io-client";
 
 const ContainerDiv = styled.div`
   display: flex;
@@ -68,7 +71,11 @@ class ExternalLink extends Component {
     super(props);
 
     this.state = {
+      response: false,
+      percentage: 0,
+      endpoint:"http://localhost:3002",
       loading: false,
+      crawling: false,
       projectUUID: this.props.projectUUID,
       source: [],
       period:"",
@@ -88,6 +95,8 @@ class ExternalLink extends Component {
   handleSubmit = (e) => { 
     console.log(this.state)
     let crawlingRequest = this.state;
+    this.setState({crawling: true})
+
 
     CrawlerService.executeCrawling(crawlingRequest).then((response) => {
       let modalContent = response.status === 200 || response.status === 201 ?
@@ -99,13 +108,24 @@ class ExternalLink extends Component {
         buttons: [
           {
             label: 'Continue',
-            onClick: () => window.location.replace('/dashboard/info')
+            // onClick: () => window.location.replace('/dashboard/crawl')
+            onClick: () => console.log('Searching')
           }
         ]
       });
     })
     e.preventDefault() 
   }
+  componentDidMount() {
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.on("server_response", p => this.setState({ 
+      response: p['data'],
+      percentage: p['data']
+   }));
+    
+  }
+  
 
   render() {
     
@@ -114,6 +134,8 @@ class ExternalLink extends Component {
     }
 
     const { classes } = this.props;
+    const {percentage} = this.state;
+    const {response} = this.state
     return (
       <ContainerDiv>
         <Card style={{height: "300%", padding: "10px 10px 10px"}}>
@@ -140,9 +162,9 @@ class ExternalLink extends Component {
                   value={this.state.period}
                   onChange={this.handlePeriodChange}
                 >
-                  <MenuItem value={10}>Past 24 hours</MenuItem>
-                  <MenuItem value={20}>Past Week</MenuItem>
-                  <MenuItem value={30}>Past Month</MenuItem>
+                  <MenuItem value="Past Day">Past Day</MenuItem>
+                  <MenuItem value="Past Week">Past Week</MenuItem>
+                  <MenuItem value="Past Month">Past Month</MenuItem>
                 </Select>
             </FormControl>
             
@@ -181,8 +203,38 @@ class ExternalLink extends Component {
         >
         Search
         </Button>
+        { this.state.crawling &&
+          <div >
+          {/* Crawling......{percentage}%  */}
+          <Progress
+            percent={percentage}
+            theme={{
+            success: {
+              symbol: '🏄‍',
+              color: 'rgb(223, 105, 180)'
+            },
+            active: {
+              symbol: '😋',
+              color: '#fbc630'
+            },
+            default: {
+              symbol: '😀',
+              color: '#fbc630'
+            }
+          }}
+          />
+        </div>
+        }
+        <div style={{ textAlign: "center" }}>
+        {percentage &&
+           <p>
+              Crawling process : {percentage} %
+            </p>
+        }
+        </div>
         </Card>
       </ContainerDiv>
+      
     );
   }
 }
