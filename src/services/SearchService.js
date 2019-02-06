@@ -8,22 +8,18 @@ class SearchService {
   }
 
   documentSearch = async (search_term, tags, dateFrom, dateTo) => {
-    let query = this.queryBuilder(this._project_uuid, search_term, tags, dateFrom, dateTo);
+    let query = this.queryBuilder(search_term, tags, dateFrom, dateTo);
     return await DocumentService.queryDocuments(query);
   };
 
-  queryBuilder = (project_uuid, search_term, tags, dateFrom, dateTo) => {
-    let secure_search_term = escapeElastic(search_term);
-    let unixDateFrom = dateFrom !== '' ? Date.parse(dateFrom)/1000 : '';
-    let unixDateTo = dateTo !== '' ? Date.parse(dateTo)/1000 : Date.parse(Date().toString());
-
+  queryBuilder = (search_term, tags, dateFrom, dateTo) => {
     let query = {
       "_source": ["file_path","_id"],
-      "query" : {"bool": {"must": [{"match_phrase_prefix" : {"input": {"query": secure_search_term, "max_expansions": 50}}}]}}
+      "query" : {"bool": {"must": [{ "match": { "project_uuid": this._project_uuid } }]}}
     };
 
-    if (project_uuid !== '') {
-      query.query.bool.must.push(this.filterProjectMatch(project_uuid))
+    if (search_term !== '') {
+      query.query.bool.must.push(this.filterSearchTermMarch(search_term));
     }
 
     if (tags.length !== 0) {
@@ -32,24 +28,27 @@ class SearchService {
       });
     }
 
-    if (unixDateFrom !== '') {
-      query.query.bool.must.push(this.filterDate(unixDateFrom, unixDateTo));
+    if (dateFrom !== '') {
+      let unixDateFrom = Date.parse(dateFrom)/1000;
+      let unixDateTo = dateTo !== '' ? Date.parse(dateTo)/1000 : Date.parse(Date().toString())/1000;
+      query.query.bool.must.push(this.filterDateRange(unixDateFrom, unixDateTo));
     }
-    console.log(JSON.stringify(query));
+
     return query;
   };
 
-  filterProjectMatch = (project_uuid) => {
-    return { "match": { "project_uuid": project_uuid } };
+  filterSearchTermMarch =(search_term) => {
+    let secure_search_term = escapeElastic(search_term);
+    return {"match_phrase_prefix" : {"input": {"query": secure_search_term, "max_expansions": 50}}}
   };
 
   filterTagsMatch = (tag) => {
     return { "match": { "tags.tag.keyword": tag } };
   };
 
-  filterDate = (unixDateFrom, unixDateTo) => {
+  filterDateRange = (unixDateFrom, unixDateTo) => {
     return { "range": { "timestamp": { "gte": unixDateFrom, "lt":  unixDateTo } } };
   };
 }
 
-export default SearchService
+export default SearchService;
