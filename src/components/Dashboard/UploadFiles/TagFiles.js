@@ -14,7 +14,7 @@ class TagFiles extends Component {
   constructor(props) {
     super(props);
 
-    DocumentService.getAllTags().then((existingTags) => {
+    DocumentService.getAllTags(true).then((existingTags) => {
       this.setState({
         suggestions: existingTags
       })

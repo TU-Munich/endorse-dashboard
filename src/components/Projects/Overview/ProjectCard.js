@@ -31,12 +31,17 @@ class ProjectCard extends Component {
     };
   }
 
+  setProjectUUID() {
+    window.localStorage.removeItem('projectUUID');
+    window.localStorage.setItem('projectUUID', this.state.projectUUID);
+  }
+
   render() {
     const {classes} = this.props;
 
-    const OpenDashboardLink = props => <Link to={`/dashboard/${this.state.projectUUID}`} {...props} />;
-    const OpenUploadFileLink = props => <Link to={`/dashboard/${this.state.projectUUID}/upload_files`} {...props} />;
-    const OpenCrawlURLLink = props => <Link to={`/dashboard/${this.state.projectUUID}/external_link`} {...props} />;
+    const OpenDashboardLink = props => <Link to={`/dashboard/info`} {...props} />;
+    const OpenUploadFileLink = props => <Link to={`/dashboard/upload_files`} {...props} />;
+    const OpenCrawlURLLink = props => <Link to={`/dashboard/external_link`} {...props} />;
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -61,16 +66,16 @@ class ProjectCard extends Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <Button size="small" color="primary" className={classes.button} component={OpenDashboardLink}>
+          <Button size="small" color="primary" className={classes.button} component={OpenDashboardLink} onClick={() => this.setProjectUUID()}>
             Open Project
           </Button>
           <Tooltip title="Upload Files" aria-label="Upload Files to project">
-            <IconButton component={OpenUploadFileLink}>
+            <IconButton component={OpenUploadFileLink} onClick={() => this.setProjectUUID()}>
               <UploadFilesIcon />
             </IconButton>
           </Tooltip>
           <Tooltip title="Crawl URL's" aria-label="Upload URL for web crawling to project">
-            <IconButton component={OpenCrawlURLLink}>
+            <IconButton component={OpenCrawlURLLink} onClick={() => this.setProjectUUID()}>
               <UploadLinksIcon/>
             </IconButton>
           </Tooltip>
