@@ -10,6 +10,10 @@ export default class DocumentService {
     return this.documentService.put(this.documentsEndpoint() + document_id, payload)
   }
 
+  static async queryDocuments(query) {
+    return await this.documentService.post(this.documentsQueryEndpoint(), query);
+  };
+
   static async getAllTags() {
     let tags = [{name: 'Innovation'}];
     var body = {

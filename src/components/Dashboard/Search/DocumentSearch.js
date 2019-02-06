@@ -10,6 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import styled from 'styled-components'
 import ResultsList from './ResultsList'
 import DocumentService from '../../../services/DocumentService'
+import SearchService from '../../../services/SearchService'
 import ColorPalette from '../../../constants/ColorPalette'
 
 const styles = {
@@ -61,6 +62,7 @@ class DocumentSearch extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.handleDocumentSearch = this.handleDocumentSearch.bind(this);
     this.handleTagSelection = this.handleTagSelection.bind(this);
+    this.searchService = new SearchService(this.props.projectUUID);
   }
 
   componentWillMount() {
@@ -80,8 +82,13 @@ class DocumentSearch extends Component {
     console.log(this.state.search_tags);
   }
 
-  handleDocumentSearch() {
-
+  async handleDocumentSearch() {
+    this.searchService.documentSearch(this.state.search_term, ['Symbolic'], '2019-01-31T00:00:00+00:00', '2019-04-02T00:00:00+00:00').then((results) => {
+      console.log(results);
+      this.setState({
+        results: results.data.hits.hits
+      });
+    });
   }
 
   render() {
@@ -122,7 +129,7 @@ class DocumentSearch extends Component {
         </Tags>
         <ResultsTitle>Search results:</ResultsTitle>
         <Results>
-          <ResultsList/>
+          <ResultsList data={this.state.results} />
         </Results>
       </div>
     )

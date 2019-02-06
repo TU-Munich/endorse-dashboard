@@ -14,18 +14,9 @@ class ResultsList extends Component {
   render() {
     return (
       <ResultsListComponent>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
-        <ResultListItem/>
+        {this.props.data.map((result, i) =>
+            <ResultListItem key={i} document={result} />
+        )}
       </ResultsListComponent>
     );
   }

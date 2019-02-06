@@ -84,19 +84,26 @@ const DeleteButton = styled(IconButton)`
 class ResultListItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { doc_name: 'Testing a new element.pdf' }
+    this.state = {
+      download_link: this.props.document._source.file_path,
+      document_id: this.props.document._id
+    }
   }
 
   render() {
     return (
       <ListItem>
         <Ribbon class={'ribbon'} />
-        <ItemLabel>{ this.state.doc_name }</ItemLabel>
+        <ItemLabel>{ 'Document super awesome.pdf' }</ItemLabel>
         <ListItemActions>
-          <DownloadButton aria-label="Download" style={{transition: 'none', borderRadius: 0}}>
+          <DownloadButton aria-label="Download"
+                          style={{transition: 'none', borderRadius: 0}}
+                          onClick={() => alert(this.state.download_link)}>
             <DownloadIcon />
           </DownloadButton>
-          <ViewButton aria-label="View" style={{transition: 'none', borderRadius: 0}}>
+          <ViewButton aria-label="View"
+                      style={{transition: 'none', borderRadius: 0}}
+                      onClick={() => alert(this.state.document_id)}>
             <ViewIcon />
           </ViewButton>
           <StatisticsButton aria-label="Statistics" style={{transition: 'none', borderRadius: 0}}>
