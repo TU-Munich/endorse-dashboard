@@ -2,44 +2,25 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Chip from '@material-ui/core/Chip';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import styled from 'styled-components'
 import ResultsList from './ResultsList'
 import DocumentService from '../../../services/DocumentService'
 import SearchService from '../../../services/SearchService'
 import ColorPalette from '../../../constants/ColorPalette'
 
-const styles = {
-  root: {
-    margin: '10px auto',
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: '98%',
-  },
-  input: {
-    marginLeft: 8,
-    flex: 1,
-  },
-  iconButton: {
-    padding: 10,
-  },
-  divider: {
-    width: 1,
-    height: 28,
-    margin: 4,
-  },
-};
-
-const Tags = styled.div`
-  margin: auto;
-  align-items: center;
-  width: 90%;
-  text-align: center;
+const Filters = styled.div`
+  width: 98%;
+  margin: 0px auto;
+  padding: 0px 4px;
+  display: flex;
 `;
 
 const ResultsTitle = styled.h2`
@@ -54,11 +35,18 @@ const Results = styled.div`
   box-shadow: 0px 1px 5px 1px rgba(100,100,100, .4);
 `;
 
+const TagsPlaceholder = styled.label`
+  color: darkgray;
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+`;
+
 class DocumentSearch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { search_term: '', search_tags: [], results: [], tags: [], loading: true };
+    this.state = { name: [], search_term: '', search_tags: [], results: [], tags: [], loading: true };
     this.onSearchChange = this.onSearchChange.bind(this);
     this.handleDocumentSearch = this.handleDocumentSearch.bind(this);
     this.handleTagSelection = this.handleTagSelection.bind(this);
@@ -75,6 +63,10 @@ class DocumentSearch extends Component {
     this.setState({search_term: event.target.value});
   }
 
+  handleChange = event => {
+    this.setState({ search_tags: event.target.value });
+  };
+
   handleTagSelection(event) {
     console.log(event);
     let search_tags = [].concat(this.state.search_tags, event.target.value);
@@ -83,7 +75,7 @@ class DocumentSearch extends Component {
   }
 
   async handleDocumentSearch() {
-    this.searchService.documentSearch(this.state.search_term, ['Symbolic'], '2019-01-31T00:00:00+00:00', '2019-04-02T00:00:00+00:00').then((results) => {
+    this.searchService.documentSearch(this.state.search_term, this.state.search_tags, '2019-01-31T00:00:00+00:00', '2019-04-02T00:00:00+00:00').then((results) => {
       console.log(results);
       this.setState({
         results: results.data.hits.hits
@@ -97,11 +89,24 @@ class DocumentSearch extends Component {
     return (
       <div>
         <Paper className={classes.root} elevation={1}>
+          <FormControl className={classes.formControl}>
+            <Select
+              style={{margin: 0}}
+              multiple
+              displayEmpty
+              value={this.state.search_tags}
+              onChange={this.handleChange}
+              input={<Input id="select-multiple-placeholder" disableUnderline={true}/>}
+              renderValue={selected => selected.length === 0 ? <TagsPlaceholder>Tags</TagsPlaceholder> : selected.join(', ')}>
+              <MenuItem disabled value=""><em>Tags</em></MenuItem>
+              {this.state.tags.map((tag) => <MenuItem key={tag} value={tag}> {tag} </MenuItem> )}
+            </Select>
+          </FormControl>
+          <Divider className={classes.divider} />
           <InputBase
             className={classes.input}
             placeholder="Search documents"
-            onChange={ this.onSearchChange }
-            />
+            onChange={ this.onSearchChange }/>
           <Divider className={classes.divider} />
           <IconButton
             className={classes.iconButton}
@@ -110,23 +115,9 @@ class DocumentSearch extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-        <Tags>
-          {
-            this.state.tags.map((tag, i) =>
-              <Chip
-                key={i}
-                label={tag.name}
-                clickable
-                className={classes.chip}
-                color="primary"
-                variant="outlined"
-                onClick={ this.handleTagSelection }
-                selected={true}
-                style={{marginRight: '2px', marginBottom: '2px'}}
-              />
-            )
-          }
-        </Tags>
+        <Filters>
+
+        </Filters>
         <ResultsTitle>Search results:</ResultsTitle>
         <Results>
           <ResultsList data={this.state.results} />
@@ -140,5 +131,35 @@ DocumentSearch.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const styles = theme => ({
+  root: {
+    margin: '10px auto 0px auto',
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: '98%',
+  },
+  formControl: {
+    marginLeft: 10,
+    minWidth: 100,
+    maxWidth: 150
+  },
+  input: {
+    margin: 0,
+    padding: 0,
+    flex: 1,
+  },
+  label: {
+    position: 'relative'
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    width: 1,
+    height: 28,
+    margin: 4,
+  }
+});
 
 export default withStyles(styles)(DocumentSearch)

@@ -14,8 +14,8 @@ export default class DocumentService {
     return await this.documentService.post(this.documentsQueryEndpoint(), query);
   };
 
-  static async getAllTags() {
-    let tags = [{name: 'Innovation'}];
+  static async getAllTags(isAddTag) {
+    let tags = [];
     var body = {
       "_source": ["tags"],
       "size": "0",
@@ -23,7 +23,11 @@ export default class DocumentService {
     };
     let response = await this.documentService.post(this.documentsQueryEndpoint(), body);
     response.data.aggregations.tags.buckets.forEach((bucket) => {
-      tags.push({name: bucket.key});
+      if (isAddTag) {
+        tags.push({name: bucket.key});
+      } else {
+        tags.push(bucket.key);
+      }
     });
     return tags;
   }
