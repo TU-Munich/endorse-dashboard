@@ -82,33 +82,27 @@ const DeleteButton = styled(IconButton)`
 `;
 
 class ResultListItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      download_link: this.props.document._source.file_path,
-      document_id: this.props.document._id,
-      document_name: this.props.document._source.file_path.match(/[(_\-)a-zA-Z0-9]+(\.)+([a-zA-Z]{3,})/g)
-    }
-  }
-
   fetchDocumentInformation() {
 
   }
 
   render() {
+    let download_link = this.props.document._source.file_path;
+    let document_id = this.props.document._id;
+    let document_name = this.props.document._source.file_path.match(/[(_\-)a-zA-Z0-9]+(\.)+([a-zA-Z]{3,})/g);
     return (
       <ListItem>
         <Ribbon class={'ribbon'} />
-        <ItemLabel>{ this.state.document_name.toString().replace(/_/g, ' ') }</ItemLabel>
+        <ItemLabel>{ document_name.toString().replace(/_/g, ' ') }</ItemLabel>
         <ListItemActions>
           <DownloadButton aria-label="Download"
                           style={{transition: 'none', borderRadius: 0}}
-                          onClick={() => alert(this.state.download_link)}>
+                          onClick={() => alert(download_link)}>
             <DownloadIcon />
           </DownloadButton>
           <ViewButton aria-label="View"
                       style={{transition: 'none', borderRadius: 0}}
-                      onClick={() => alert(this.state.document_id)}>
+                      onClick={() => alert(document_id)}>
             <ViewIcon />
           </ViewButton>
           <StatisticsButton aria-label="Statistics" style={{transition: 'none', borderRadius: 0}}>

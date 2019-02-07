@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
+import Modal from '@material-ui/core/Modal';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import styled from 'styled-components'
@@ -49,7 +50,6 @@ class DocumentSearch extends Component {
     this.state = { name: [], search_term: '', search_tags: [], results: [], tags: [], loading: true };
     this.onSearchChange = this.onSearchChange.bind(this);
     this.handleDocumentSearch = this.handleDocumentSearch.bind(this);
-    this.handleTagSelection = this.handleTagSelection.bind(this);
     this.searchService = new SearchService(this.props.projectUUID);
   }
 
@@ -66,12 +66,6 @@ class DocumentSearch extends Component {
   handleChange = event => {
     this.setState({ search_tags: event.target.value });
   };
-
-  handleTagSelection(event) {
-    console.log(event);
-    let search_tags = [].concat(this.state.search_tags, event.target.value);
-    this.setState({search_tags: search_tags});
-  }
 
   async handleDocumentSearch() {
     this.searchService.documentSearch(this.state.search_term, this.state.search_tags, '2019-01-01T00:00:00+00:00', '2019-31-03T00:00:00+00:00').then((results) => {
