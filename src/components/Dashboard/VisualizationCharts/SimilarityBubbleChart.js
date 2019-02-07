@@ -54,7 +54,6 @@ class SimilarityBubbleChart extends Component{
     if (this.state.loading) {
       return <h2>Loading...</h2>
     }
-    console.log(this.state);
     return (
       <Bubble data={this.prepareChartData(this.state.data)}/>
     );

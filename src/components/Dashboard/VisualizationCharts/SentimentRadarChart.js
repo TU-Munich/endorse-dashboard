@@ -1,25 +1,13 @@
 import React, {Component} from 'react';
 import {Radar} from 'react-chartjs-2';
-import DocumentService from '../../../services/DocumentService';
 
 class SentimentRadarChart extends Component{
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true,
-      data: []
-    }
-  }
-  componentWillMount() {
-    this.setState({
-      loading: true
-    }, () => {this.fetchSentimentData()})
   }
 
   prepareChartData(documentAnalysis) {
-    console.log(documentAnalysis);
     let chartData = documentAnalysis.total;
-    console.log(chartData);
     return {
       labels: ['Positive', 'Negative', 'Neutral'],
       datasets: [{
@@ -38,22 +26,10 @@ class SentimentRadarChart extends Component{
     }
   };
 
-  fetchSentimentData() {
-    DocumentService.getSentimentCount(this.props.projectUUID).then((response) => {
-      this.setState({
-        data: response,
-        loading: false
-      });
-    });
-  };
 
   render() {
-    if (this.state.loading) {
-      return <h2>Loading...</h2>
-    }
-    console.log(this.state);
     return (
-      <Radar data={this.prepareChartData(this.state.data)}/>
+      <Radar data={this.prepareChartData(this.props.data)}/>
     );
   }
 

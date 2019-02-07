@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Bar} from 'react-chartjs-2';
-import DocumentService from "../../../services/DocumentService";
 
 class SentimentBarChart extends Component{
   constructor(props) {
@@ -8,7 +7,6 @@ class SentimentBarChart extends Component{
   }
 
   prepareChartData(documentAnalysis) {
-    console.log(documentAnalysis);
     const chartKeyword = documentAnalysis.keyword;
     const chartCount = documentAnalysis.counts;
     return {
