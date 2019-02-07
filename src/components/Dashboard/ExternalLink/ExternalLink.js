@@ -15,6 +15,8 @@ import CrawlerService from '../../../services/CrawlerService';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 import socketIOClient from "socket.io-client";
+import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const ContainerDiv = styled.div`
   display: flex;
@@ -47,6 +49,16 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  progress:{
+    marginTop : 10,
+    flexGrow: 1,
+  },
+  linearColorPrimary: {
+    backgroundColor: '#0065BD',
+  },
+  linearBarColorPrimary: {
+    backgroundColor: '#a9cae8',
+  },
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 450,
@@ -71,8 +83,8 @@ class ExternalLink extends Component {
     super(props);
 
     this.state = {
-      response: false,
       percentage: 0,
+      quotes:'',
       endpoint:"http://localhost:3002",
       loading: false,
       crawling: false,
@@ -109,7 +121,7 @@ class ExternalLink extends Component {
           {
             label: 'Continue',
             // onClick: () => window.location.replace('/dashboard/crawl')
-            onClick: () => console.log('Searching')
+            onClick: () => this.setState({crawling: false})
           }
         ]
       });
@@ -119,9 +131,8 @@ class ExternalLink extends Component {
   componentDidMount() {
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
-    socket.on("server_response", p => this.setState({ 
-      response: p['data'],
-      percentage: p['data']
+    socket.on("server_response", response => this.setState({ 
+      quote: response['data']
    }));
     
   }
@@ -135,7 +146,6 @@ class ExternalLink extends Component {
 
     const { classes } = this.props;
     const {percentage} = this.state;
-    const {response} = this.state
     return (
       <ContainerDiv>
         <Card style={{height: "300%", padding: "10px 10px 10px"}}>
@@ -200,12 +210,21 @@ class ExternalLink extends Component {
         variant="contained" 
         color="primary" 
         onClick={this.handleSubmit}
+        disabled={this.state.crawling}
         >
         Search
         </Button>
         { this.state.crawling &&
           <div >
-          {/* Crawling......{percentage}%  */}
+          <Paper className={classes.progress}>
+            <LinearProgress 
+              classes={{
+                colorPrimary: classes.linearColorPrimary,
+                barColorPrimary: classes.linearBarColorPrimary,
+                      }}
+            />
+          </Paper>
+          {/* Crawling......{percentage}% 
           <Progress
             percent={percentage}
             theme={{
@@ -222,16 +241,14 @@ class ExternalLink extends Component {
               color: '#fbc630'
             }
           }}
-          />
-        </div>
-        }
-        <div style={{ textAlign: "center" }}>
-        {percentage &&
-           <p>
-              Crawling process : {percentage} %
+          />*/
+          <div style={{ textAlign: "center" }}>
+            <p>
+                {this.state.quotes}
             </p>
-        }
+          </div>}
         </div>
+        }
         </Card>
       </ContainerDiv>
       
