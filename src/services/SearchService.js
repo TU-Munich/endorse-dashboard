@@ -19,7 +19,7 @@ class SearchService {
     };
 
     if (search_term !== '') {
-      query.query.bool.must.push(this.filterSearchTermMatch(search_term));
+      query.query.bool.must.push(this.filterSearchTermInputMatch(search_term));
     }
 
     if (tags.length !== 0) {
@@ -37,9 +37,15 @@ class SearchService {
     return query;
   };
 
-  filterSearchTermMatch =(search_term) => {
+  filterSearchTermInputMatch = (search_term) => {
     let secure_search_term = escapeElastic(search_term);
     return {"match_phrase_prefix" : {"input": {"query": secure_search_term, "max_expansions": 50}}}
+  };
+
+  // Not used at the moment. No possibility to filter documents by title
+  filterSearchTermFileNameMatch = (search_term) => {
+    let secure_search_term = escapeElastic(search_term);
+    return {"match_phrase_prefix" : {"file_path": {"query": secure_search_term, "max_expansions": 50}}}
   };
 
   filterTagsMatch = (tag) => {

@@ -24,7 +24,7 @@ const Filters = styled.div`
 `;
 
 const ResultsTitle = styled.h2`
-  padding-left: 10px;
+  padding-left: 15px;
   margin: 10px 0;
 `;
 
@@ -116,7 +116,9 @@ class DocumentSearch extends Component {
         <Filters>
 
         </Filters>
-        <ResultsTitle>Search results:</ResultsTitle>
+        {this.state.results.length > 0 &&
+          <ResultsTitle>Search results:</ResultsTitle>
+        }
         <Results>
           <ResultsList data={this.state.results} />
         </Results>
