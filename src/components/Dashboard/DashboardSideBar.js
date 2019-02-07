@@ -114,7 +114,7 @@ class DashboardSideBar extends Component {
 
                             <ListItemA to={"/dashboard/visualization_charts"}>
                                 <NavSideMenuLI>
-                                    <Icon icon="chart-line"/>Visualizations
+                                    <Icon icon="chart-line"/>Charts
                                 </NavSideMenuLI>
                             </ListItemA>
 
