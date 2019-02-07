@@ -5,6 +5,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 import ChartsIcon from '@material-ui/icons/TrendingUp';
 import ViewIcon from '@material-ui/icons/Visibility';
+import Modal from "@material-ui/core/Modal/Modal";
+import DocumentDetailView from './DocumentDetailView'
 
 const Ribbon = styled.div`
   width: 10px;
@@ -82,13 +84,23 @@ const DeleteButton = styled(IconButton)`
 `;
 
 class ResultListItem extends Component {
-  fetchDocumentInformation() {
-
+  constructor(props) {
+    super(props);
+    this.state = { open: false };
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
+
+  handleOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ open: false });
+  };
 
   render() {
     let download_link = this.props.document._source.file_path;
-    let document_id = this.props.document._id;
     let document_name = this.props.document._source.file_path.match(/[(_\-)a-zA-Z0-9]+(\.)+([a-zA-Z]{3,})/g);
     return (
       <ListItem>
@@ -102,7 +114,7 @@ class ResultListItem extends Component {
           </DownloadButton>
           <ViewButton aria-label="View"
                       style={{transition: 'none', borderRadius: 0}}
-                      onClick={() => alert(document_id)}>
+                      onClick={this.handleOpenModal}>
             <ViewIcon />
           </ViewButton>
           <StatisticsButton aria-label="Statistics" style={{transition: 'none', borderRadius: 0}}>
@@ -112,6 +124,9 @@ class ResultListItem extends Component {
             <DeleteIcon />
           </DeleteButton>
         </ListItemActions>
+        <Modal open={this.state.open} onClose={this.handleCloseModal} disableAutoFocus={true}>
+          <DocumentDetailView document_id={this.props.document._id} />
+        </Modal>
       </ListItem>
     );
   }

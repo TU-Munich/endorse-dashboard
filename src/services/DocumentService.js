@@ -6,8 +6,13 @@ export default class DocumentService {
   static documentsEndpoint() { return '/generic/document-index/document/' }
   static documentsQueryEndpoint() { return '/generic/query/document-index/document' }
 
+  static async getDocumentById(document_id) {
+    let query = { "_source": {"excludes": "input"}, "query": {"match": {"_id": document_id }}};
+    return await this.documentService.post(this.documentsQueryEndpoint(), query);
+  }
+
   static updateDocument(document_id, payload) {
-    return this.documentService.put(this.documentsEndpoint() + document_id, payload)
+    return this.documentService.put(this.documentsEndpoint() + document_id, payload);
   }
 
   static async queryDocuments(query) {

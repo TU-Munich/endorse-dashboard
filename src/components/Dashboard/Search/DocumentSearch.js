@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
-import Modal from '@material-ui/core/Modal';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import styled from 'styled-components'
@@ -16,13 +15,6 @@ import ResultsList from './ResultsList'
 import DocumentService from '../../../services/DocumentService'
 import SearchService from '../../../services/SearchService'
 import ColorPalette from '../../../constants/ColorPalette'
-
-const Filters = styled.div`
-  width: 98%;
-  margin: 0px auto;
-  padding: 0px 4px;
-  display: flex;
-`;
 
 const ResultsTitle = styled.h2`
   padding-left: 15px;
@@ -47,7 +39,7 @@ class DocumentSearch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { name: [], search_term: '', search_tags: [], results: [], tags: [], loading: true };
+    this.state = { name: [], search_term: '', search_tags: [], results: [], tags: [], loading: true, open: false };
     this.onSearchChange = this.onSearchChange.bind(this);
     this.handleDocumentSearch = this.handleDocumentSearch.bind(this);
     this.searchService = new SearchService(this.props.projectUUID);
@@ -63,7 +55,7 @@ class DocumentSearch extends Component {
     this.setState({search_term: event.target.value});
   }
 
-  handleChange = event => {
+  handleTagsChange = event => {
     this.setState({ search_tags: event.target.value });
   };
 
@@ -87,7 +79,7 @@ class DocumentSearch extends Component {
               multiple
               displayEmpty
               value={this.state.search_tags}
-              onChange={this.handleChange}
+              onChange={this.handleTagsChange}
               input={<Input id="select-multiple-placeholder" disableUnderline={true}/>}
               renderValue={selected => selected.length === 0 ? <TagsPlaceholder>Tags</TagsPlaceholder> : selected.join(', ')}>
               <MenuItem disabled value=""><em>Tags</em></MenuItem>
@@ -107,9 +99,6 @@ class DocumentSearch extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-        <Filters>
-
-        </Filters>
         {this.state.results.length > 0 &&
           <ResultsTitle>Search results:</ResultsTitle>
         }
