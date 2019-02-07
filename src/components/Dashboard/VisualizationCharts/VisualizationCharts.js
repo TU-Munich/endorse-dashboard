@@ -29,13 +29,18 @@ const DivCards = styled.div`
   display:inline-block;
   padding-right : 15px;
   margin-bottom: 3%;
+  
 `;
 const FormCont = styled.form`
-    margin: theme.spacing.unit;
-    padding: 5px;
-    fontsize: small;
+    fontsize: normal;
 `;
 
+const CardsContainer = styled.div`
+   display: flex;
+  flex-flow: row wrap;	
+  margin: 10px; 
+  max-width: 100%;
+`;
 
 class VisualizationCharts extends Component {
 
@@ -161,24 +166,24 @@ class VisualizationCharts extends Component {
             <PageTitle>
               Project Visualization
             </PageTitle>
-            <div style={{width:"60%", backgroundColor:"#fbfbfb", left:"25%", position:"relative"}}>
-              <div style={{display:"inline-flex", paddingLeft:"15px"}}>
+            <div style={{width:"98%", margin:"0 auto"}}>
+              <div style={{display:"flex", margin:"0 auto", maxWidth:"55%", alignItems:"center"}}>
                 <FormCont>
                   <InputLabel htmlFor="filter_id">Source data: </InputLabel>
-                  <Select style={{width:"90px", fontSize:"small"}}
+                  <Select style={{width:"100px", fontSize:"small", padding:"0 5px", maxHeight:"17px"}}
                           value={this.state.value}
                           onChange={this.handleSelectChange}>
                     <MenuItem value={"uploaded"}>Uploaded</MenuItem>
                     <MenuItem value={"crawled"}>Crawled</MenuItem>
                   </Select>
                 </FormCont>
-                <FormCont style={{marginTop:"1%"}}>
+                <FormCont style={{padding:"0 5px"}}>
                 <InputLabel>From:</InputLabel>
                 <DatePicker
                   selected={this.state.startDate}
                   onChange={this.handleStartDateChange}/>
                 </FormCont>
-                <FormCont style={{marginTop:"1%"}}>
+                <FormCont style={{padding:"0 5px"}}>
                   <InputLabel>To:</InputLabel>
                   <DatePicker
                     selected={this.state.endDate}
@@ -187,6 +192,7 @@ class VisualizationCharts extends Component {
               </div>
             </div><br/>
 
+        <CardsContainer>
             <DivCards>
               <Card>
                 <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
@@ -253,6 +259,7 @@ class VisualizationCharts extends Component {
                 </CardContent>
               </Card>
             </DivCards>
+        </CardsContainer>
       </OverviewWrapper>
     );
   }

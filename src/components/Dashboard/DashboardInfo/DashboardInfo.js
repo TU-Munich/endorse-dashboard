@@ -8,8 +8,7 @@ import SentimentDoughnutChart from "../VisualizationCharts/SentimentDoughnutChar
 import SentimentRadarChart from "../VisualizationCharts/SentimentRadarChart";
 import SimilarityBubbleChart from "../VisualizationCharts/SimilarityBubbleChart";
 import DocumentService from '../../../services/DocumentService';
-import Input from "@material-ui/core/Input/Input";
-import InputLabel from "@material-ui/core/es/InputLabel/InputLabel";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Article = styled.article`
     margin: auto;
@@ -28,20 +27,19 @@ const Title = styled.h3`
 
 const CardDiv = styled.div`
   text-align: justify;
-  display: -webkit-box;  
-  border-radius: 30%;
-  padding: 10px 10px;
+  display: inline-flex; 
+  width: 100%;
 `;
 const CellDiv = styled.div`
-  margin-right:10%;
+  width: 33.1%;
+  padding: 0 5px;
 `;
 const StyledCardContent = styled.div`
   border-bottom: 2px solid #f2f2f2;
   padding:5px;
   text-align:left;
-  color: #336699;
-  margin-left:10px;
-  margin-right: 10px;
+  color: white;
+  background-color: #2e353e;
 `;
 
 const DivCards = styled.div`
@@ -54,6 +52,16 @@ const InputText = styled.input`
    text-align: center;
    font-size :30px;
    border: none;
+`;
+const Icon = styled(FontAwesomeIcon)`
+  display: inline-block;
+  position: relative;
+`;
+const CardsContainer = styled.div`
+  display: flex;
+  margin: 1%; 
+  max-width: 99%
+  width:99%;
 `;
 
 class DashboardInfo extends Component {
@@ -124,15 +132,13 @@ class DashboardInfo extends Component {
 
     return (
       <div>
-        <Grid style={{width: "33.33%", gridColumnGap: "33%", margin: "20px 0px"}}>
+        <CardsContainer>
           <CardDiv>
             <CellDiv>
               <Card>
                 <StyledCardContent>
-                  <label>Local Search</label>
-                  <img style={{width: "10%", height: "10%", marginLeft: "50%",}}
-                       src={"https://www.freeiconspng.com/uploads/upload-icon-3.png"}
-                       alt={""}/>
+                  <label>Uploaded data</label>
+                  <Icon icon="upload" style={{float:"right"}}/>
                 </StyledCardContent>
                 <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
                   <InputText  value={this.state.totalDocuments}/>
@@ -143,10 +149,8 @@ class DashboardInfo extends Component {
             <CellDiv>
               <Card>
                 <StyledCardContent>
-                  <label>External Search</label>
-                  <img style={{width: "10%", height: "10%", marginLeft: "44%"}}
-                       src={"https://www.freeiconspng.com/uploads/upload-icon-3.png"}
-                       alt={""}/>
+                  <label>Crawled data</label>
+                  <Icon icon="upload" style={{float:"right"}}/>
                 </StyledCardContent>
                 <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
                   <InputText  value={this.state.totalDocuments}/>
@@ -158,9 +162,7 @@ class DashboardInfo extends Component {
               <Card>
                 <StyledCardContent>
                   <label>Local Search</label>
-                  <img style={{width: "10%", height: "10%", marginLeft: "50%",}}
-                       src={"https://www.freeiconspng.com/uploads/upload-icon-3.png"}
-                       alt={""}/>
+                  <Icon icon="upload" style={{float:"right"}}/>
                 </StyledCardContent>
                 <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
                   <InputText  value={this.state.totalDocuments}/>
@@ -169,11 +171,11 @@ class DashboardInfo extends Component {
               </Card>
             </CellDiv>
           </CardDiv>
-        </Grid>
+        </CardsContainer>
         <CardDiv>
-          <Card style={{width: "100%"}}>
+          <Card style={{width: "100%", margin:"1%"}}>
             <Article>
-              <Title style={{marginBottom:"10%"}}>Project Overview</Title>
+              <Title style={{marginBottom:"5%"}}>Project Overview</Title>
               <DivCards>
               <SentimentBarChart projectUUID={this.props.projectUUID} data={this.state.nerData}/>
               </DivCards>

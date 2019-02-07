@@ -40,6 +40,7 @@
     "lodash": "^4.17.10",
     "material-ui-filter": "^2.1.13",
     "material-ui-image": "^3.0.3",
+    "material-ui-pickers": "^2.2.0",
     "material-ui-slider": "^3.0.0",
     "npm": "^6.4.1",
     "react": "^16.4.1",
