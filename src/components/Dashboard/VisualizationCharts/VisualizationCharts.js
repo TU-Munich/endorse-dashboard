@@ -1,20 +1,18 @@
 import React, {Component} from "react";
 import SentimentDoughnutChart from './SentimentDoughnutChart';
 import SentimentBarChart from "./SentimentBarChart";
-import SentimetLineChart from "./SentimetLineChart";
 import styled from 'styled-components';
 import Card from "@material-ui/core/Card/Card";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
-import SentimentAreaChart from "./SentimentAreaChart";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Input from "@material-ui/core/es/Input/Input";
 import SentimentRadarChart from "./SentimentRadarChart";
 import SimilarityBubbleChart from "./SimilarityBubbleChart";
+import DocumentService from "../../../services/DocumentService";
 
 
 const OverviewWrapper = styled.div`
@@ -22,7 +20,6 @@ const OverviewWrapper = styled.div`
   flex-grow: 1;
   margin: 1px;
 `;
-
 const PageTitle = styled.h1`
   text-align: center;
 `;
@@ -33,7 +30,6 @@ const DivCards = styled.div`
   padding-right : 15px;
   margin-bottom: 3%;
 `;
-
 const FormCont = styled.form`
     margin: theme.spacing.unit;
     padding: 5px;
@@ -49,14 +45,36 @@ class VisualizationCharts extends Component {
       startDate: new Date(),
       endDate: new Date(),
       value: 'uploaded',
-      amountBar: '5',
-      amountDoughnut: '5'
+      amountBar: '10',
+      amountDoughnut: '10',
+      nerData: '',
+      labelData : ''
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.handleSelectChange= this.handleSelectChange.bind(this);
     this.handleAmountBarChange= this.handleAmountBarChange.bind(this);
     this.handleAmountDoughnutChange= this.handleAmountDoughnutChange.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({
+      loading: true
+    }, () => {
+      this.fetchNerResponseData().then((status) => {
+        if (status === 'success') {
+          this.fetchLabelsResponseData().then((status) =>{
+            if (status === 'success') {
+              this.fetchSentimentResponseData().then((status) => {
+                if (status === 'success') {
+                  this.setState({loading: false})
+                }
+              })
+            }
+          })
+        }
+      });
+    })
   }
 
   handleStartDateChange(date) {
@@ -74,15 +92,57 @@ class VisualizationCharts extends Component {
   }
 
   handleAmountBarChange(event) {
-    this.setState({amountBar: event.target.value});
+    this.setState({amountBar: event.target.value}, () => {
+      this.fetchNerResponseData()
+    });
   }
 
   handleAmountDoughnutChange(event) {
-    this.setState({amountDoughnut: event.target.value});
+    this.setState({amountDoughnut: event.target.value}, () =>{
+      this.fetchLabelsResponseData()
+    });
   }
 
+  fetchNerResponseData(){
+    return new Promise((resolve) => {
+      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar).then((response) => {
+        this.setState({
+          nerData: response
+        }, () => {
+          resolve('success')
+        });
+      });
+    });
+  }
+
+  fetchLabelsResponseData(){
+    return new Promise((resolve) => {
+      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut).then((response) => {
+        this.setState({
+          labelData: response
+        },() => {
+          resolve('success')
+        });
+      });
+    });
+  }
+
+  fetchSentimentResponseData(){
+    return new Promise((resolve) => {
+      DocumentService.getSentimentCount(this.props.projectUUID).then((response) => {
+        this.setState({
+          sentimentData: response
+        }, () => {
+          resolve('success')
+        });
+      });
+    });
+  }
 
   render() {
+    if (this.state.loading) {
+      return <h2>Loading...</h2>
+    }
     return (
       <OverviewWrapper>
             <PageTitle>
@@ -117,7 +177,7 @@ class VisualizationCharts extends Component {
             <DivCards>
               <Card>
                 <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
-                  <SentimentBarChart projectUUID={this.props.projectUUID}/>
+                  <SentimentBarChart projectUUID={this.props.projectUUID}  data={this.state.nerData}/>
                 </CardMedia>
                   <CardContent style={{fontSize:"medium"}}>
                     Document Name Entity Recognition:
@@ -127,6 +187,7 @@ class VisualizationCharts extends Component {
                       <Select style={{width:"40%", fontSize:"small"}}
                               value={this.state.amountBar}
                               onChange={this.handleAmountBarChange}>
+                        <MenuItem value={"3"}>3</MenuItem>
                         <MenuItem value={"5"}>5</MenuItem>
                         <MenuItem value={"10"}>10</MenuItem>
                         <MenuItem value={"15"}>15</MenuItem>
@@ -139,7 +200,7 @@ class VisualizationCharts extends Component {
             <DivCards>
               <Card >
                 <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
-                  <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
+                  <SentimentDoughnutChart projectUUID={this.props.projectUUID} data={this.state.labelData}/>
                 </CardMedia>
                 <CardContent style={{fontSize:"medium"}}>
                   Project Documents Labels
@@ -149,9 +210,10 @@ class VisualizationCharts extends Component {
                       <Select style={{width:"40%", fontSize:"small"}}
                               value={this.state.amountDoughnut}
                               onChange={this.handleAmountDoughnutChange}>
+                        <MenuItem value={"3"}>3</MenuItem>
                         <MenuItem value={"5"}>5</MenuItem>
                         <MenuItem value={"10"}>10</MenuItem>
-                        <MenuItem value={"10"}>15</MenuItem>
+                        <MenuItem value={"15"}>15</MenuItem>
                       </Select>
                     </FormCont>
                   </div>
