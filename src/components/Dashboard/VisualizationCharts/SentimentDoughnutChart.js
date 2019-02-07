@@ -6,17 +6,8 @@ import DocumentService from "../../../services/DocumentService";
 class SentimentDoughnutChart extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            loading: true,
-            data: []
-        }
     }
 
-    componentWillMount() {
-        this.setState({
-          loading: true
-        }, () => {this.fetchSentimentData()})
-    }
 
     prepareChartData(documentAnalysis) {
       console.log(documentAnalysis);
@@ -34,21 +25,10 @@ class SentimentDoughnutChart extends Component {
         }
     };
 
-  fetchSentimentData() {
-    DocumentService.getLabelsCount(this.props.projectUUID).then((response) => {
-      this.setState({
-        data: response,
-        loading: false
-      });
-    });
-  }
-
     render() {
-        if (this.state.loading) {
-            return <h2>Loading...</h2>
-        }
+
         return (
-            <Doughnut data={this.prepareChartData(this.state.data)}/>
+            <Doughnut data={this.prepareChartData(this.props.data)}/>
         );
     }
 }
