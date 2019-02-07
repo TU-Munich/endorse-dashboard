@@ -8,6 +8,8 @@ import SentimentDoughnutChart from "../VisualizationCharts/SentimentDoughnutChar
 import SentimentRadarChart from "../VisualizationCharts/SentimentRadarChart";
 import SimilarityBubbleChart from "../VisualizationCharts/SimilarityBubbleChart";
 import DocumentService from '../../../services/DocumentService';
+import Input from "@material-ui/core/Input/Input";
+import InputLabel from "@material-ui/core/es/InputLabel/InputLabel";
 
 const Article = styled.article`
     margin: auto;
@@ -48,19 +50,27 @@ const DivCards = styled.div`
     margin-bottom: 7%;
 `;
 
+const InputText = styled.input`
+   text-align: center;
+   font-size :30px;
+   border: none;
+`;
+
 class DashboardInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
-      data: [],
       amountBar: '10',
       amountDoughnut: '10',
       nerData: '',
-      labelData : ''
+      labelData : '',
+      sentimentData: '',
+      totalDocuments: ''
     }
-    this.fetchNerResponseData()
-      this.fetchLabelsResponseData()
+    this.fetchNerResponseData();
+    this.fetchLabelsResponseData();
+    this.fetchSentimentResponseData();
+    this.fetchTotalDocumentCount();
   }
 
   fetchNerResponseData(){
@@ -86,8 +96,32 @@ class DashboardInfo extends Component {
       });
     });
   }
+  fetchSentimentResponseData(){
+    return new Promise((resolve) => {
+      DocumentService.getSentimentCount(this.props.projectUUID).then((response) => {
+        this.setState({
+          sentimentData: response
+        }, () => {
+          resolve('success')
+        });
+      });
+    });
+  }
+
+  fetchTotalDocumentCount(){
+    return new Promise((resolve) => {
+      DocumentService.getDocumentsCount(this.props.projectUUID).then((response) => {
+        this.setState({
+          totalDocuments: response
+        }, () => {
+          resolve('success')
+        });
+      });
+    });
+  }
 
   render() {
+
     return (
       <div>
         <Grid style={{width: "33.33%", gridColumnGap: "33%", margin: "20px 0px"}}>
@@ -101,7 +135,7 @@ class DashboardInfo extends Component {
                        alt={""}/>
                 </StyledCardContent>
                 <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
-                  <label style={{display: "inline-block", fontSize: "30px"}}>10</label>
+                  <InputText  value={this.state.totalDocuments}/>
                   <label style={{display: "block", fontSize: "10px"}}>files were analyzed </label>
                 </CardMedia>
               </Card>
@@ -115,7 +149,7 @@ class DashboardInfo extends Component {
                        alt={""}/>
                 </StyledCardContent>
                 <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
-                  <label style={{display: "inline-block", fontSize: "30px"}}>100</label>
+                  <InputText  value={this.state.totalDocuments}/>
                   <label style={{display: "block", fontSize: "10px"}}>links were analyzed </label>
                 </CardMedia>
               </Card>
@@ -129,7 +163,7 @@ class DashboardInfo extends Component {
                        alt={""}/>
                 </StyledCardContent>
                 <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
-                  <label style={{display: "inline-block", fontSize: "30px"}}>500</label>
+                  <InputText  value={this.state.totalDocuments}/>
                   <label style={{display: "block", fontSize: "10px"}}>NER were detected</label>
                 </CardMedia>
               </Card>
@@ -147,7 +181,7 @@ class DashboardInfo extends Component {
                 <SentimentDoughnutChart projectUUID={this.props.projectUUID} data={this.state.labelData}/>
               </DivCards>
               <DivCards>
-                <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+                <SentimentRadarChart projectUUID={this.props.projectUUID} data={this.state.sentimentData}/>
               </DivCards>
               <DivCards>
                 <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
