@@ -54,7 +54,7 @@ class DocumentSearch extends Component {
   }
 
   componentWillMount() {
-    DocumentService.getAllTags().then((tags) => {
+    DocumentService.getAllTags(false, this.props.projectUUID).then((tags) => {
       this.setState({ tags: tags, loading: false })
     })
   }

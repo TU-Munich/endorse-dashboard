@@ -26,7 +26,7 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: './public/'
+              publicPath: '/'
             }
           },
           "css-loader"
@@ -42,6 +42,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebPackPlugin({

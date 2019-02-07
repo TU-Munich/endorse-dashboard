@@ -14,21 +14,32 @@ export default class DocumentService {
     return await this.documentService.post(this.documentsQueryEndpoint(), query);
   };
 
-  static async getAllTags(isAddTag) {
+  static async getAllTags(isAddTag, project_uuid) {
     let tags = [];
     var body = {
       "_source": ["tags"],
       "size": "0",
       "aggs": {"tags": {"terms": {"field": "tags.tag.keyword", "size": "1000" }}}
     };
+
+    if (project_uuid !== false) {
+      body.query = {"match": { "project_uuid": project_uuid }}
+    }
+
     let response = await this.documentService.post(this.documentsQueryEndpoint(), body);
+
     response.data.aggregations.tags.buckets.forEach((bucket) => {
-      if (isAddTag) {
+      if (isAddTag === true) {
         tags.push({name: bucket.key});
       } else {
         tags.push(bucket.key);
       }
     });
+
+    if (isAddTag === true && tags.length < 1) {
+      tags = [{name: ''}]
+    }
+
     return tags;
   }
 

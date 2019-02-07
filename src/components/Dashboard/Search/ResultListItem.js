@@ -91,6 +91,10 @@ class ResultListItem extends Component {
     }
   }
 
+  fetchDocumentInformation() {
+
+  }
+
   render() {
     return (
       <ListItem>

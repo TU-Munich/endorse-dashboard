@@ -19,7 +19,7 @@ class SearchService {
     };
 
     if (search_term !== '') {
-      query.query.bool.must.push(this.filterSearchTermMarch(search_term));
+      query.query.bool.must.push(this.filterSearchTermMatch(search_term));
     }
 
     if (tags.length !== 0) {
@@ -37,7 +37,7 @@ class SearchService {
     return query;
   };
 
-  filterSearchTermMarch =(search_term) => {
+  filterSearchTermMatch =(search_term) => {
     let secure_search_term = escapeElastic(search_term);
     return {"match_phrase_prefix" : {"input": {"query": secure_search_term, "max_expansions": 50}}}
   };
