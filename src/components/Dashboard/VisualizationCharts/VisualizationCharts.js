@@ -48,7 +48,8 @@ class VisualizationCharts extends Component {
       amountBar: '10',
       amountDoughnut: '10',
       nerData: '',
-      labelData : ''
+      labelData : '',
+      sentimentData: ''
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -78,13 +79,19 @@ class VisualizationCharts extends Component {
   }
 
   handleStartDateChange(date) {
-    this.setState({
-      startDate: date
+    this.setState({startDate: date}, () =>{
+      this.fetchNerResponseData();
+      this.fetchLabelsResponseData();
+      this.fetchSentimentResponseData();
     });
   }
 
   handleEndDateChange(date) {
-    this.setState({endDate: date});
+    this.setState({endDate: date}, () => {
+      this.fetchNerResponseData();
+      this.fetchLabelsResponseData();
+      this.fetchSentimentResponseData();
+    });
   }
 
   handleSelectChange(event) {
@@ -105,7 +112,9 @@ class VisualizationCharts extends Component {
 
   fetchNerResponseData(){
     return new Promise((resolve) => {
-      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar).then((response) => {
+      let unixDateFrom = Date.parse(this.state.startDate)/1000;
+      let unixDateTo = Date.parse(this.state.endDate)/1000;
+      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar, unixDateFrom, unixDateTo).then((response) => {
         this.setState({
           nerData: response
         }, () => {
@@ -116,8 +125,10 @@ class VisualizationCharts extends Component {
   }
 
   fetchLabelsResponseData(){
+    let unixDateFrom = Date.parse(this.state.startDate)/1000;
+    let unixDateTo = Date.parse(this.state.endDate)/1000;
     return new Promise((resolve) => {
-      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut).then((response) => {
+      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut, unixDateFrom, unixDateTo).then((response) => {
         this.setState({
           labelData: response
         },() => {
@@ -128,8 +139,10 @@ class VisualizationCharts extends Component {
   }
 
   fetchSentimentResponseData(){
+    let unixDateFrom = Date.parse(this.state.startDate)/1000;
+    let unixDateTo = Date.parse(this.state.endDate)/1000;
     return new Promise((resolve) => {
-      DocumentService.getSentimentCount(this.props.projectUUID).then((response) => {
+      DocumentService.getSentimentCount(this.props.projectUUID, unixDateFrom, unixDateTo).then((response) => {
         this.setState({
           sentimentData: response
         }, () => {
@@ -149,7 +162,7 @@ class VisualizationCharts extends Component {
               Project Visualization
             </PageTitle>
             <div style={{width:"60%", backgroundColor:"#fbfbfb", left:"25%", position:"relative"}}>
-              <div style={{display:"-webkit-box", paddingLeft:"15px"}}>
+              <div style={{display:"inline-flex", paddingLeft:"15px"}}>
                 <FormCont>
                   <InputLabel htmlFor="filter_id">Source data: </InputLabel>
                   <Select style={{width:"90px", fontSize:"small"}}
@@ -223,7 +236,7 @@ class VisualizationCharts extends Component {
         <DivCards>
           <Card >
             <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
-              <SentimentRadarChart projectUUID={this.props.projectUUID}/>
+              <SentimentRadarChart projectUUID={this.props.projectUUID} data={this.state.sentimentData}/>
             </CardMedia>
             <CardContent>
               Document Sentiment Values
