@@ -53,8 +53,38 @@ class DashboardInfo extends Component {
     super(props);
     this.state = {
       loading: true,
-      data: []
+      data: [],
+      amountBar: '10',
+      amountDoughnut: '10',
+      nerData: '',
+      labelData : ''
     }
+    this.fetchNerResponseData()
+      this.fetchLabelsResponseData()
+  }
+
+  fetchNerResponseData(){
+    return new Promise((resolve) => {
+      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar).then((response) => {
+        this.setState({
+          nerData: response
+        }, () => {
+          resolve('success')
+        });
+      });
+    });
+  }
+
+  fetchLabelsResponseData(){
+    return new Promise((resolve) => {
+      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut).then((response) => {
+        this.setState({
+          labelData: response
+        },() => {
+          resolve('success')
+        });
+      });
+    });
   }
 
   render() {
@@ -111,10 +141,10 @@ class DashboardInfo extends Component {
             <Article>
               <Title style={{marginBottom:"10%"}}>Project Overview</Title>
               <DivCards>
-                <SentimentBarChart projectUUID={this.props.projectUUID}/>
+              <SentimentBarChart projectUUID={this.props.projectUUID} data={this.state.nerData}/>
               </DivCards>
               <DivCards>
-                <SentimentDoughnutChart projectUUID={this.props.projectUUID}/>
+                <SentimentDoughnutChart projectUUID={this.props.projectUUID} data={this.state.labelData}/>
               </DivCards>
               <DivCards>
                 <SentimentRadarChart projectUUID={this.props.projectUUID}/>

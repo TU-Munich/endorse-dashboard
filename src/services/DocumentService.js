@@ -47,7 +47,7 @@ export default class DocumentService {
     return tags;
   }
 
-  static async getNerCount(projectUUID) {
+  static async getNerCount(projectUUID, amountBar) {
     let query = {
       "size": "0",
       "query": {
@@ -56,14 +56,8 @@ export default class DocumentService {
       "aggs": {
         "count": {
           "terms": {
-            "field": "ner.text.keyword"
-          },
-          "aggs":{
-            "label":{
-              "terms": {
-                "field": "ner.label.keyword"
-              }
-            }
+            "field": "ner.text.keyword",
+            "size": amountBar
           }
         }
       }
@@ -73,14 +67,14 @@ export default class DocumentService {
     let keyword = [];
     let counts = [];
 
-    response.data.aggregations.count.buckets.map((bucket) => {
+    response.data.aggregations.count.buckets.forEach((bucket) => {
       keyword.push(bucket.key);
       counts.push(bucket.doc_count);
     });
     return {keyword, counts}
   }
 
-  static async getLabelsCount(projectUUID) {
+  static async getLabelsCount(projectUUID, amountDoughnut) {
     let query = {
       "size": "0",
       "query": {
@@ -89,7 +83,8 @@ export default class DocumentService {
       "aggs": {
         "labels": {
           "terms": {
-            "field": "ner.label.keyword"
+            "field": "ner.label.keyword",
+            "size": amountDoughnut
           }
         }
       }
@@ -98,7 +93,7 @@ export default class DocumentService {
     let labelCounts = [];
     let labels = [];
 
-    response.data.aggregations.labels.buckets.map((bucket) => {
+    response.data.aggregations.labels.buckets.forEach((bucket) => {
       labels.push(bucket.key);
       labelCounts.push(bucket.doc_count);
     });
@@ -131,13 +126,13 @@ export default class DocumentService {
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let total =[];
 
-    response.data.aggregations.neg.buckets.map((bucket) => {
+    response.data.aggregations.neg.buckets.forEach((bucket) => {
       total.push(bucket.key);
     });
-    response.data.aggregations.pos.buckets.map((bucket) => {
+    response.data.aggregations.pos.buckets.forEach((bucket) => {
       total.push(bucket.key);
     });
-    response.data.aggregations.neu.buckets.map((bucket) => {
+    response.data.aggregations.neu.buckets.forEach((bucket) => {
       total.push(bucket.key);
     });
 
@@ -159,7 +154,7 @@ export default class DocumentService {
     };
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let totalDocuments =[];
-    response.data.aggregations.docsTotal.buckets.map((bucket) => {
+    response.data.aggregations.docsTotal.buckets.forEach((bucket) => {
       totalDocuments.push(bucket.doc_count);
     });
     return {totalDocuments};
