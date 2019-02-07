@@ -4,10 +4,8 @@
   "description": "Public website and admin dashboard for ENDOrSE - End User Document Search Engine",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -59,12 +57,27 @@
     "react-tag-autocomplete": "^5.8.0",
     "react-ui-cards": "^1.4.0",
     "styled-components": "^3.3.3",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "webpack-node-externals": "^1.7.2"
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.2",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  }
 }
