@@ -86,7 +86,8 @@ class ResultListItem extends Component {
     super(props);
     this.state = {
       download_link: this.props.document._source.file_path,
-      document_id: this.props.document._id
+      document_id: this.props.document._id,
+      document_name: this.props.document._source.file_path.match(/[(_\-)a-zA-Z0-9]+(\.)+([a-zA-Z]{3,})/g)
     }
   }
 
@@ -94,7 +95,7 @@ class ResultListItem extends Component {
     return (
       <ListItem>
         <Ribbon class={'ribbon'} />
-        <ItemLabel>{ 'Document super awesome.pdf' }</ItemLabel>
+        <ItemLabel>{ this.state.document_name.toString().replace(/_/g, ' ') }</ItemLabel>
         <ListItemActions>
           <DownloadButton aria-label="Download"
                           style={{transition: 'none', borderRadius: 0}}

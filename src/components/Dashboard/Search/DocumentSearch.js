@@ -71,12 +71,10 @@ class DocumentSearch extends Component {
     console.log(event);
     let search_tags = [].concat(this.state.search_tags, event.target.value);
     this.setState({search_tags: search_tags});
-    console.log(this.state.search_tags);
   }
 
   async handleDocumentSearch() {
-    this.searchService.documentSearch(this.state.search_term, this.state.search_tags, '2019-01-31T00:00:00+00:00', '2019-04-02T00:00:00+00:00').then((results) => {
-      console.log(results);
+    this.searchService.documentSearch(this.state.search_term, this.state.search_tags, '2019-01-01T00:00:00+00:00', '2019-31-03T00:00:00+00:00').then((results) => {
       this.setState({
         results: results.data.hits.hits
       });
