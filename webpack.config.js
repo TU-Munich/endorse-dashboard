@@ -9,7 +9,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname,'dist'),
-    filename: 'scripts/[name].js'
+    filename: 'scripts/[name].js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -38,6 +39,9 @@ module.exports = {
         }
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebPackPlugin({
