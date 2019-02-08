@@ -12,11 +12,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import { confirmAlert } from 'react-confirm-alert';
 import CrawlerService from '../../../services/CrawlerService';
-import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 import socketIOClient from "socket.io-client";
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
+
 
 const ContainerDiv = styled.div`
   display: flex;
@@ -74,6 +74,7 @@ const styles = theme => ({
   noLabel: {
     marginTop: theme.spacing.unit * 3,
   },
+  
 });
 
 
@@ -84,7 +85,8 @@ class ExternalLink extends Component {
 
     this.state = {
       percentage: 0,
-      quotes:'',
+      quote:'',
+      author:'',
       endpoint:"http://localhost:3002",
       loading: false,
       crawling: false,
@@ -104,7 +106,10 @@ class ExternalLink extends Component {
   handleChangeMultiple = (event) => {
     this.setState({ source: event.target.value });
   };
-  handleSubmit = (e) => { 
+  // handleStopClick = (e) =>{
+
+  // }
+  handleSearchClick = (e) => { 
     console.log(this.state)
     let crawlingRequest = this.state;
     this.setState({crawling: true})
@@ -114,17 +119,17 @@ class ExternalLink extends Component {
       let modalContent = response.status === 200 || response.status === 201 ?
         {title: 'Success', message: 'Related articles are crawling!'} :
         {title: 'Error', message: 'An error has occurred while executing search, please contact the system admin'};
-      confirmAlert({
-        title: modalContent.title,
-        message: modalContent.message,
-        buttons: [
-          {
-            label: 'Continue',
-            // onClick: () => window.location.replace('/dashboard/crawl')
-            onClick: () => this.setState({crawling: false})
-          }
-        ]
-      });
+      // confirmAlert({
+      //   title: modalContent.title,
+      //   message: modalContent.message,
+      //   buttons: [
+      //     {
+      //       label: 'Continue',
+      //       // onClick: () => window.location.replace('/dashboard/crawl')
+      //       onClick: () => this.setState({crawling: false})
+      //     }
+      //   ]
+      // });
     })
     e.preventDefault() 
   }
@@ -132,7 +137,8 @@ class ExternalLink extends Component {
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
     socket.on("server_response", response => this.setState({ 
-      quote: response['data']
+      quote: response['data']['quote'],
+      author: response['data']['author']
    }));
     
   }
@@ -145,7 +151,6 @@ class ExternalLink extends Component {
     }
 
     const { classes } = this.props;
-    const {percentage} = this.state;
     return (
       <ContainerDiv>
         <Card style={{height: "300%", padding: "10px 10px 10px"}}>
@@ -206,16 +211,25 @@ class ExternalLink extends Component {
           </div>
         
         </form>
+        { !this.state.crawling &&
         <Button 
         variant="contained" 
         color="primary" 
-        onClick={this.handleSubmit}
+        onClick={this.handleSearchClick}
         disabled={this.state.crawling}
         >
         Search
         </Button>
+        }
         { this.state.crawling &&
           <div >
+          {/* <Button 
+          variant="contained" 
+          color="secondary" 
+          onClick={this.handleStopClick}
+          >
+          Stop
+          </Button> */}
           <Paper className={classes.progress}>
             <LinearProgress 
               classes={{
@@ -224,29 +238,14 @@ class ExternalLink extends Component {
                       }}
             />
           </Paper>
-          {/* Crawling......{percentage}% 
-          <Progress
-            percent={percentage}
-            theme={{
-            success: {
-              symbol: '🏄‍',
-              color: 'rgb(223, 105, 180)'
-            },
-            active: {
-              symbol: '😋',
-              color: '#fbc630'
-            },
-            default: {
-              symbol: '😀',
-              color: '#fbc630'
-            }
-          }}
-          />*/
           <div style={{ textAlign: "center" }}>
+            <h3>
+                {this.state.quote}
+            </h3>
             <p>
-                {this.state.quotes}
+                {this.state.author}
             </p>
-          </div>}
+          </div>
         </div>
         }
         </Card>
