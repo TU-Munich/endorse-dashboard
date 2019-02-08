@@ -12,7 +12,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import { confirmAlert } from 'react-confirm-alert';
 import CrawlerService from '../../../services/CrawlerService';
-import "react-sweet-progress/lib/style.css";
 import socketIOClient from "socket.io-client";
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
