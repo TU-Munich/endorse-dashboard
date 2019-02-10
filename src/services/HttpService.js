@@ -38,6 +38,15 @@ class HttpService {
     })
   }
 
+  put(path, data) {
+    return new Promise((resolve) => {
+      resolve(this.request(path, lodash.assign(
+        {method: 'PUT'},
+        data ? { data } : {}
+      )))
+    })
+  }
+
   _buildHeaders() {
     const accessToken = this._accessToken;
     const authType = this._authType;

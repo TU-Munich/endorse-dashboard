@@ -9,7 +9,7 @@ const ContainerHeaderDiv = styled.div`
   flex-flow: column nowrap;	
   overflow-y: auto;
   overflow-x: hidden;
-  box-shadow: 10px 3px 5px gray;
+  box-shadow: 0px 2px 5px grey;
 `;
 const ContainerDiv = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const ContentsDiv = styled.div`
 `;
 
 const Content = styled.div`
-  margin-left: 210px;
+  margin-left: 200px;
   width: 100%;
   overflow-x: hidden;
 `;
