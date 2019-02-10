@@ -144,83 +144,185 @@
     opacity: 0.5;
     cursor: auto;
 }
-.react-sweet-progress {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
-  width: 100%; }
-
-.react-sweet-progress-symbol {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: start;
-      justify-content: flex-start;
-  width: 35px;
-  height: 20px;
-  padding-left: 10px;
-  color: rgba(0, 0, 0, 0.7);
-  font-weight: 200; }
-
-.react-sweet-progress-symbol-absolute {
-  display: -ms-flexbox;
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
-  transform: translate3d(-50%, -50%, 0); }
-  .react-sweet-progress-symbol-absolute .react-sweet-progress-symbol {
-    padding: 0;
-    width: 100%; }
-
-.react-sweet-progress-circle-outer {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle; }
-.react-sweet-progress-line {
-  width: 100%;
-  border-radius: 100px;
-  background-color: #efefef;
-  vertical-align: middle; }
-  .react-sweet-progress-line-inner {
+.react-tags {
     position: relative;
-    min-height: 10px;
-    border-radius: 100px;
-    transition: width 0.3s ease; }
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #D1D1D1;
+    border-radius: 1px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: text;
+}
 
-.react-sweet-progress-line-inner-status-active:before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 10px;
-  background: #fff;
-  animation: active-anim 2s cubic-bezier(0.25, 1, 0.6, 1) infinite;
-  content: "";
-  opacity: 0; }
+.react-tags.is-focused {
+    border-bottom: 1px solid #26a69a;
+    -webkit-box-shadow: 0 1px 0 0 #26a69a;
+    box-shadow: 0 1px 0 0 #26a69a;
+}
 
-@keyframes active-anim {
-  0% {
-    width: 0;
-    opacity: .1; }
-  20% {
-    width: 0;
-    opacity: .5; }
-  to {
+.react-tags__selected {
+    display: inline;
+}
+
+.react-tags__selected-tag {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 6px 6px 0 0;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 5px;
+    background: #414dbc;
+    font-size: inherit;
+    color: white;
+    line-height: inherit;
+}
+
+.react-tags__selected-tag:first-child {
+    margin-left: 0;
+}
+
+.react-tags__selected-tag:after {
+    content: '\2715';
+    color: #AAA;
+    margin-left: 8px;
+}
+
+.react-tags__selected-tag:hover,
+.react-tags__selected-tag:focus {
+    border-color: #B1B1B1;
+}
+
+.react-tags__search {
+    display: inline-block;
+
+    /* match tag layout */
+    padding: 12px 0px;
+
+    /* prevent autoresize overflowing the container */
+    max-width: 100%;
+}
+
+@media screen and (min-width: 30em) {
+
+    .react-tags__search {
+        /* this will become the offsetParent for suggestions */
+        position: relative;
+    }
+
+}
+
+.react-tags__search input {
+    /* prevent autoresize overflowing the container */
+    max-width: 100%;
+
+    /* remove styles and layout from this element */
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+
+    /* match the font styles */
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.react-tags__search input::-ms-clear {
+    display: none;
+}
+
+.react-tags__suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
     width: 100%;
-    opacity: 0; } }
-.react-sweet-progress-circle path {
-  stroke-linecap: round; }
+}
 
+@media screen and (min-width: 30em) {
+
+    .react-tags__suggestions {
+        width: auto;
+    }
+
+}
+
+.react-tags__suggestions ul {
+    margin: 4px -1px;
+    padding: 0;
+    list-style: none;
+    background: white;
+    border: 1px solid #D1D1D1;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    bottom: 100%;
+}
+
+.react-tags__suggestions li {
+    border-bottom: 1px solid #ddd;
+    padding: 6px 8px;
+}
+
+.react-tags__suggestions li mark {
+    text-decoration: underline;
+    background: none;
+    font-weight: 600;
+}
+
+.react-tags__suggestions li:hover {
+    cursor: pointer;
+    background: #eee;
+}
+
+.react-tags__suggestions li.is-active {
+    background: #b7cfe0;
+}
+
+.react-tags__suggestions li.is-disabled {
+    opacity: 0.5;
+    cursor: auto;
+}
+.ArticleCopy{
+    font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+    width: 80%;
+    margin:0 auto;
+    /* border: 1px solid #ddd;
+    padding: 3rem; */
+  }
+  .ArticleCopy p {
+      text-rendering: optimizeLegibility;
+  }
+  .ArticleCopy blockquote {
+      position: relative;  /*  <--- */
+      font-style: italic;
+      text-align: center;
+      padding: 1rem 1.2rem;
+      width: 80%;  /* create space for the quotes */
+      color: #4a4a4a;
+      margin: 1rem auto 2rem;
+      color: #4a4a4a;
+      background: #f6f7f8;
+  }
+  /* -- create the quotation marks -- */
+  .ArticleCopy blockquote:before,
+  .ArticleCopy blockquote:after{
+      font-family: FontAwesome;
+      position: absolute;
+      /* -- inside the relative position of blockquote -- */
+      top: 13px;
+      color: #E8E8E8;
+      font-size: 34px;
+  }
+  .ArticleCopy blockquote:before{
+      content: "\f10d";
+      margin-right: 13px;
+      right: 100%;
+  }
+  .ArticleCopy blockquote:after{
+      content: "\f10e";
+      margin-left: 13px;
+      left: 100%;  
+  }
 .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow,
 .react-datepicker__month-year-read-view--down-arrow {
