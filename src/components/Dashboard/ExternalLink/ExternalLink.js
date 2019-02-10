@@ -116,22 +116,22 @@ class ExternalLink extends Component {
     this.setState({crawling: false})
     CrawlerService.stopCrawling(this.state.projectUUID)
     this.setState({crawling: false})
-    // CrawlerService.stopCrawling(this.state.projectUUID).then((response) => {
-    //   let modalContent = response.status === 200 || response.status === 201 ?
-    //     {title: 'Warning', message: 'Crawling process is stoped!'} :
-    //     {title: 'Error', message: 'An error has occurred while sotp crawler, please contact the system admin'};
-    //   confirmAlert({
-    //     title: modalContent.title,
-    //     message: modalContent.message,
-    //     buttons: [
-    //       {
-    //         label: 'Continue',
-    //         // onClick: () => window.location.replace('/dashboard/crawl')
-    //         onClick: () => this.setState({crawling: false})
-    //       }
-    //     ]
-    //   });
-    // })
+    CrawlerService.stopCrawling(this.state.projectUUID).then((response) => {
+      let modalContent = response.status === 204 ?
+        {title: 'Warning', message: 'Crawling process is stoped!'} :
+        {title: 'Error', message: 'An error has occurred while sotp crawler, please contact the system admin'};
+      confirmAlert({
+        title: modalContent.title,
+        message: modalContent.message,
+        buttons: [
+          {
+            label: 'Continue',
+            // onClick: () => window.location.replace('/dashboard/crawl')
+            onClick: () => this.setState({crawling: false})
+          }
+        ]
+      });
+    })
     e.preventDefault() 
   }
 
@@ -153,7 +153,7 @@ class ExternalLink extends Component {
 
     CrawlerService.executeCrawling(crawlingRequest).then((response) => {
       let modalContent = response.status === 200 || response.status === 201 ?
-        {title: 'Notification', message: 'Crawling is done'} :
+        {title: 'Success', message: 'Crawling is done'} :
         {title: 'Error', message: 'An error has occurred while executing search, please contact the system admin'};
       confirmAlert({
         title: modalContent.title,
