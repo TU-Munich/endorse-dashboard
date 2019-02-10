@@ -87,46 +87,52 @@ const Icon = styled(FontAwesomeIcon)`
 `;
 
 class DashboardSideBar extends Component {
-    render() {
-        return (
-            <SideBar>
-                <NavSideMenu>
-                    <Logo>ENDOSE</Logo>
-                    <MenuList>
-                        <NavSideMenuUL id="menu-content" className="menu-content collapse out">
-                            <ListItemA to={"/dashboard/info"}>
-                                <NavSideMenuLI>
-                                    <Icon icon="info"/> Dashboard
-                                </NavSideMenuLI>
-                            </ListItemA>
+  render() {
+    return (
+      <SideBar>
+        <NavSideMenu>
+          <Logo>ENDORSE</Logo>
+          <MenuList>
+            <NavSideMenuUL id="menu-content" className="menu-content collapse out">
+              <ListItemA to={"/dashboard/info"}>
+                <NavSideMenuLI>
+                  <Icon icon="info"/> Dashboard
+                </NavSideMenuLI>
+              </ListItemA>
 
-                            <ListItemA to={"/dashboard/upload_files"}>
-                                <NavSideMenuLI>
-                                    <Icon icon="upload"/> Upload Files
-                                </NavSideMenuLI>
-                            </ListItemA>
+              <ListItemA to={"/dashboard/search"}>
+                <NavSideMenuLI>
+                  <Icon icon="search"/> Search
+                </NavSideMenuLI>
+              </ListItemA>
 
-                            <ListItemA to={"/dashboard/crawl"}>
-                                <NavSideMenuLI>
-                                    <Icon icon="cloud-upload-alt"/> Crawler
-                                </NavSideMenuLI>
-                            </ListItemA>
+              <ListItemA to={"/dashboard/upload_files"}>
+                <NavSideMenuLI>
+                  <Icon icon="upload"/> Upload Files
+                </NavSideMenuLI>
+              </ListItemA>
 
-                            <ListItemA to={"/dashboard/visualization_charts"}>
-                                <NavSideMenuLI>
-                                    <Icon icon="chart-line"/>Visualizations
-                                </NavSideMenuLI>
-                            </ListItemA>
+              <ListItemA to={"/dashboard/crawl"}>
+                <NavSideMenuLI>
+                  <Icon icon="cloud-upload-alt"/> Crawler
+                </NavSideMenuLI>
+              </ListItemA>
 
-                            <ListItem href="http://localhost:5601" target="_blank">
-                                <Icon icon="chart-line"/> Kibana
-                            </ListItem>
-                        </NavSideMenuUL>
-                    </MenuList>
-                </NavSideMenu>
-            </SideBar>
-        );
-    }
+              <ListItemA to={"/dashboard/visualization_charts"}>
+                <NavSideMenuLI>
+                  <Icon icon="chart-line"/>Charts
+                </NavSideMenuLI>
+              </ListItemA>
+
+              <ListItem href="http://localhost:5601" target="_blank">
+                <Icon icon="chart-line"/> Kibana
+              </ListItem>
+            </NavSideMenuUL>
+          </MenuList>
+        </NavSideMenu>
+      </SideBar>
+    );
+  }
 }
 
 export default DashboardSideBar;

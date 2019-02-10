@@ -4,25 +4,17 @@ import {Radar} from 'react-chartjs-2';
 class SentimentRadarChart extends Component{
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true,
-      data: []
-    }
   }
 
-  componentWillMount() {
-    this.setState({
-      loading: true
-    }, () => {this.fetchSentimentData()})
-  }
-
-  prepareChartData(sentimentData) {
-    // let chartData = [sentimentData.compound, sentimentData.neg, sentimentData.neu, sentimentData.pos];
-    let chartData = sentimentData;
+  prepareChartData(documentAnalysis) {
+    let chartData = documentAnalysis.total;
     return {
-      labels: ['Negative', 'Neutral', 'Positive'],
+      labels: ['Positive', 'Negative', 'Neutral'],
       datasets: [{
-        label: "Project Data",
+        scaleOverride: true,
+        scaleSteps: 4,
+        scaleStepWidth: 5,
+        label: "Sentiment Data",
         data: chartData,
         backgroundColor: 'rgba(179,181,198,0.2)',
         borderColor: 'rgba(179,181,198,1)',
@@ -34,29 +26,10 @@ class SentimentRadarChart extends Component{
     }
   };
 
-  fetchSentimentData() {
-    let chartData;
-    chartData = ['0.2', '0.8', '0.5'];
-    /*AnalyticsService.getSentimentData().then((response) => {
-      chartData = prepareChartData(response.data.hits.hits[0].total);
-      this.setState({
-        data: chartData,
-        loading: false
-      })
-    })*/
-    this.setState({
-      data: chartData,
-      loading: false
-    })
-  };
 
   render() {
-    if (this.state.loading) {
-      return <h2>Loading...</h2>
-    }
-    console.log(this.state);
     return (
-      <Radar data={this.prepareChartData(this.state.data)}/>
+      <Radar data={this.prepareChartData(this.props.data)}/>
     );
   }
 

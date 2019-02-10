@@ -1,71 +1,29 @@
 import React, {Component} from 'react';
 import {Doughnut} from 'react-chartjs-2';
 
-// import AnalyticsService from '../../../services/AnalyticsService
-
 class SentimentDoughnutChart extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            loading: true,
-            data: [],
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            min: 0
-                        }
-                    }]
-                }
-            }
-        }
     }
 
-    componentWillMount() {
-        this.setState({
-            loading: true
-        }, () => {
-            this.fetchSentimentData()
-        })
-    }
-
-    prepareChartData(sentimentData) {
-        // let chartData = [sentimentData.compound, sentimentData.neg, sentimentData.neu, sentimentData.pos];
-        let chartData = sentimentData;
+    prepareChartData(documentAnalysis) {
+      const chartLabels = documentAnalysis.labels;
+      const chartData = documentAnalysis.labelCounts;
         return {
-            labels: ['PERSON', 'EVENT', 'DATE', 'ORG'],
+            labels: chartLabels,
             datasets: [{
                 data: chartData,
-                backgroundColor: ["#0091ac", '#e4e4e4', '#0d386e', '#8187b1'],
-                hoverBackgroundColor: ['#0091ac', '#e4e4e4', '#0d386e', '#8187b1']
+                backgroundColor: ["#474653", '#4241A3', '#155787', '#70AFA9',
+                  '#FAF7DC', '#3066BE', '#119DA4', '#91C3E0', '#907AD6', '#4273C3'],
+                hoverBackgroundColor: ['#99989F', '#6463B3', '#3F759C', '#8ABDB8',
+                  '#FAF8E2', '#5581C9', '#3CAEB4', '#A5CDE5','#B8AAE4','#7B9DD5']
             }]
         }
     };
 
-    fetchSentimentData() {
-        let chartData;
-        chartData = ['13', '21', '5', '15'];
-        /*AnalyticsService.getSentimentData().then((response) => {
-          chartData = prepareChartData(response.data.hits.hits[0].total);
-          this.setState({
-            data: chartData,
-            loading: false
-          })
-        })*/
-        this.setState({
-            data: chartData,
-            loading: false
-        })
-    };
-
     render() {
-        if (this.state.loading) {
-            return <h2>Loading...</h2>
-        }
-        console.log(this.state);
         return (
-            <Doughnut data={this.prepareChartData(this.state.data)}/>
+            <Doughnut data={this.prepareChartData(this.props.data)}/>
         );
     }
 }

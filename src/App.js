@@ -8,6 +8,10 @@ import Contact from './containers/Contact/Contact';
 import Login from './containers/Login/LoginContainer';
 
 class App extends Component {
+  componentWillMount() {
+    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+  }
+
 	render() {
 		return (
 		  <Router>

@@ -86,8 +86,10 @@ const Icon = styled(FontAwesomeIcon)`
 `;
 
 const UserGreeting = styled.h1`
-  margin: auto 230px;
+  margin: auto 0;
   font-size: 16px;
+  position: relative;
+  padding: 10px;
   color: white;
 `;
 
