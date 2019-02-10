@@ -70,4 +70,218 @@ export default class DocumentService {
     });
     return tags;
   }
+
+  static async getNerCount(projectUUID, amountBar, unixDateFrom, unixDateTo) {
+    let query ='';
+    if (unixDateFrom === unixDateTo){
+      query = {
+        "size": "0",
+        "query":{
+              "term": {"project_uuid": projectUUID}
+              },
+        "aggs": {
+          "count": {
+            "terms": {
+              "field": "ner.text.keyword",
+              "size": amountBar
+            }
+          }
+        }
+      };
+    } else {
+       query = {
+        "size": "0",
+        "query": {
+          "bool": {
+            "must": [{
+              "match": {
+                "project_uuid": projectUUID
+              }
+            },
+              {
+                "range": {
+                  "timestamp": {
+                    "gte": unixDateFrom,
+                    "lt": unixDateTo
+                  }
+                }
+              }]
+          }
+        },
+        "aggs": {
+          "count": {
+            "terms": {
+              "field": "ner.text.keyword",
+              "size": amountBar
+            }
+          }
+        }
+      };
+    }
+
+    let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
+    let keyword = [];
+    let counts = [];
+
+    response.data.aggregations.count.buckets.forEach((bucket) => {
+      keyword.push(bucket.key);
+      counts.push(bucket.doc_count);
+    });
+    return {keyword, counts}
+  }
+
+  static async getLabelsCount(projectUUID, amountDoughnut, unixDateFrom, unixDateTo) {
+    let query ='';
+    if (unixDateFrom === unixDateTo) {
+      query = {
+        "size": "0",
+        "query": {
+              "term": {"project_uuid": projectUUID}
+            },
+        "aggs": {
+          "labels": {
+            "terms": {
+              "field": "ner.label.keyword",
+              "size": amountDoughnut
+            }
+          }
+        }
+      };
+    } else {
+      query = {
+        "size": "0",
+        "query": {
+          "bool": {
+            "must": [{
+              "match": {
+                "project_uuid": projectUUID
+              }
+            },
+              {
+                "range": {
+                  "timestamp": {
+                    "gte": unixDateFrom,
+                    "lt": unixDateTo
+                  }
+                }
+              }]
+          }
+        },
+        "aggs": {
+          "labels": {
+            "terms": {
+              "field": "ner.label.keyword",
+              "size": amountDoughnut
+            }
+          }
+        }
+      };
+    }
+    let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
+    let labelCounts = [];
+    let labels = [];
+
+    response.data.aggregations.labels.buckets.forEach((bucket) => {
+      labels.push(bucket.key);
+      labelCounts.push(bucket.doc_count);
+    });
+    return {labels, labelCounts}
+  }
+
+  static async getSentimentCount(projectUUID, unixDateFrom, unixDateTo) {
+    let query ='';
+    if (unixDateFrom === unixDateTo) {
+      query = {
+        "size": "0",
+        "query": {
+              "term": {"project_uuid": projectUUID}
+              },
+        "aggs": {
+          "neg": {
+            "terms": {
+              "field": "sentiment.total.neg"
+            }
+          }, "pos": {
+            "terms": {
+              "field": "sentiment.total.pos"
+            }
+          },
+          "neu": {
+            "terms": {
+              "field": "sentiment.total.neu"
+            }
+          }
+        }
+      };
+    }else {
+      query = {
+        "size": "0",
+        "query": {
+          "bool": {
+            "must": [{
+              "match": {
+                "project_uuid": projectUUID
+              }
+            },
+              {
+                "range": {
+                  "timestamp": {
+                    "gte": unixDateFrom,
+                    "lt": unixDateTo
+                  }
+                }
+              }]
+          }
+        },
+        "aggs": {
+          "neg": {
+            "terms": {
+              "field": "sentiment.total.neg"
+            }
+          }, "pos": {
+            "terms": {
+              "field": "sentiment.total.pos"
+            }
+          },
+          "neu": {
+            "terms": {
+              "field": "sentiment.total.neu"
+            }
+          }
+        }
+      };
+    }
+
+
+    let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
+    let total =[];
+
+    response.data.aggregations.neg.buckets.forEach((bucket) => {
+      total.push(bucket.key);
+    });
+    response.data.aggregations.pos.buckets.forEach((bucket) => {
+      total.push(bucket.key);
+    });
+    response.data.aggregations.neu.buckets.forEach((bucket) => {
+      total.push(bucket.key);
+    });
+    return {total}
+  }
+  static async getDocumentsCount(projectUUID) {
+    let query = {
+      "size":"0",
+      "query": {
+        "term": {"project_uuid": projectUUID}
+      },
+      "aggs": {
+        "docsTotal":{
+          "terms": {
+            "field": "project_uuid.keyword"
+          }
+        }
+      }
+    };
+    let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
+    return response.data.aggregations.docsTotal.buckets[0].doc_count;
+  }
 }
