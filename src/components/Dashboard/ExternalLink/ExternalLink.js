@@ -117,7 +117,7 @@ class ExternalLink extends Component {
     CrawlerService.stopCrawling(this.state.projectUUID)
     this.setState({crawling: false})
     CrawlerService.stopCrawling(this.state.projectUUID).then((response) => {
-      let modalContent = response.status === 204 ?
+      let modalContent = response.status === 208 ?
         {title: 'Warning', message: 'Crawling process is stoped!'} :
         {title: 'Error', message: 'An error has occurred while sotp crawler, please contact the system admin'};
       confirmAlert({
