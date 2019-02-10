@@ -50,8 +50,8 @@ class VisualizationCharts extends Component {
       startDate: new Date(),
       endDate: new Date(),
       value: 'uploaded',
-      amountBar: '10',
-      amountDoughnut: '10',
+      amountBar: '5',
+      amountDoughnut: '3',
       nerData: '',
       labelData : '',
       sentimentData: ''
@@ -175,6 +175,7 @@ class VisualizationCharts extends Component {
                           onChange={this.handleSelectChange}>
                     <MenuItem value={"uploaded"}>Uploaded</MenuItem>
                     <MenuItem value={"crawled"}>Crawled</MenuItem>
+                    <MenuItem value={"both"}>Both</MenuItem>
                   </Select>
                 </FormCont>
                 <FormCont style={{padding:"0 5px"}}>
@@ -195,9 +196,9 @@ class VisualizationCharts extends Component {
         <CardsContainer>
             <DivCards>
               <Card>
-                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
+                <CardContent style={{backgroundColor:"#fbfbfb"}} image={""}>
                   <SentimentBarChart projectUUID={this.props.projectUUID}  data={this.state.nerData}/>
-                </CardMedia>
+                </CardContent>
                   <CardContent style={{fontSize:"medium"}}>
                     Document Name Entity Recognition:
                     <div style={{display:"-webkit-box"}}>
@@ -218,9 +219,9 @@ class VisualizationCharts extends Component {
             </DivCards>
             <DivCards>
               <Card >
-                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
+                <CardContent style={{backgroundColor:"#fbfbfb"}} image={""}>
                   <SentimentDoughnutChart projectUUID={this.props.projectUUID} data={this.state.labelData}/>
-                </CardMedia>
+                </CardContent>
                 <CardContent style={{fontSize:"medium"}}>
                   Project Documents Labels
                   <div style={{display:"-webkit-box"}}>
@@ -241,9 +242,9 @@ class VisualizationCharts extends Component {
             </DivCards>
         <DivCards>
           <Card >
-            <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
+            <CardContent style={{backgroundColor:"#fbfbfb"}} image={""}>
               <SentimentRadarChart projectUUID={this.props.projectUUID} data={this.state.sentimentData}/>
-            </CardMedia>
+            </CardContent>
             <CardContent>
               Document Sentiment Values
             </CardContent>
@@ -251,9 +252,9 @@ class VisualizationCharts extends Component {
         </DivCards>
             <DivCards>
               <Card >
-                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
+                <CardContent style={{backgroundColor:"#fbfbfb"}} image={""}>
                   <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
-                </CardMedia>
+                </CardContent>
                 <CardContent>
                   Document Similarity
                 </CardContent>
