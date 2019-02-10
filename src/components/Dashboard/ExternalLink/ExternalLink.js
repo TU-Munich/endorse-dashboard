@@ -153,7 +153,7 @@ class ExternalLink extends Component {
 
     CrawlerService.executeCrawling(crawlingRequest).then((response) => {
       let modalContent = response.status === 200 || response.status === 201 ?
-        {title: 'Success', message: 'Crawling is done!'} :
+        {title: 'Notification', message: 'Crawling is done'} :
         {title: 'Error', message: 'An error has occurred while executing search, please contact the system admin'};
       confirmAlert({
         title: modalContent.title,
