@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import WebFont from 'webfontloader'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faCompass, faPhone, faHandshake, faUser, faUpload, faCloudUploadAlt, faChartLine, faInfo, faSignOutAlt, faLaptop} from '@fortawesome/free-solid-svg-icons'
+import { faHome, faCompass, faPhone, faHandshake, faUser, faUpload, faCloudUploadAlt, faChartLine, faInfo, faSignOutAlt, faLaptop, faSearch} from '@fortawesome/free-solid-svg-icons'
 import App from './App'
-import registerServiceWorker from './registerServiceWorker'
+import '../public/index.css'
 
-library.add(faHome, faCompass, faPhone, faHandshake,faUser, faUpload, faCloudUploadAlt, faChartLine, faInfo, faSignOutAlt, faLaptop);
+library.add(faHome, faCompass, faPhone, faHandshake,faUser, faUpload, faCloudUploadAlt, faChartLine, faInfo, faSignOutAlt, faLaptop, faSearch);
 
 WebFont.load({
   google: {
@@ -21,5 +21,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root')
 );
-
-registerServiceWorker();

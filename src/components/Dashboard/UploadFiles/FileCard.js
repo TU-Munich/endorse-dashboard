@@ -36,10 +36,7 @@ const styles = {
   card: {
     minHeight: 135,
     textAlign: 'left',
-    overflow: '-webkit-paged-y',
-    marginBottom: 10,
-    marginLeft: 5,
-    marginRight: 5
+    overflow: '-webkit-paged-y'
   },
   cardContent: {
     paddingBottom: 0,

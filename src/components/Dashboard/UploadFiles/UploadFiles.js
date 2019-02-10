@@ -53,7 +53,8 @@ class UploadFiles extends Component {
         onload: (response) => {
           this.state.preFiles.forEach((preFile) => {
             let jsonResponse = JSON.parse(response);
-            if (preFile.name.replace(/ /g,"_") === jsonResponse.name) {
+            let preFileName = preFile.name.replace(/ /g,"_");
+            if (preFileName === jsonResponse.name) {
               preFile["_id"] = jsonResponse.result._id;
               this.setState({
                 files: [].concat(this.state.files, preFile)
@@ -123,7 +124,7 @@ class UploadFiles extends Component {
           </UploadContainer>
         </Card>
         <br />
-        <TagFiles files={this.state.files} visible={this.state.addTagsVisible} />
+        <TagFiles files={this.state.files} projectUUID={this.state.projectUUID} visible={this.state.addTagsVisible} />
       </ContainerDiv>
     );
   }
