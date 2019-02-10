@@ -114,6 +114,23 @@ class ExternalLink extends Component {
   };
   handleStopClick = (e) =>{
     this.setState({crawling: false})
+    CrawlerService.stopCrawling(this.state.projectUUID).then((response) => {
+      let modalContent = response.status === 200 || response.status === 201 ?
+        {title: 'Success', message: 'Crawling process is stoped!'} :
+        {title: 'Error', message: 'An error has occurred while sotp crawler, please contact the system admin'};
+      confirmAlert({
+        title: modalContent.title,
+        message: modalContent.message,
+        buttons: [
+          {
+            label: 'Continue',
+            // onClick: () => window.location.replace('/dashboard/crawl')
+            onClick: () => this.setState({crawling: false})
+          }
+        ]
+      });
+    })
+    e.preventDefault() 
   }
 
   handleAddTagsClick() {
@@ -125,13 +142,16 @@ class ExternalLink extends Component {
   handleSearchClick = (e) => { 
     console.log(this.state)
     let crawlingRequest = this.state;
-    this.setState({crawling: true})
+    this.setState({
+      crawling: true,
+      article_list: [] //Initialized back to empty list when click search button
+    })
   
 
 
     CrawlerService.executeCrawling(crawlingRequest).then((response) => {
       let modalContent = response.status === 200 || response.status === 201 ?
-        {title: 'Success', message: 'Related articles are crawling!'} :
+        {title: 'Success', message: 'Crawling is done!'} :
         {title: 'Error', message: 'An error has occurred while executing search, please contact the system admin'};
       confirmAlert({
         title: modalContent.title,
@@ -140,7 +160,9 @@ class ExternalLink extends Component {
           {
             label: 'Continue',
             // onClick: () => window.location.replace('/dashboard/crawl')
-            onClick: () => this.setState({crawling: false})
+            onClick: () => this.setState({
+              crawling: false
+            })
           }
         ]
       });
@@ -271,16 +293,16 @@ class ExternalLink extends Component {
           </div>
         </div>
         }
-        </Card>
         { this.state.article_list.length > 0 &&
-              <Card>
-                {/* {this.state.article_list} */}
-                <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
-                  Show Result
-                </AddTagsButton>
-                <TagArticles files={this.state.article_list} visible={this.state.addTagsVisible} />
-              </Card>
+        <div>
+          <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
+            Show Result
+          </AddTagsButton>
+          <TagArticles files={this.state.article_list} visible={this.state.addTagsVisible} />
+        </div>
         }
+        </Card>
+        
       </ContainerDiv>
       
     );
