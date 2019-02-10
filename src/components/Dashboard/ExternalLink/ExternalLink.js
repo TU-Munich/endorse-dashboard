@@ -15,6 +15,8 @@ import CrawlerService from '../../../services/CrawlerService';
 import socketIOClient from "socket.io-client";
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import TagArticles from './TagArticles';
+import './quotes.css'
 
 
 const ContainerDiv = styled.div`
@@ -36,6 +38,10 @@ const MenuProps = {
     },
   },
 };
+const AddTagsButton = styled(Button)`
+  text-align: center;
+  float: center;
+`;
 
 const sources = [
   'New York Times',
@@ -83,7 +89,6 @@ class ExternalLink extends Component {
     super(props);
 
     this.state = {
-      percentage: 0,
       quote:'',
       author:'',
       endpoint:"http://localhost:3002",
@@ -92,7 +97,9 @@ class ExternalLink extends Component {
       projectUUID: this.props.projectUUID,
       source: [],
       period:"",
-      query:""
+      query:"",
+      article_list:[],
+      addTagsVisible: false
     };
 
   }
@@ -105,30 +112,38 @@ class ExternalLink extends Component {
   handleChangeMultiple = (event) => {
     this.setState({ source: event.target.value });
   };
-  // handleStopClick = (e) =>{
+  handleStopClick = (e) =>{
+    this.setState({crawling: false})
+  }
 
-  // }
+  handleAddTagsClick() {
+    this.setState({
+      addTagsVisible: !this.state.addTagsVisible
+    })
+  }
+
   handleSearchClick = (e) => { 
     console.log(this.state)
     let crawlingRequest = this.state;
     this.setState({crawling: true})
+  
 
 
     CrawlerService.executeCrawling(crawlingRequest).then((response) => {
       let modalContent = response.status === 200 || response.status === 201 ?
         {title: 'Success', message: 'Related articles are crawling!'} :
         {title: 'Error', message: 'An error has occurred while executing search, please contact the system admin'};
-      // confirmAlert({
-      //   title: modalContent.title,
-      //   message: modalContent.message,
-      //   buttons: [
-      //     {
-      //       label: 'Continue',
-      //       // onClick: () => window.location.replace('/dashboard/crawl')
-      //       onClick: () => this.setState({crawling: false})
-      //     }
-      //   ]
-      // });
+      confirmAlert({
+        title: modalContent.title,
+        message: modalContent.message,
+        buttons: [
+          {
+            label: 'Continue',
+            // onClick: () => window.location.replace('/dashboard/crawl')
+            onClick: () => this.setState({crawling: false})
+          }
+        ]
+      });
     })
     e.preventDefault() 
   }
@@ -139,7 +154,10 @@ class ExternalLink extends Component {
       quote: response['data']['quote'],
       author: response['data']['author']
    }));
-    
+    socket.on("updated_article_list", response => this.setState({
+      article_list: response['data'] 
+    }));
+      
   }
   
 
@@ -153,8 +171,13 @@ class ExternalLink extends Component {
     return (
       <ContainerDiv>
         <Card style={{height: "300%", padding: "10px 10px 10px"}}>
-          <h1>Crawler</h1>
-          <p>Collect related articles from major news websites</p>
+          {/* <div className='ArticleCopy'>
+            <blockquote>I am Jeff Fan borned in Taiwan</blockquote>
+            <p>iambigmomma</p>
+          </div> */}
+            <h1>Crawler</h1>
+            <p>Collect related articles from major news websites</p>
+          
           <form onSubmit={this.handleSubmit} onChange={this.handleSearchChange} >
           <TextField
                   label="Search"
@@ -222,13 +245,13 @@ class ExternalLink extends Component {
         }
         { this.state.crawling &&
           <div >
-          {/* <Button 
+          <Button 
           variant="contained" 
           color="secondary" 
           onClick={this.handleStopClick}
           >
           Stop
-          </Button> */}
+          </Button>
           <Paper className={classes.progress}>
             <LinearProgress 
               classes={{
@@ -237,10 +260,11 @@ class ExternalLink extends Component {
                       }}
             />
           </Paper>
-          <div style={{ textAlign: "center" }}>
-            <h3>
+          {/* <div style={{ textAlign: "center" }}> */}
+          <div className='ArticleCopy'>
+            <blockquote>
                 {this.state.quote}
-            </h3>
+            </blockquote>
             <p>
                 {this.state.author}
             </p>
@@ -248,6 +272,15 @@ class ExternalLink extends Component {
         </div>
         }
         </Card>
+        { this.state.article_list.length > 0 &&
+              <Card>
+                {/* {this.state.article_list} */}
+                <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
+                  Show Result
+                </AddTagsButton>
+                <TagArticles files={this.state.article_list} visible={this.state.addTagsVisible} />
+              </Card>
+        }
       </ContainerDiv>
       
     );
