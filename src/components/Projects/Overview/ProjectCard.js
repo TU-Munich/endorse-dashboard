@@ -41,7 +41,7 @@ class ProjectCard extends Component {
 
     const OpenDashboardLink = props => <Link to={`/dashboard/info`} {...props} />;
     const OpenUploadFileLink = props => <Link to={`/dashboard/upload_files`} {...props} />;
-    const OpenCrawlURLLink = props => <Link to={`/dashboard/external_link`} {...props} />;
+    const OpenCrawlURLLink = props => <Link to={`/dashboard/crawl`} {...props} />;
     return (
       <Card className={classes.card}>
         <CardHeader
