@@ -89,6 +89,7 @@ class ResultListItem extends Component {
     this.state = { open: false };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleOpenVisualizations = this.handleOpenVisualizations.bind(this);
   }
 
   handleOpenModal = () => {
@@ -99,7 +100,11 @@ class ResultListItem extends Component {
     this.setState({ open: false });
   };
 
-
+  handleOpenVisualizations = () => {
+    window.localStorage.removeItem('document_id');
+    window.localStorage.setItem('document_id', this.props.document._id);
+    this.props.history.push('/dashboard/visualization_charts');
+  };
 
   render() {
     let download_link = this.props.document._source.file_path;
@@ -119,7 +124,9 @@ class ResultListItem extends Component {
                       onClick={this.handleOpenModal}>
             <ViewIcon />
           </ViewButton>
-          <StatisticsButton aria-label="Statistics" style={{transition: 'none', borderRadius: 0}}>
+          <StatisticsButton aria-label="Statistics"
+                            style={{transition: 'none', borderRadius: 0}}
+                            onClick={this.handleOpenVisualizations}>
             <ChartsIcon />
           </StatisticsButton>
           <DeleteButton aria-label="Delete"

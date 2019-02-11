@@ -125,7 +125,7 @@ class DocumentSearch extends Component {
           <ResultsTitle>Search results:</ResultsTitle>
         }
         <Results>
-          <ResultsList data={this.state.results} handleDocumentDelete={this.handleDocumentDelete} />
+          <ResultsList data={this.state.results} handleDocumentDelete={this.handleDocumentDelete} history={this.props.history} />
         </Results>
       </div>
     )
