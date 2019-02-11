@@ -41,6 +41,7 @@ const MenuProps = {
 const AddTagsButton = styled(Button)`
   text-align: center;
   float: center;
+  marginTop : 10,
 `;
 
 const sources = [
@@ -91,7 +92,7 @@ class ExternalLink extends Component {
     this.state = {
       quote:'',
       author:'',
-      endpoint:"http://localhost:3002",
+      endpoint:"http://35.197.219.92:3002",
       loading: false,
       crawling: false,
       projectUUID: this.props.projectUUID,
@@ -115,23 +116,25 @@ class ExternalLink extends Component {
   handleStopClick = (e) =>{
     this.setState({crawling: false})
     CrawlerService.stopCrawling(this.state.projectUUID)
-    this.setState({crawling: false})
-    CrawlerService.stopCrawling(this.state.projectUUID).then((response) => {
-      let modalContent = response.status === 208 ?
-        {title: 'Warning', message: 'Crawling process is stoped!'} :
-        {title: 'Error', message: 'An error has occurred while sotp crawler, please contact the system admin'};
-      confirmAlert({
-        title: modalContent.title,
-        message: modalContent.message,
-        buttons: [
-          {
-            label: 'Continue',
-            // onClick: () => window.location.replace('/dashboard/crawl')
-            onClick: () => this.setState({crawling: false})
-          }
-        ]
-      });
-    })
+    socket.emit("close_crawler");
+    //socket.
+    // this.setState({crawling: false})
+    // CrawlerService.stopCrawling(this.state.projectUUID).then((response) => {
+    //   let modalContent = response.status === 208 ?
+    //     {title: 'Warning', message: 'Crawling process is stoped!'} :
+    //     {title: 'Error', message: 'An error has occurred while sotp crawler, please contact the system admin'};
+    //   confirmAlert({
+    //     title: modalContent.title,
+    //     message: modalContent.message,
+    //     buttons: [
+    //       {
+    //         label: 'Continue',
+    //         // onClick: () => window.location.replace('/dashboard/crawl')
+    //         onClick: () => this.setState({crawling: false})
+    //       }
+    //     ]
+    //   });
+    // })
     e.preventDefault() 
   }
 
@@ -148,6 +151,17 @@ class ExternalLink extends Component {
       crawling: true,
       article_list: [] //Initialized back to empty list when click search button
     })
+
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.emit("start_crawling") //Trigger backend to scan the crawler folder for result display
+    socket.on("server_response", response => this.setState({ 
+      quote: response['data']['quote'],
+      author: response['data']['author']
+   }));
+    socket.on("updated_article_list", response => this.setState({
+      article_list: response['data'] 
+    }));
   
 
 
@@ -171,18 +185,18 @@ class ExternalLink extends Component {
     })
     e.preventDefault() 
   }
-  componentDidMount() {
-    const { endpoint } = this.state;
-    const socket = socketIOClient(endpoint);
-    socket.on("server_response", response => this.setState({ 
-      quote: response['data']['quote'],
-      author: response['data']['author']
-   }));
-    socket.on("updated_article_list", response => this.setState({
-      article_list: response['data'] 
-    }));
+  // componentDidMount() {
+  //   const { endpoint } = this.state;
+  //   const socket = socketIOClient(endpoint);
+  //   socket.on("server_response", response => this.setState({ 
+  //     quote: response['data']['quote'],
+  //     author: response['data']['author']
+  //  }));
+  //   socket.on("updated_article_list", response => this.setState({
+  //     article_list: response['data'] 
+  //   }));
       
-  }
+  // }
   
 
   render() {
@@ -276,6 +290,7 @@ class ExternalLink extends Component {
           >
           Stop
           </Button>
+          
           <Paper className={classes.progress}>
             <LinearProgress 
               classes={{
@@ -284,7 +299,6 @@ class ExternalLink extends Component {
                       }}
             />
           </Paper>
-          {/* <div style={{ textAlign: "center" }}> */}
           <div className='ArticleCopy'>
             <blockquote>
                 {this.state.quote}
@@ -296,14 +310,23 @@ class ExternalLink extends Component {
         </div>
         }
         { this.state.article_list.length > 0 &&
-        <div>
-          <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
-            Show Result
-          </AddTagsButton>
-          <TagArticles files={this.state.article_list} visible={this.state.addTagsVisible} />
-        </div>
-        }
+            <div>
+              <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
+                Show Result
+              </AddTagsButton>
+            </div>
+          }
+        
         </Card>
+        { this.state.addTagsVisible &&
+        <ContainerDiv>
+          <Card>
+            <h1>Overview of News Articles</h1>
+            <TagArticles files={this.state.article_list} visible={this.state.addTagsVisible} />
+          </Card>
+        </ContainerDiv>
+        
+        }
         
       </ContainerDiv>
       
