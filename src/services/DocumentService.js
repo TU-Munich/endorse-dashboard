@@ -15,6 +15,10 @@ export default class DocumentService {
     return this.documentService.put(this.documentsEndpoint() + document_id, payload);
   }
 
+  static deleteDocumentById(document_id) {
+    return this.documentService.delete(this.documentsEndpoint() + document_id, '')
+  }
+
   static async queryDocuments(query) {
     return await this.documentService.post(this.documentsQueryEndpoint(), query);
   };

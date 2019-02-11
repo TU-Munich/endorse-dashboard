@@ -15,6 +15,9 @@ import ResultsList from './ResultsList'
 import DocumentService from '../../../services/DocumentService'
 import SearchService from '../../../services/SearchService'
 import ColorPalette from '../../../constants/ColorPalette'
+import {confirmAlert} from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 const ResultsTitle = styled.h2`
   padding-left: 15px;
@@ -42,6 +45,7 @@ class DocumentSearch extends Component {
     this.state = { name: [], search_term: '', search_tags: [], results: [], tags: [], loading: true, open: false };
     this.onSearchChange = this.onSearchChange.bind(this);
     this.handleDocumentSearch = this.handleDocumentSearch.bind(this);
+    this.handleDocumentDelete = this.handleDocumentDelete.bind(this);
     this.searchService = new SearchService(this.props.projectUUID);
   }
 
@@ -59,10 +63,28 @@ class DocumentSearch extends Component {
     this.setState({ search_tags: event.target.value });
   };
 
-  async handleDocumentSearch() {
+  handleDocumentSearch() {
     this.searchService.documentSearch(this.state.search_term, this.state.search_tags, '2019-01-01T00:00:00+00:00', '2019-31-03T00:00:00+00:00').then((results) => {
       this.setState({
         results: results.data.hits.hits
+      });
+    });
+  }
+
+  handleDocumentDelete(document_id) {
+    DocumentService.deleteDocumentById(document_id).then((response) => {
+      let modalContent = response.status === 200 || response.status === 204 ?
+        {title: 'Success', message: 'Document has been successfully deleted'} :
+        {title: 'Error', message: 'An error has occurred while deleting the document, please contact the system admin'};
+      confirmAlert({
+        title: modalContent.title,
+        message: modalContent.message,
+        buttons: [
+          {
+            label: 'Continue',
+            onClick: () => this.handleDocumentSearch()
+          }
+        ]
       });
     });
   }
@@ -103,7 +125,7 @@ class DocumentSearch extends Component {
           <ResultsTitle>Search results:</ResultsTitle>
         }
         <Results>
-          <ResultsList data={this.state.results} />
+          <ResultsList data={this.state.results} handleDocumentDelete={this.handleDocumentDelete} />
         </Results>
       </div>
     )

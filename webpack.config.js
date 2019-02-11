@@ -37,6 +37,14 @@ module.exports = {
         use: {
           loader: "html-loader"
         }
+      },
+      {
+        test: /\.(eot|woff|ttf|svg)$/,
+        loaders: ["file?name=[path][name].[ext]?[hash]"]
+      },
+      {
+        test: /\.woff2(\?\S*)?$/,
+        loaders: ["file?name=[path][name].[ext]?[hash]"]
       }
     ]
   },

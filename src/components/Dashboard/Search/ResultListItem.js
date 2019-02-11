@@ -99,6 +99,8 @@ class ResultListItem extends Component {
     this.setState({ open: false });
   };
 
+
+
   render() {
     let download_link = this.props.document._source.file_path;
     let document_name = this.props.document._source.file_path.match(/[(_\-)a-zA-Z0-9]+(\.)+([a-zA-Z]{3,})/g);
@@ -120,7 +122,9 @@ class ResultListItem extends Component {
           <StatisticsButton aria-label="Statistics" style={{transition: 'none', borderRadius: 0}}>
             <ChartsIcon />
           </StatisticsButton>
-          <DeleteButton aria-label="Delete" style={{transition: 'none', borderRadius: 0}}>
+          <DeleteButton aria-label="Delete"
+                        style={{transition: 'none', borderRadius: 0}}
+                        onClick={() => this.props.handleDocumentDelete(this.props.document._id)}>
             <DeleteIcon />
           </DeleteButton>
         </ListItemActions>
