@@ -46,6 +46,7 @@ class DocumentSearch extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.handleDocumentSearch = this.handleDocumentSearch.bind(this);
     this.handleDocumentDelete = this.handleDocumentDelete.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
     this.searchService = new SearchService(this.props.projectUUID);
   }
 
@@ -72,6 +73,27 @@ class DocumentSearch extends Component {
   }
 
   handleDocumentDelete(document_id) {
+    let modalContent = {
+      title: 'Delete document',
+      message: 'Are you sure you want to continue? All information and analytics regarding this document will be deleted from the system.'
+    };
+
+    confirmAlert({
+      title: modalContent.title,
+      message: modalContent.message,
+      buttons: [
+        {
+          label: 'Continue',
+          onClick: () => this.deleteDocument(document_id)
+        },
+        {
+          label: 'Cancel',
+        }
+      ]
+    });
+  }
+
+  deleteDocument(document_id) {
     DocumentService.deleteDocumentById(document_id).then((response) => {
       let modalContent = response.status === 200 || response.status === 204 ?
         {title: 'Success', message: 'Document has been successfully deleted'} :
