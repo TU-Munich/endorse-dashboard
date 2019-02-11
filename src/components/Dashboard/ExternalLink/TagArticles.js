@@ -32,7 +32,7 @@ class TagArticles extends Component {
           {
             this.props.files.map((file, i) =>
               <Grid key={i} item xs={12} sm={12} md={6} lg={4}>
-                <ArticleCard file={file}  />
+                <ArticleCard file={file} />
               </Grid>
             )
           }

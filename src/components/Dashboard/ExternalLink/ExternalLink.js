@@ -117,24 +117,7 @@ class ExternalLink extends Component {
     this.setState({crawling: false})
     CrawlerService.stopCrawling(this.state.projectUUID)
     socket.emit("close_crawler");
-    //socket.
-    // this.setState({crawling: false})
-    // CrawlerService.stopCrawling(this.state.projectUUID).then((response) => {
-    //   let modalContent = response.status === 208 ?
-    //     {title: 'Warning', message: 'Crawling process is stoped!'} :
-    //     {title: 'Error', message: 'An error has occurred while sotp crawler, please contact the system admin'};
-    //   confirmAlert({
-    //     title: modalContent.title,
-    //     message: modalContent.message,
-    //     buttons: [
-    //       {
-    //         label: 'Continue',
-    //         // onClick: () => window.location.replace('/dashboard/crawl')
-    //         onClick: () => this.setState({crawling: false})
-    //       }
-    //     ]
-    //   });
-    // })
+    //socket.disconnect();
     e.preventDefault() 
   }
 
@@ -154,14 +137,17 @@ class ExternalLink extends Component {
 
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
+    
     socket.emit("start_crawling") //Trigger backend to scan the crawler folder for result display
     socket.on("server_response", response => this.setState({ 
-      quote: response['data']['quote'],
-      author: response['data']['author']
-   }));
-    socket.on("updated_article_list", response => this.setState({
-      article_list: response['data'] 
+    quote: response['data']['quote'],
+    author: response['data']['author']
     }));
+    socket.on("updated_article_list", response => this.setState({
+    article_list: response['data'] 
+    }));
+    // socket.disconnect();
+  
   
 
 
@@ -169,7 +155,8 @@ class ExternalLink extends Component {
       let modalContent = response.status === 200 || response.status === 201 ?
         {title: 'Success', message: 'Crawling is done'} :
         {title: 'Error', message: 'An error has occurred while executing search, please contact the system admin'};
-      confirmAlert({
+        socket.disconnect();
+        confirmAlert({
         title: modalContent.title,
         message: modalContent.message,
         buttons: [
@@ -182,6 +169,7 @@ class ExternalLink extends Component {
           }
         ]
       });
+      
     })
     e.preventDefault() 
   }

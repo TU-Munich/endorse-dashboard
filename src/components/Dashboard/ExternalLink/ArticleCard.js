@@ -13,7 +13,7 @@ class ArticleCard extends Component {
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Typography className={classes.fileName} color={"textPrimary"} gutterBottom>
-            Title: {this.props.file['title']}
+            {this.props.file['title']}
           </Typography>
           {/* <Typography className={classes.fileMeta} color="textSecondary">
             Date: {this.props.file.lastModifiedDate.toString()}
