@@ -76,9 +76,15 @@ export default class DocumentService {
     if (unixDateFrom === unixDateTo){
       query = {
         "size": "0",
-        "query":{
-              "term": {"project_uuid": projectUUID}
-              },
+        "query": {
+          "bool": {
+            "must": [{
+              "match": {
+                "project_uuid": projectUUID
+              }
+            }]
+          }
+        },
         "aggs": {
           "count": {
             "terms": {
@@ -136,8 +142,14 @@ export default class DocumentService {
       query = {
         "size": "0",
         "query": {
-              "term": {"project_uuid": projectUUID}
-            },
+          "bool": {
+            "must": [{
+              "match": {
+                "project_uuid": projectUUID
+              }
+            }]
+          }
+        },
         "aggs": {
           "labels": {
             "terms": {
@@ -194,8 +206,14 @@ export default class DocumentService {
       query = {
         "size": "0",
         "query": {
-              "term": {"project_uuid": projectUUID}
-              },
+          "bool": {
+            "must": [{
+              "match": {
+                "project_uuid": projectUUID
+              }
+            }]
+          }
+        },
         "aggs": {
           "neg": {
             "terms": {
@@ -271,8 +289,12 @@ export default class DocumentService {
     let query = {
       "size":"0",
       "query": {
-        "term": {"project_uuid": projectUUID}
-      },
+        "bool": {
+          "must": [{
+            "match": {
+              "project_uuid": projectUUID
+            }
+          }]}},
       "aggs": {
         "docsTotal":{
           "terms": {
