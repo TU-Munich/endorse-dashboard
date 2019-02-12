@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
-import SentimentBarChart from "../VisualizationCharts/SentimentBarChart";
-import SentimentDoughnutChart from "../VisualizationCharts/SentimentDoughnutChart";
+import NerBarChart from "../VisualizationCharts/NerBarChart";
+import LabelsDoughnutChart from "../VisualizationCharts/LabelsDoughnutChart";
 import SentimentRadarChart from "../VisualizationCharts/SentimentRadarChart";
 import SimilarityBubbleChart from "../VisualizationCharts/SimilarityBubbleChart";
 import DocumentService from '../../../services/DocumentService';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
+import TagsPolarChart from "../VisualizationCharts/TagsPolarChart";
 
 const Title = styled.h3`
 	font-style: bold;
@@ -78,7 +79,8 @@ class DashboardInfo extends Component {
       nerData: '',
       labelData : '',
       sentimentData: '',
-      totalDocuments: ''
+      totalDocuments: '',
+      tagsData:''
     };
     if (this.props.document_id !== undefined) {
       this.setState({document_id: this.props.document_id});
@@ -87,6 +89,7 @@ class DashboardInfo extends Component {
     this.fetchLabelsResponseData();
     this.fetchSentimentResponseData();
     this.fetchTotalDocumentCount();
+    this.fetchTagResponseData();
   }
 
   fetchNerResponseData(){
@@ -130,6 +133,20 @@ class DashboardInfo extends Component {
         this.setState({
           sentimentData: response
         }, () => {
+          resolve('success')
+        });
+      });
+    });
+  }
+
+  fetchTagResponseData(){
+    return new Promise((resolve) => {
+      DocumentService.getTagsCount(this.props.projectUUID,
+                                  undefined,
+                                  undefined,).then((response) => {
+        this.setState({
+          tagsData: response
+        },() => {
           resolve('success')
         });
       });
@@ -205,12 +222,12 @@ class DashboardInfo extends Component {
           <ChartsContainer>
               <ChartDiv>
                 <Card>
-                  <SentimentBarChart data={this.state.nerData}/>
+                  <NerBarChart data={this.state.nerData}/>
                 </Card>
               </ChartDiv>
               <ChartDiv>
                 <Card>
-                  <SentimentDoughnutChart data={this.state.labelData}/>
+                  <LabelsDoughnutChart data={this.state.labelData}/>
                 </Card>
               </ChartDiv>
               <ChartDiv>
@@ -218,6 +235,13 @@ class DashboardInfo extends Component {
                   <SentimentRadarChart data={this.state.sentimentData}/>
                 </Card>
               </ChartDiv>
+            {this.state.document_id === undefined &&
+            <ChartDiv>
+              <Card>
+                <TagsPolarChart data={this.state.tagsData}/>
+              </Card>
+            </ChartDiv>
+            }
             {this.state.document_id !== undefined &&
               <ChartDiv>
                 <Card>

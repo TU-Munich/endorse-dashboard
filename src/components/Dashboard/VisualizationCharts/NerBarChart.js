@@ -37,7 +37,7 @@ const options = {
     }]
   }
 };
-class SentimentBarChart extends Component{
+class NerBarChart extends Component{
   constructor(props) {
     super(props);
     if (this.props.document_id !== undefined) {
@@ -76,4 +76,4 @@ class SentimentBarChart extends Component{
     );
   }
 }
-export default SentimentBarChart;
+export default NerBarChart;

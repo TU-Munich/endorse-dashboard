@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Polar} from 'react-chartjs-2';
 
-class SentimentAreaChart extends Component {
+class TagsPolarChart extends Component {
   constructor(props) {
     super(props);
   }
@@ -33,4 +33,4 @@ class SentimentAreaChart extends Component {
   }
 }
 
-export default SentimentAreaChart;
+export default TagsPolarChart;
