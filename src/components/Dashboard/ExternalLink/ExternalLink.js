@@ -298,10 +298,10 @@ class ExternalLink extends Component {
         {/* { this.state.article_list.length > 0 &&
             <div>
               <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
-                Show Result
+                Add Tag
               </AddTagsButton>
             </div>
-          } */}
+        } */}
         
         </Card>
         { this.state.article_list.length > 0 &&
