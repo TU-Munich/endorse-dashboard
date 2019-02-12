@@ -1,19 +1,13 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
-import {Grid} from 'react-md';
-import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import SentimentBarChart from "../VisualizationCharts/SentimentBarChart";
 import SentimentDoughnutChart from "../VisualizationCharts/SentimentDoughnutChart";
 import SentimentRadarChart from "../VisualizationCharts/SentimentRadarChart";
 import SimilarityBubbleChart from "../VisualizationCharts/SimilarityBubbleChart";
 import DocumentService from '../../../services/DocumentService';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-const Article = styled.article`
-    margin: auto;
-    padding: 15px;
-`;
+import CardContent from "@material-ui/core/es/CardContent/CardContent";
 
 const Title = styled.h3`
 	font-style: bold;
@@ -41,13 +35,6 @@ const StyledCardContent = styled.div`
   color: white;
   background-color: #2e353e;
 `;
-
-const DivCards = styled.div`
-    width: 50%;
-    display: inline-block;
-    margin-bottom: 7%;
-`;
-
 const InputText = styled.input`
    text-align: center;
    font-size :30px;
@@ -63,6 +50,24 @@ const CardsContainer = styled.div`
   max-width: 99%
   width:99%;
 `;
+const OverviewWrapper = styled.div`
+  width: 100%;
+  flex-grow: 1;
+  margin: 1px;
+`;
+const ChartsContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;	
+  margin: 10px; 
+  max-width: 100%;
+`;
+const ChartDiv = styled.div`
+  width: 50%;
+  height: 50%;
+  display:inline-block;
+  padding-right : 15px;
+  margin-bottom: 3%;
+`;
 
 class DashboardInfo extends Component {
   constructor(props) {
@@ -74,6 +79,9 @@ class DashboardInfo extends Component {
       labelData : '',
       sentimentData: '',
       totalDocuments: ''
+    };
+    if (this.props.document_id !== undefined) {
+      this.setState({document_id: this.props.document_id});
     }
     this.fetchNerResponseData();
     this.fetchLabelsResponseData();
@@ -83,7 +91,11 @@ class DashboardInfo extends Component {
 
   fetchNerResponseData(){
     return new Promise((resolve) => {
-      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar).then((response) => {
+      DocumentService.getNerCount(this.props.projectUUID,
+                                  this.state.amountBar,
+                                  undefined,
+                                  undefined,
+                                  this.state.document_id).then((response) => {
         this.setState({
           nerData: response
         }, () => {
@@ -95,7 +107,11 @@ class DashboardInfo extends Component {
 
   fetchLabelsResponseData(){
     return new Promise((resolve) => {
-      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut).then((response) => {
+      DocumentService.getLabelsCount(this.props.projectUUID,
+                                     this.state.amountDoughnut,
+                                    undefined,
+                                    undefined,
+                                     this.state.document_id).then((response) => {
         this.setState({
           labelData: response
         },() => {
@@ -104,9 +120,13 @@ class DashboardInfo extends Component {
       });
     });
   }
+
   fetchSentimentResponseData(){
     return new Promise((resolve) => {
-      DocumentService.getSentimentCount(this.props.projectUUID).then((response) => {
+      DocumentService.getSentimentCount(this.props.projectUUID,
+                                        undefined,
+                                        undefined,
+                                        this.state.document_id).then((response) => {
         this.setState({
           sentimentData: response
         }, () => {
@@ -126,71 +146,87 @@ class DashboardInfo extends Component {
         });
       });
     });
+
   }
 
   render() {
 
     return (
       <div>
-        <CardsContainer>
-          <CardDiv>
-            <CellDiv>
-              <Card>
-                <StyledCardContent>
-                  <label>Uploaded data</label>
-                  <Icon icon="upload" style={{float:"right"}}/>
-                </StyledCardContent>
-                <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
-                  <InputText  value={this.state.totalDocuments}/>
-                  <label style={{display: "block", fontSize: "10px"}}>files were analyzed </label>
-                </CardMedia>
-              </Card>
-            </CellDiv>
-            <CellDiv>
-              <Card>
-                <StyledCardContent>
-                  <label>Crawled data</label>
-                  <Icon icon="upload" style={{float:"right"}}/>
-                </StyledCardContent>
-                <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
-                  <InputText  value={this.state.totalDocuments}/>
-                  <label style={{display: "block", fontSize: "10px"}}>links were analyzed </label>
-                </CardMedia>
-              </Card>
-            </CellDiv>
-            <CellDiv>
-              <Card>
-                <StyledCardContent>
-                  <label>Local Search</label>
-                  <Icon icon="upload" style={{float:"right"}}/>
-                </StyledCardContent>
-                <CardMedia style={{textAlign: "center", margin: "15px"}} src={"picture"}>
-                  <InputText  value={this.state.totalDocuments}/>
-                  <label style={{display: "block", fontSize: "10px"}}>NER were detected</label>
-                </CardMedia>
-              </Card>
-            </CellDiv>
-          </CardDiv>
-        </CardsContainer>
-        <CardDiv>
-          <Card style={{width: "100%", margin:"1%"}}>
-            <Article>
-              <Title style={{marginBottom:"5%"}}>Project Overview</Title>
-              <DivCards>
-              <SentimentBarChart projectUUID={this.props.projectUUID} data={this.state.nerData}/>
-              </DivCards>
-              <DivCards>
-                <SentimentDoughnutChart projectUUID={this.props.projectUUID} data={this.state.labelData}/>
-              </DivCards>
-              <DivCards>
-                <SentimentRadarChart projectUUID={this.props.projectUUID} data={this.state.sentimentData}/>
-              </DivCards>
-              <DivCards>
-                <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
-              </DivCards>
-            </Article>
-          </Card>
-        </CardDiv>
+        {this.state.document_id === undefined &&
+          <CardsContainer>
+            <CardDiv>
+              <CellDiv>
+                <Card>
+                  <StyledCardContent>
+                    <label>Uploaded data</label>
+                    <Icon icon="upload" style={{float:"right"}}/>
+                  </StyledCardContent>
+                  <CardContent style={{textAlign: "center"}}>
+                    <InputText  value={this.state.totalDocuments}/>
+                    <label style={{display: "block", fontSize: "10px"}}>files were locally uploaded </label>
+                  </CardContent>
+                </Card>
+              </CellDiv>
+              <CellDiv>
+                <Card>
+                  <StyledCardContent>
+                    <label>Crawled data</label>
+                    <Icon icon="upload" style={{float:"right"}}/>
+                  </StyledCardContent>
+                  <CardContent style={{textAlign: "center"}}>
+                    <InputText  value={this.state.totalDocuments}/>
+                    <label style={{display: "block", fontSize: "10px"}}>links were crawled </label>
+                  </CardContent>
+                </Card>
+              </CellDiv>
+              <CellDiv>
+                <Card>
+                  <StyledCardContent>
+                    <label>Total Documents</label>
+                    <Icon icon="upload" style={{float:"right"}}/>
+                  </StyledCardContent>
+                  <CardContent style={{textAlign: "center"}}>
+                    <InputText  value={this.state.totalDocuments}/>
+                    <label style={{display: "block", fontSize: "10px"}}>stored in this project</label>
+                  </CardContent>
+                </Card>
+              </CellDiv>
+            </CardDiv>
+          </CardsContainer>
+        }
+        {this.state.document_id === undefined &&
+          <Title style={{marginBottom:"5%"}}>Project Overview</Title>
+        }
+        {this.state.document_id !== undefined &&
+          <Title style={{marginBottom:"5%"}}>Document Overview</Title>
+        }
+        <OverviewWrapper>
+          <ChartsContainer>
+              <ChartDiv>
+                <Card>
+                  <SentimentBarChart data={this.state.nerData}/>
+                </Card>
+              </ChartDiv>
+              <ChartDiv>
+                <Card>
+                  <SentimentDoughnutChart data={this.state.labelData}/>
+                </Card>
+              </ChartDiv>
+              <ChartDiv>
+                <Card>
+                  <SentimentRadarChart data={this.state.sentimentData}/>
+                </Card>
+              </ChartDiv>
+            {this.state.document_id !== undefined &&
+              <ChartDiv>
+                <Card>
+                  <SimilarityBubbleChart />
+                </Card>
+              </ChartDiv>
+            }
+          </ChartsContainer>
+        </OverviewWrapper>
       </div>
     );
   }
