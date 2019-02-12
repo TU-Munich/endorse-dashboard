@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
-import {Grid} from 'react-md';
-import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import SentimentBarChart from "../VisualizationCharts/SentimentBarChart";
 import SentimentDoughnutChart from "../VisualizationCharts/SentimentDoughnutChart";
 import SentimentRadarChart from "../VisualizationCharts/SentimentRadarChart";
@@ -81,6 +79,9 @@ class DashboardInfo extends Component {
       labelData : '',
       sentimentData: '',
       totalDocuments: ''
+    };
+    if (this.props.document_id !== undefined) {
+      this.setState({document_id: this.props.document_id});
     }
     this.fetchNerResponseData();
     this.fetchLabelsResponseData();
@@ -140,69 +141,85 @@ class DashboardInfo extends Component {
 
     return (
       <div>
-        <CardsContainer>
-          <CardDiv>
-            <CellDiv>
-              <Card>
-                <StyledCardContent>
-                  <label>Uploaded data</label>
-                  <Icon icon="upload" style={{float:"right"}}/>
-                </StyledCardContent>
-                <CardContent style={{textAlign: "center"}}>
-                  <InputText  value={this.state.totalDocuments}/>
-                  <label style={{display: "block", fontSize: "10px"}}>files were locally uploaded </label>
-                </CardContent>
-              </Card>
-            </CellDiv>
-            <CellDiv>
-              <Card>
-                <StyledCardContent>
-                  <label>Crawled data</label>
-                  <Icon icon="upload" style={{float:"right"}}/>
-                </StyledCardContent>
-                <CardContent style={{textAlign: "center"}}>
-                  <InputText  value={this.state.totalDocuments}/>
-                  <label style={{display: "block", fontSize: "10px"}}>links were crawled </label>
-                </CardContent>
-              </Card>
-            </CellDiv>
-            <CellDiv>
-              <Card>
-                <StyledCardContent>
-                  <label>Total Documents</label>
-                  <Icon icon="upload" style={{float:"right"}}/>
-                </StyledCardContent>
-                <CardContent style={{textAlign: "center"}}>
-                  <InputText  value={this.state.totalDocuments}/>
-                  <label style={{display: "block", fontSize: "10px"}}>stored in this project</label>
-                </CardContent>
-              </Card>
-            </CellDiv>
-          </CardDiv>
-        </CardsContainer>
-        <Title style={{marginBottom:"5%"}}>Project Overview</Title>
+        {this.state.document_id === undefined &&
+          <CardsContainer>
+            <CardDiv>
+              <CellDiv>
+                <Card>
+                  <StyledCardContent>
+                    <label>Uploaded data</label>
+                    <Icon icon="upload" style={{float:"right"}}/>
+                  </StyledCardContent>
+                  <CardContent style={{textAlign: "center"}}>
+                    <InputText  value={this.state.totalDocuments}/>
+                    <label style={{display: "block", fontSize: "10px"}}>files were locally uploaded </label>
+                  </CardContent>
+                </Card>
+              </CellDiv>
+              <CellDiv>
+                <Card>
+                  <StyledCardContent>
+                    <label>Crawled data</label>
+                    <Icon icon="upload" style={{float:"right"}}/>
+                  </StyledCardContent>
+                  <CardContent style={{textAlign: "center"}}>
+                    <InputText  value={this.state.totalDocuments}/>
+                    <label style={{display: "block", fontSize: "10px"}}>links were crawled </label>
+                  </CardContent>
+                </Card>
+              </CellDiv>
+              <CellDiv>
+                <Card>
+                  <StyledCardContent>
+                    <label>Total Documents</label>
+                    <Icon icon="upload" style={{float:"right"}}/>
+                  </StyledCardContent>
+                  <CardContent style={{textAlign: "center"}}>
+                    <InputText  value={this.state.totalDocuments}/>
+                    <label style={{display: "block", fontSize: "10px"}}>stored in this project</label>
+                  </CardContent>
+                </Card>
+              </CellDiv>
+            </CardDiv>
+          </CardsContainer>
+        }
+        {this.state.document_id === undefined &&
+          <Title style={{marginBottom:"5%"}}>Project Overview</Title>
+        }
+        {this.state.document_id !== undefined &&
+          <Title style={{marginBottom:"5%"}}>Document Overview</Title>
+        }
         <OverviewWrapper>
           <ChartsContainer>
               <ChartDiv>
                 <Card>
-                  <SentimentBarChart projectUUID={this.props.projectUUID} data={this.state.nerData}/>
+                  <SentimentBarChart projectUUID={this.props.projectUUID}
+                                     document_id={this.state.document_id}
+                                     data={this.state.nerData}/>
                 </Card>
               </ChartDiv>
               <ChartDiv>
                 <Card>
-                  <SentimentDoughnutChart projectUUID={this.props.projectUUID} data={this.state.labelData}/>
+                  <SentimentDoughnutChart projectUUID={this.props.projectUUID}
+                                          document_id={this.state.document_id}
+                                          data={this.state.labelData}/>
                 </Card>
               </ChartDiv>
               <ChartDiv>
                 <Card>
-                  <SentimentRadarChart projectUUID={this.props.projectUUID} data={this.state.sentimentData}/>
+                  <SentimentRadarChart projectUUID={this.props.projectUUID}
+                                       document_id={this.state.document_id}
+                                       data={this.state.sentimentData}/>
                 </Card>
               </ChartDiv>
+            {this.state.document_id !== undefined &&
               <ChartDiv>
-                  <Card>
-                    <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
-                  </Card>
+                <Card>
+                  <SimilarityBubbleChart projectUUID={this.props.projectUUID}
+                                         document_id={this.state.document_id}/>
+                </Card>
               </ChartDiv>
+            }
           </ChartsContainer>
         </OverviewWrapper>
       </div>
