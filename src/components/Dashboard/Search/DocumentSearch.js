@@ -94,21 +94,17 @@ class DocumentSearch extends Component {
   }
 
   deleteDocument(document_id) {
-    DocumentService.deleteDocumentById(document_id).then((response) => {
-      let modalContent = response.status === 200 || response.status === 204 ?
-        {title: 'Success', message: 'Document has been successfully deleted'} :
-        {title: 'Error', message: 'An error has occurred while deleting the document, please contact the system admin'};
-      confirmAlert({
-        title: modalContent.title,
-        message: modalContent.message,
-        buttons: [
-          {
-            label: 'Continue',
-            onClick: () => this.handleDocumentSearch()
-          }
-        ]
-      });
+    DocumentService.deleteDocumentById(document_id).then(async (response) => {
+      let status = response.status === 200 || response.status === 204 ? 'success' : 'error';
+      if (status === 'success') {
+        await this.sleep(500);
+        this.handleDocumentSearch();
+      }
     });
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   render() {
