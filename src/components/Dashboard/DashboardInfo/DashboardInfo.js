@@ -91,7 +91,11 @@ class DashboardInfo extends Component {
 
   fetchNerResponseData(){
     return new Promise((resolve) => {
-      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar).then((response) => {
+      DocumentService.getNerCount(this.props.projectUUID,
+                                  this.state.amountBar,
+                                  undefined,
+                                  undefined,
+                                  this.state.document_id).then((response) => {
         this.setState({
           nerData: response
         }, () => {
@@ -103,7 +107,11 @@ class DashboardInfo extends Component {
 
   fetchLabelsResponseData(){
     return new Promise((resolve) => {
-      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut).then((response) => {
+      DocumentService.getLabelsCount(this.props.projectUUID,
+                                     this.state.amountDoughnut,
+                                    undefined,
+                                    undefined,
+                                     this.state.document_id).then((response) => {
         this.setState({
           labelData: response
         },() => {
@@ -112,9 +120,13 @@ class DashboardInfo extends Component {
       });
     });
   }
+
   fetchSentimentResponseData(){
     return new Promise((resolve) => {
-      DocumentService.getSentimentCount(this.props.projectUUID).then((response) => {
+      DocumentService.getSentimentCount(this.props.projectUUID,
+                                        undefined,
+                                        undefined,
+                                        this.state.document_id).then((response) => {
         this.setState({
           sentimentData: response
         }, () => {
@@ -193,30 +205,23 @@ class DashboardInfo extends Component {
           <ChartsContainer>
               <ChartDiv>
                 <Card>
-                  <SentimentBarChart projectUUID={this.props.projectUUID}
-                                     document_id={this.state.document_id}
-                                     data={this.state.nerData}/>
+                  <SentimentBarChart data={this.state.nerData}/>
                 </Card>
               </ChartDiv>
               <ChartDiv>
                 <Card>
-                  <SentimentDoughnutChart projectUUID={this.props.projectUUID}
-                                          document_id={this.state.document_id}
-                                          data={this.state.labelData}/>
+                  <SentimentDoughnutChart data={this.state.labelData}/>
                 </Card>
               </ChartDiv>
               <ChartDiv>
                 <Card>
-                  <SentimentRadarChart projectUUID={this.props.projectUUID}
-                                       document_id={this.state.document_id}
-                                       data={this.state.sentimentData}/>
+                  <SentimentRadarChart data={this.state.sentimentData}/>
                 </Card>
               </ChartDiv>
             {this.state.document_id !== undefined &&
               <ChartDiv>
                 <Card>
-                  <SimilarityBubbleChart projectUUID={this.props.projectUUID}
-                                         document_id={this.state.document_id}/>
+                  <SimilarityBubbleChart />
                 </Card>
               </ChartDiv>
             }

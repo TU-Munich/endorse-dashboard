@@ -71,9 +71,9 @@ export default class DocumentService {
     return tags;
   }
 
-  static async getNerCount(projectUUID, amountBar, unixDateFrom, unixDateTo) {
+  static async getNerCount(projectUUID, amountBar, unixDateFrom, unixDateTo, document_id) {
     let query ='';
-    if (unixDateFrom === unixDateTo){
+    if (unixDateFrom === unixDateTo && document_id === undefined) {
       query = {
         "size": "0",
         "query": {
@@ -94,8 +94,29 @@ export default class DocumentService {
           }
         }
       };
-    } else {
+    } else if (unixDateFrom === unixDateTo && document_id !== undefined) {
        query = {
+         "size": "0",
+         "query": {
+           "bool": {
+             "must": [{
+               "match": {
+                 "_id": document_id
+               }
+             }]
+           }
+         },
+         "aggs": {
+           "count": {
+             "terms": {
+               "field": "ner.text.keyword",
+               "size": amountBar
+             }
+           }
+         }
+       };
+    } else {
+      query = {
         "size": "0",
         "query": {
           "bool": {
@@ -135,9 +156,9 @@ export default class DocumentService {
     return {keyword, counts}
   }
 
-  static async getLabelsCount(projectUUID, amountDoughnut, unixDateFrom, unixDateTo) {
+  static async getLabelsCount(projectUUID, amountDoughnut, unixDateFrom, unixDateTo, document_id) {
     let query ='';
-    if (unixDateFrom === unixDateTo) {
+    if (unixDateFrom === unixDateTo && document_id === undefined) {
       query = {
         "size": "0",
         "query": {
@@ -158,7 +179,28 @@ export default class DocumentService {
           }
         }
       };
-    } else {
+    } else if (unixDateFrom === unixDateTo && document_id !== undefined) {
+      query = {
+        "size": "0",
+        "query": {
+          "bool": {
+            "must": [{
+              "match": {
+                "_id": document_id
+              }
+            }]
+          }
+        },
+        "aggs": {
+        "labels": {
+          "terms": {
+            "field": "ner.label.keyword",
+              "size": amountDoughnut
+          }
+        }
+      }
+      };
+    }else {
       query = {
         "size": "0",
         "query": {
@@ -199,9 +241,9 @@ export default class DocumentService {
     return {labels, labelCounts}
   }
 
-  static async getSentimentCount(projectUUID, unixDateFrom, unixDateTo) {
+  static async getSentimentCount(projectUUID, unixDateFrom, unixDateTo, document_id) {
     let query ='';
-    if (unixDateFrom === unixDateTo) {
+    if (unixDateFrom === unixDateTo && document_id === undefined) {
       query = {
         "size": "0",
         "query": {
@@ -230,7 +272,36 @@ export default class DocumentService {
           }
         }
       };
-    }else {
+    }else if (unixDateFrom === unixDateTo && document_id !== undefined) {
+      query = {
+        "size": "0",
+        "query": {
+          "bool": {
+            "must": [{
+              "match": {
+                "_id": document_id
+              }
+            }]
+          }
+        },
+        "aggs": {
+          "neg": {
+            "terms": {
+              "field": "sentiment.total.neg"
+            }
+          }, "pos": {
+            "terms": {
+              "field": "sentiment.total.pos"
+            }
+          },
+          "neu": {
+            "terms": {
+              "field": "sentiment.total.neu"
+            }
+          }
+        }
+      };
+    } else {
       query = {
         "size": "0",
         "query": {

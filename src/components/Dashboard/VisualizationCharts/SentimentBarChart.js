@@ -37,6 +37,9 @@ const options = {
 class SentimentBarChart extends Component{
   constructor(props) {
     super(props);
+    if (this.props.document_id !== undefined) {
+      this.setState({document_id: this.props.document_id});
+    }
   }
 
   prepareChartData(documentAnalysis) {
