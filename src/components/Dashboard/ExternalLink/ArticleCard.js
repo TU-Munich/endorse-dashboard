@@ -15,11 +15,11 @@ class ArticleCard extends Component {
           <Typography className={classes.fileName} color={"textPrimary"} gutterBottom>
             {this.props.file['title']}
           </Typography>
-          {/* <Typography className={classes.fileMeta} color="textSecondary">
-            Date: {this.props.file.lastModifiedDate.toString()}
-          </Typography> */}
           <Typography className={classes.fileMeta} color="textSecondary">
-            Source: {this.props.file['url']}
+            Source: {this.props.file['source']}
+          </Typography>
+          <Typography className={classes.fileMeta} color="textSecondary">
+            Link: {this.props.file['url']}
           </Typography>
         </CardContent>
         {/* <Tag suggestions={this.props.suggestions} /> */}

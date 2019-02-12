@@ -41,7 +41,7 @@ const MenuProps = {
 const AddTagsButton = styled(Button)`
   text-align: center;
   float: center;
-  marginTop : 10,
+  margin-bottom: 10px;
 `;
 
 const sources = [
@@ -92,8 +92,8 @@ class ExternalLink extends Component {
     this.state = {
       quote:'',
       author:'',
-      //endpoint:"http://35.197.219.92:3002",
-      endpoint:"http://localhost:3002",
+      endpoint:"http://35.197.219.92:3002",
+      //endpoint:"http://localhost:3002",
       loading: false,
       crawling: false,
       projectUUID: this.props.projectUUID,
@@ -231,8 +231,6 @@ class ExternalLink extends Component {
                   <MenuItem value="Past Month">Past Month</MenuItem>
                 </Select>
             </FormControl>
-            
-            {/* Sources select component */}
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="select-multiple-chip">Source</InputLabel>
               <Select
@@ -279,7 +277,6 @@ class ExternalLink extends Component {
           >
           Stop
           </Button>
-          
           <Paper className={classes.progress}>
             <LinearProgress 
               classes={{
@@ -298,20 +295,20 @@ class ExternalLink extends Component {
           </div>
         </div>
         }
-        { this.state.article_list.length > 0 &&
+        {/* { this.state.article_list.length > 0 &&
             <div>
               <AddTagsButton variant="contained" color="primary" onClick={() => { this.handleAddTagsClick()}}>
                 Show Result
               </AddTagsButton>
             </div>
-          }
+          } */}
         
         </Card>
-        { this.state.addTagsVisible &&
+        { this.state.article_list.length > 0 &&
         <ContainerDiv>
-          <Card>
+          <Card style={{height: "300%", padding: "10px 10px 10px"}}>
             <h1>Overview of News Articles</h1>
-            <TagArticles files={this.state.article_list} visible={this.state.addTagsVisible} />
+            <TagArticles files={this.state.article_list} visible={this.state.article_list.length > 0} />
           </Card>
         </ContainerDiv>
         
