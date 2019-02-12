@@ -7,6 +7,7 @@ import ChartsIcon from '@material-ui/icons/TrendingUp';
 import ViewIcon from '@material-ui/icons/Visibility';
 import Modal from "@material-ui/core/Modal/Modal";
 import DocumentDetailView from './DocumentDetailView'
+import config from '../../../config';
 
 const Ribbon = styled.div`
   width: 10px;
@@ -100,16 +101,18 @@ class ResultListItem extends Component {
   };
 
   render() {
-    let download_link = this.props.document._source.file_path;
-    let document_name = this.props.document._source.file_path.match(/[(_\-)a-zA-Z0-9]+(\.)+([a-zA-Z]{3,})/g);
+    // /project/<string:projectUUID>/files/download/
+    let download_link = config.nlpServiceBaseUrl + '/files/project/' + this.props.document._source.project_uuid + '/files/download/' + this.props.document._source.file_name;
+    let document_name = this.props.document._source.file_name;
     return (
       <ListItem>
         <Ribbon class={'ribbon'} />
-        <ItemLabel>{ document_name.toString().replace(/_/g, ' ') }</ItemLabel>
+        <ItemLabel>{document_name}</ItemLabel>
         <ListItemActions>
           <DownloadButton aria-label="Download"
+                          href={download_link}
                           style={{transition: 'none', borderRadius: 0}}
-                          onClick={() => alert(download_link)}>
+                          >
             <DownloadIcon />
           </DownloadButton>
           <ViewButton aria-label="View"
