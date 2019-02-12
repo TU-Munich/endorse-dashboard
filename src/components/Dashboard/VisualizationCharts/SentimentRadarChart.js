@@ -16,7 +16,7 @@ class SentimentRadarChart extends Component{
         scaleStepWidth: 5,
         label: "Sentiment Data",
         data: chartData,
-        backgroundColor: 'rgba(179,181,198,0.2)',
+        backgroundColor: ['rgba(179,181,198,0.2)', "rgba(75,192,192,0.4)"],
         borderColor: 'rgba(179,181,198,1)',
         pointBackgroundColor: 'rgba(179,181,198,1)',
         pointBorderColor: '#fff',
