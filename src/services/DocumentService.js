@@ -124,7 +124,6 @@ export default class DocumentService {
         }
       };
     }
-
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let keyword = [];
     let counts = [];
@@ -270,7 +269,6 @@ export default class DocumentService {
       };
     }
 
-
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let total =[];
 
@@ -303,7 +301,11 @@ export default class DocumentService {
         }
       }
     };
+    let totalDocuments = 0;
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
-    return response.data.aggregations.docsTotal.buckets[0].doc_count;
+    if (response.data.aggregations.docsTotal.buckets.length !== 0) {
+      totalDocuments = response.data.aggregations.docsTotal.buckets[0].doc_count;
+    }
+    return totalDocuments;
   }
 }

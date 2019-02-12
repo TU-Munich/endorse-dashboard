@@ -133,6 +133,7 @@ class DashboardInfo extends Component {
         });
       });
     });
+
   }
 
   render() {

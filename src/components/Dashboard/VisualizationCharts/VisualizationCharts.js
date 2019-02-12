@@ -196,7 +196,7 @@ class VisualizationCharts extends Component {
         <CardsContainer>
             <DivCards>
               <Card>
-                <CardContent style={{backgroundColor:"#fbfbfb"}} image={""}>
+                <CardContent style={{backgroundColor:"#fbfbfb"}}>
                   <SentimentBarChart projectUUID={this.props.projectUUID}  data={this.state.nerData}/>
                 </CardContent>
                   <CardContent style={{fontSize:"medium"}}>
@@ -219,7 +219,7 @@ class VisualizationCharts extends Component {
             </DivCards>
             <DivCards>
               <Card >
-                <CardContent style={{backgroundColor:"#fbfbfb"}} image={""}>
+                <CardContent style={{backgroundColor:"#fbfbfb"}}>
                   <SentimentDoughnutChart projectUUID={this.props.projectUUID} data={this.state.labelData}/>
                 </CardContent>
                 <CardContent style={{fontSize:"medium"}}>
@@ -242,7 +242,7 @@ class VisualizationCharts extends Component {
             </DivCards>
         <DivCards>
           <Card >
-            <CardContent style={{backgroundColor:"#fbfbfb"}} image={""}>
+            <CardContent style={{backgroundColor:"#fbfbfb"}}>
               <SentimentRadarChart projectUUID={this.props.projectUUID} data={this.state.sentimentData}/>
             </CardContent>
             <CardContent>
@@ -252,7 +252,7 @@ class VisualizationCharts extends Component {
         </DivCards>
             <DivCards>
               <Card >
-                <CardContent style={{backgroundColor:"#fbfbfb"}} image={""}>
+                <CardContent style={{backgroundColor:"#fbfbfb"}}>
                   <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
                 </CardContent>
                 <CardContent>
