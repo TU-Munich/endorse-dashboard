@@ -13,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import SentimentRadarChart from "./SentimentRadarChart";
 import SimilarityBubbleChart from "./SimilarityBubbleChart";
 import DocumentService from "../../../services/DocumentService";
+import SentimentAreaChart from "./SentimentAreaChart";
 
 
 const OverviewWrapper = styled.div`
@@ -54,7 +55,8 @@ class VisualizationCharts extends Component {
       amountDoughnut: '3',
       nerData: '',
       labelData : '',
-      sentimentData: ''
+      sentimentData: '',
+      tagsData: ''
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -73,7 +75,11 @@ class VisualizationCharts extends Component {
             if (status === 'success') {
               this.fetchSentimentResponseData().then((status) => {
                 if (status === 'success') {
-                  this.setState({loading: false})
+                  this.fetchTagResponseData().then((status) => {
+                    if (status === 'success') {
+                      this.setState({loading: false})
+                    }
+                  })
                 }
               })
             }
@@ -88,6 +94,7 @@ class VisualizationCharts extends Component {
       this.fetchNerResponseData();
       this.fetchLabelsResponseData();
       this.fetchSentimentResponseData();
+      this.fetchTagResponseData();
     });
   }
 
@@ -96,6 +103,7 @@ class VisualizationCharts extends Component {
       this.fetchNerResponseData();
       this.fetchLabelsResponseData();
       this.fetchSentimentResponseData();
+      this.fetchTagResponseData();
     });
   }
 
@@ -151,6 +159,20 @@ class VisualizationCharts extends Component {
         this.setState({
           sentimentData: response
         }, () => {
+          resolve('success')
+        });
+      });
+    });
+  }
+
+  fetchTagResponseData(){
+    let unixDateFrom = Date.parse(this.state.startDate)/1000;
+    let unixDateTo = Date.parse(this.state.endDate)/1000;
+    return new Promise((resolve) => {
+      DocumentService.getTagsCount(this.props.projectUUID, unixDateFrom, unixDateTo).then((response) => {
+        this.setState({
+          tagsData: response
+        },() => {
           resolve('success')
         });
       });
@@ -253,7 +275,7 @@ class VisualizationCharts extends Component {
             <DivCards>
               <Card >
                 <CardContent style={{backgroundColor:"#fbfbfb"}}>
-                  <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
+                  <SentimentAreaChart projectUUID={this.props.projectUUID} data={this.state.tagsData}/>
                 </CardContent>
                 <CardContent>
                   Document Similarity

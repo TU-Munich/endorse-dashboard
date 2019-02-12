@@ -1,23 +1,36 @@
-import React from 'react'
-import { Chart } from 'react-charts';
-import ChartConfig from "./ChartConfig";
+import React, {Component} from 'react';
+import {Polar} from 'react-chartjs-2';
 
-export default () => (
-  <div>
-    <ChartConfig series={10}>
-      {({ data }) => (
-        <Chart
-          data={data}
-          series={{ type: 'area' }}
-          axes={[
-            { primary: true, position: 'bottom', type: 'time' },
-            { position: 'left', type: 'linear', stacked: true },
-          ]}
-          primaryCursor
-          secondaryCursor
-          tooltip
-        />
-      )}
-    </ChartConfig>
-  </div>
-)
+class SentimentAreaChart extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  prepareChartData(documentAnalysis) {
+
+    const chartLabels = documentAnalysis.tagsLabels;
+    const chartData = documentAnalysis.tagsCounts;
+    console.log(chartLabels);
+    return {
+      labels: chartLabels,
+      datasets: [{
+        data: chartData,
+        backgroundColor: [ '#907AD6',
+          '#4BC0C0',
+          '#0099cc',
+          '#FFCE56',
+          '#FF6384',
+          '#E7E9ED',
+          '#36A2EB']
+      }]
+    }
+  };
+
+  render() {
+    return (
+      <Polar data={this.prepareChartData(this.props.data)}/>
+    );
+  }
+}
+
+export default SentimentAreaChart;
