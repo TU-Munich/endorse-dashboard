@@ -22,7 +22,7 @@ class ArticleCard extends Component {
             Link: {this.props.file['url']}
           </Typography>
         </CardContent>
-        <Tag suggestions={this.props.suggestions} />
+        {/* <Tag suggestions={this.props.suggestions} /> */}
       </Card>
     )
   }
