@@ -20,7 +20,7 @@ class SimilarityBubbleChart extends Component{
     // let chartData = [sentimentData.compound, sentimentData.neg, sentimentData.neu, sentimentData.pos];
   let chartData = sentimentData;
     return {
-      labels:['January'],
+      labels:['a','b','c',],
       datasets: [{
           label: 'First Dataset',
           data: chartData,
@@ -33,9 +33,9 @@ class SimilarityBubbleChart extends Component{
   fetchSentimentData() {
     let chartData;
     chartData = [
-      {x: 20, y: 30, r: 15},
-      {x: 40, y: 10, r: 10},
-      {x: 25, y: 15, r: 8}
+      {x: 100, y: 30, r: 20 , label:'cats'},
+      {x: 40, y: 10, r: 10 , label:'cats'},
+      {x: 25, y: 15, r: 8 , label:'cats'}
     ];
     /*AnalyticsService.getSentimentData().then((response) => {
       chartData = prepareChartData(response.data.hits.hits[0].total);
