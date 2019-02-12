@@ -54,8 +54,7 @@ class VisualizationCharts extends Component {
       amountDoughnut: '3',
       nerData: '',
       labelData : '',
-      sentimentData: '',
-      document_id: window.localStorage.getItem('document_id')
+      sentimentData: ''
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -82,10 +81,6 @@ class VisualizationCharts extends Component {
         }
       });
     })
-  }
-
-  componentWillUnmount() {
-    window.localStorage.removeItem('document_id');
   }
 
   handleStartDateChange(date) {

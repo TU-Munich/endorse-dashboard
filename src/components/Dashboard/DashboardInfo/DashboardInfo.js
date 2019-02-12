@@ -80,9 +80,19 @@ class DashboardInfo extends Component {
       sentimentData: '',
       totalDocuments: ''
     };
+  }
+
+  componentWillMount() {
     if (this.props.document_id !== undefined) {
-      this.setState({document_id: this.props.document_id});
+      this.setState({document_id: this.props.document_id}, () => {
+        this.initializeCharts()
+      });
+    } else {
+      this.initializeCharts()
     }
+  }
+
+  initializeCharts() {
     this.fetchNerResponseData();
     this.fetchLabelsResponseData();
     this.fetchSentimentResponseData();
@@ -97,8 +107,10 @@ class DashboardInfo extends Component {
                                   undefined,
                                   this.state.document_id).then((response) => {
         this.setState({
-          nerData: response
+          nerData: response,
+          maxTicks: Math.max(...response.counts) + 2
         }, () => {
+          console.log(this.state.maxTicks);
           resolve('success')
         });
       });
@@ -199,13 +211,13 @@ class DashboardInfo extends Component {
           <Title style={{marginBottom:"5%"}}>Project Overview</Title>
         }
         {this.state.document_id !== undefined &&
-          <Title style={{marginBottom:"5%"}}>Document Overview</Title>
+          <Title style={{marginBottom: 35, color: 'white'}}>Document Overview</Title>
         }
         <OverviewWrapper>
           <ChartsContainer>
               <ChartDiv>
                 <Card>
-                  <SentimentBarChart data={this.state.nerData}/>
+                  <SentimentBarChart data={this.state.nerData} maxTicks={this.state.maxTicks}/>
                 </Card>
               </ChartDiv>
               <ChartDiv>

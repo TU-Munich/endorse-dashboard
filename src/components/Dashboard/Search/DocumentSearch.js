@@ -51,9 +51,10 @@ class DocumentSearch extends Component {
   }
 
   componentWillMount() {
+    this.handleDocumentSearch();
     DocumentService.getAllTags(false, this.props.projectUUID).then((tags) => {
       this.setState({ tags: tags, loading: false })
-    })
+    });
   }
 
   onSearchChange(event) {
@@ -97,7 +98,7 @@ class DocumentSearch extends Component {
     DocumentService.deleteDocumentById(document_id).then(async (response) => {
       let status = response.status === 200 || response.status === 204 ? 'success' : 'error';
       if (status === 'success') {
-        await this.sleep(500);
+        await this.sleep(700);
         this.handleDocumentSearch();
       }
     });
