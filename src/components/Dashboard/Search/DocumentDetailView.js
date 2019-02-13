@@ -16,6 +16,11 @@ const ModalContent = styled.div`
   max-height: 600px;
 `;
 
+const PipelineDocument = styled.div`
+  width: 50%; 
+  float: right;
+`;
+
 class DocumentDetailView extends Component {
   constructor(props) {
     super(props);
@@ -44,9 +49,9 @@ class DocumentDetailView extends Component {
 
     return (
       <ModalContent className={'modal-content'}>
-        <div style={{width: '70%', float: 'right'}}>
+        <PipelineDocument>
           <ReactJson src={this.state.document} collapsed={false} />
-        </div>
+        </PipelineDocument>
       </ModalContent>
     );
   }

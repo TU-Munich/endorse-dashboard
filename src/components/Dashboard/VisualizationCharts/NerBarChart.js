@@ -1,42 +1,41 @@
 import React, {Component} from 'react';
 import {Bar} from 'react-chartjs-2';
 
-
-const options = {
-  responsive: true,
-  title:{
-    display: true,
-    text: "Most relevant data"
-  },
-  scales: {
-    yAxes: [{
-      lineWidth: 1,
-      tickWidth: 1,
-      title: {
+const options = (maxTicks) => {
+  return {
+    responsive: true,
+    scales: {
+      yAxes: [{
+        lineWidth: 1,
+        tickWidth: 1,
+        title: {
+          display: true,
+          align: 'high',
+          offset: 0,
+          text: "Amount of hits",
+          rotation: 270
+        },
         display: true,
-        align: 'high',
-        offset: 0,
-        text: "Amount of hits",
-        rotation: 270
-      },
-      display: true,
-      ticks: {
-        min: 0
-      }
-    }],
-    xAxes: [{
-      label: {
-        show: false
-      },
-      ticks: {
-        fontSize: 10,
-        autoSkip: false,
-        maxRotation: 90,
-        minRotation: 0
-      }
-    }]
+        ticks: {
+          min: 0,
+          max: maxTicks
+        }
+      }],
+      xAxes: [{
+        label: {
+          show: false
+        },
+        ticks: {
+          fontSize: 10,
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 0
+        }
+      }]
+    }
   }
 };
+
 class NerBarChart extends Component{
   constructor(props) {
     super(props);
@@ -71,8 +70,12 @@ class NerBarChart extends Component{
   };
 
   render() {
+    if (this.props.data === undefined) {
+      return(<h2>Loading...</h2>);
+    }
+
     return (
-      <Bar data={this.prepareChartData(this.props.data)} options={options}/>
+      <Bar data={this.prepareChartData(this.props.data)} options={options(this.props.maxTicks)}/>
     );
   }
 }

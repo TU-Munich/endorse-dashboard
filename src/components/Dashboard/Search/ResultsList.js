@@ -15,7 +15,7 @@ class ResultsList extends Component {
     return (
       <ResultsListComponent>
         {this.props.data.map((result, i) =>
-            <ResultListItem key={i} document={result} />
+            <ResultListItem key={i} document={result} handleDocumentDelete={this.props.handleDocumentDelete} history={this.props.history}/>
         )}
       </ResultsListComponent>
     );
