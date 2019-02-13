@@ -445,9 +445,24 @@ export default class DocumentService {
             }
           },
           "aggs": {
-            "total": {
-              "terms": {
+            "compound": {
+              "avg": {
                 "field": "sentiment.total.compound"
+              }
+            },
+            "neg": {
+              "avg": {
+                "field": "sentiment.total.neg"
+              }
+            },
+            "neu": {
+              "avg": {
+                "field": "sentiment.total.neu"
+              }
+            },
+            "pos": {
+              "avg": {
+                "field": "sentiment.total.pos"
               }
             }
           }
@@ -469,9 +484,24 @@ export default class DocumentService {
             }
           },
           "aggs": {
-            "total": {
-              "terms": {
+            "compound": {
+              "avg": {
                 "field": "sentiment.total.compound"
+              }
+            },
+            "neg": {
+              "avg": {
+                "field": "sentiment.total.neg"
+              }
+            },
+            "neu": {
+              "avg": {
+                "field": "sentiment.total.neu"
+              }
+            },
+            "pos": {
+              "avg": {
+                "field": "sentiment.total.pos"
               }
             }
           }
@@ -491,9 +521,24 @@ export default class DocumentService {
             }
           },
           "aggs": {
-            "total": {
-              "terms": {
+            "compound": {
+              "avg": {
                 "field": "sentiment.total.compound"
+              }
+            },
+            "neg": {
+              "avg": {
+                "field": "sentiment.total.neg"
+              }
+            },
+            "neu": {
+              "avg": {
+                "field": "sentiment.total.neu"
+              }
+            },
+            "pos": {
+              "avg": {
+                "field": "sentiment.total.pos"
               }
             }
           }
@@ -515,9 +560,24 @@ export default class DocumentService {
             }
           },
           "aggs": {
-            "total": {
-              "terms": {
+            "compound": {
+              "avg": {
                 "field": "sentiment.total.compound"
+              }
+            },
+            "neg": {
+              "avg": {
+                "field": "sentiment.total.neg"
+              }
+            },
+            "neu": {
+              "avg": {
+                "field": "sentiment.total.neu"
+              }
+            },
+            "pos": {
+              "avg": {
+                "field": "sentiment.total.pos"
               }
             }
           }
@@ -545,9 +605,24 @@ export default class DocumentService {
             }
           },
           "aggs": {
-            "total": {
-              "terms": {
+            "compound": {
+              "avg": {
                 "field": "sentiment.total.compound"
+              }
+            },
+            "neg": {
+              "avg": {
+                "field": "sentiment.total.neg"
+              }
+            },
+            "neu": {
+              "avg": {
+                "field": "sentiment.total.neu"
+              }
+            },
+            "pos": {
+              "avg": {
+                "field": "sentiment.total.pos"
               }
             }
           }
@@ -577,9 +652,24 @@ export default class DocumentService {
             }
           },
           "aggs": {
-            "total": {
-              "terms": {
+            "compound": {
+              "avg": {
                 "field": "sentiment.total.compound"
+              }
+            },
+            "neg": {
+              "avg": {
+                "field": "sentiment.total.neg"
+              }
+            },
+            "neu": {
+              "avg": {
+                "field": "sentiment.total.neu"
+              }
+            },
+            "pos": {
+              "avg": {
+                "field": "sentiment.total.pos"
               }
             }
           }
@@ -588,11 +678,15 @@ export default class DocumentService {
     }
 
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
-    let total =[];
-
-    response.data.aggregations.total.buckets.forEach((bucket) => {
-      total.push(bucket.key);
-    });
+    let total = [];
+    let neg = response.data.aggregations.neg.value;
+    total.push(neg);
+    let comp =response.data.aggregations.compound.value;
+    total.push(comp);
+    let neu = response.data.aggregations.neu.value;
+    total.push(neu);
+    let pos = response.data.aggregations.pos.value;
+    total.push(pos);
     return {total}
   }
 
