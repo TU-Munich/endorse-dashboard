@@ -6,6 +6,7 @@ import DownloadIcon from '@material-ui/icons/CloudDownload';
 import ChartsIcon from '@material-ui/icons/TrendingUp';
 import ViewIcon from '@material-ui/icons/Visibility';
 import Modal from "@material-ui/core/Modal/Modal";
+import Tooltip from '@material-ui/core/Tooltip';
 import DocumentDetailView from './DocumentDetailView'
 import DashboardInfo from "../DashboardInfo/DashboardInfo";
 import config from '../../../config';
@@ -13,7 +14,7 @@ import config from '../../../config';
 const Ribbon = styled.div`
   width: 10px;
   height: 0px;
-  background-color: green;
+  background-color: ${props => props.docType === 'upload' ? 'green' : '#b1170b'}; 
   position: relative;
   left: -5px;
   top: -34px;
@@ -24,8 +25,8 @@ const Ribbon = styled.div`
 		z-index: 2;
 		left: 0;
 		bottom: -10px;
-		border-left: 5px solid green;
-		border-right: 5px solid green;
+		border-left: 5px solid ${props => props.docType === 'upload' ? 'green' : '#b1170b'};;
+		border-right: 5px solid ${props => props.docType === 'upload' ? 'green' : '#b1170b'};;
 		border-bottom: 5px solid transparent;
 	}
 `;
@@ -119,44 +120,47 @@ class ResultListItem extends Component {
     let download_link = config.nlpServiceBaseUrl + '/files/project/' + this.props.document._source.project_uuid + '/files/download/' + this.props.document._source.file_name;
     let document_name = this.props.document._source.file_name;
     return (
-      <ListItem>
-        <Ribbon class={'ribbon'} />
-        <ItemLabel>{document_name}</ItemLabel>
-        <ListItemActions>
-          <DownloadButton aria-label="Download"
-                          href={download_link}
-                          style={{transition: 'none', borderRadius: 0}}
-                          >
-            <DownloadIcon />
-          </DownloadButton>
-          <ViewButton aria-label="View"
-                      style={{transition: 'none', borderRadius: 0}}
-                      onClick={this.handleOpenDocumentModal}>
-            <ViewIcon />
-          </ViewButton>
-          <StatisticsButton aria-label="Statistics"
+      <Tooltip title={`Document origin: ` + this.props.document._source.origin} placement="top">
+        <ListItem>
+          <Ribbon class={'ribbon'} docType={this.props.document._source.origin}/>
+          <ItemLabel>{document_name}</ItemLabel>
+          <ListItemActions>
+            <DownloadButton aria-label="Download"
+                            href={download_link}
                             style={{transition: 'none', borderRadius: 0}}
-                            onClick={this.handleOpenChartsModal}>
-            <ChartsIcon />
-          </StatisticsButton>
-          <DeleteButton aria-label="Delete"
+                            >
+              <DownloadIcon />
+            </DownloadButton>
+            <ViewButton aria-label="View"
                         style={{transition: 'none', borderRadius: 0}}
-                        onClick={() => this.props.handleDocumentDelete(this.props.document._id)}>
-            <DeleteIcon />
-          </DeleteButton>
-        </ListItemActions>
-        <Modal open={this.state.chartsViewOpen}
-               onClose={this.handleCloseChartsModal}
-               style={{width: '80%', margin: 'auto'}}
-               disableAutoFocus={true}>
-          <DashboardInfo projectUUID={window.localStorage.getItem('projectUUID')} document_id={this.props.document._id} />
-        </Modal>
-        <Modal open={this.state.documentViewOpen}
-               onClose={this.handleCloseDocumentModal}
-               disableAutoFocus={true}>
-          <DocumentDetailView document_id={this.props.document._id} />
-        </Modal>
-      </ListItem>
+                        onClick={this.handleOpenDocumentModal}>
+              <ViewIcon />
+            </ViewButton>
+            <StatisticsButton aria-label="Statistics"
+                              style={{transition: 'none', borderRadius: 0}}
+                              onClick={this.handleOpenChartsModal}>
+              <ChartsIcon />
+            </StatisticsButton>
+            <DeleteButton aria-label="Delete"
+                          style={{transition: 'none', borderRadius: 0}}
+                          onClick={() => this.props.handleDocumentDelete(this.props.document._id)}>
+              <DeleteIcon />
+            </DeleteButton>
+          </ListItemActions>
+          <Modal open={this.state.chartsViewOpen}
+                 onClose={this.handleCloseChartsModal}
+                 style={{width: '80%', margin: 'auto', zIndex: 3000}}
+                 disableAutoFocus={true}>
+            <DashboardInfo projectUUID={window.localStorage.getItem('projectUUID')} document_id={this.props.document._id} />
+          </Modal>
+          <Modal open={this.state.documentViewOpen}
+                 onClose={this.handleCloseDocumentModal}
+                 style={{zIndex: 3000}}
+                 disableAutoFocus={true}>
+            <DocumentDetailView document_id={this.props.document._id} />
+          </Modal>
+        </ListItem>
+      </Tooltip>
     );
   }
 }
