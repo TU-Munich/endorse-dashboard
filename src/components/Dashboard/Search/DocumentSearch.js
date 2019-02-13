@@ -9,6 +9,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import Select from '@material-ui/core/Select';
 import styled from 'styled-components'
 import ResultsList from './ResultsList'
@@ -82,15 +84,7 @@ class DocumentSearch extends Component {
     confirmAlert({
       title: modalContent.title,
       message: modalContent.message,
-      buttons: [
-        {
-          label: 'Continue',
-          onClick: () => this.deleteDocument(document_id)
-        },
-        {
-          label: 'Cancel',
-        }
-      ]
+      buttons: [{label: 'Continue', onClick: () => this.deleteDocument(document_id)}, {label: 'Cancel',}]
     });
   }
 
@@ -127,6 +121,17 @@ class DocumentSearch extends Component {
               {this.state.tags.map((tag) => <MenuItem key={tag} value={tag}> {tag} </MenuItem> )}
             </Select>
           </FormControl>
+          <Divider className={classes.divider} />
+          <FormControlLabel
+            classes={{label: classes.label}}
+            control={
+              <Switch
+                checked={this.state.sensitivitySearch}
+                onChange={this.handleSearchType}
+                value="checkedB"
+                color="primary"/>
+            }
+            label="Similarity"/>
           <Divider className={classes.divider} />
           <InputBase
             className={classes.input}
@@ -172,9 +177,16 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     flex: 1,
+    fontSize: '1rem',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: 400
   },
   label: {
-    position: 'relative'
+    position: 'relative',
+    color: 'darkgray',
+    fontSize: '1rem',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: 300
   },
   iconButton: {
     padding: 10,
