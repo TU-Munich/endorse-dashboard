@@ -82,7 +82,8 @@ class DashboardInfo extends Component {
       totalDocuments: '',
       tagsData:'',
       totalDocumentsProject:'',
-      totalCrawled:''
+      totalCrawled:'',
+      sourceData: 'both'
     };
   }
   componentWillMount() {
@@ -129,7 +130,8 @@ class DashboardInfo extends Component {
                                   this.state.amountBar,
                                   undefined,
                                   undefined,
-                                  this.state.document_id).then((response) => {
+                                  this.state.document_id,
+                                  this.state.sourceData).then((response) => {
         this.setState({
           nerData: response,
           maxTicks: Math.max(...response.counts) + 2
@@ -147,7 +149,8 @@ class DashboardInfo extends Component {
                                      this.state.amountDoughnut,
                                     undefined,
                                     undefined,
-                                     this.state.document_id).then((response) => {
+                                     this.state.document_id,
+                                      this.state.sourceData).then((response) => {
         this.setState({
           labelData: response
         },() => {
@@ -162,7 +165,8 @@ class DashboardInfo extends Component {
       DocumentService.getSentimentCount(this.props.projectUUID,
                                         undefined,
                                         undefined,
-                                        this.state.document_id).then((response) => {
+                                        this.state.document_id,
+                                        this.state.sourceData).then((response) => {
         this.setState({
           sentimentData: response
         }, () => {
@@ -176,7 +180,8 @@ class DashboardInfo extends Component {
     return new Promise((resolve) => {
       DocumentService.getTagsCount(this.props.projectUUID,
                                   undefined,
-                                  undefined,).then((response) => {
+                                  undefined,
+                                  this.state.sourceData).then((response) => {
         this.setState({
           tagsData: response
         },() => {
