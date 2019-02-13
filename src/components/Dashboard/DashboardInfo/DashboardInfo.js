@@ -80,10 +80,12 @@ class DashboardInfo extends Component {
       labelData : '',
       sentimentData: '',
       totalDocuments: '',
-      tagsData:''
+      tagsData:'',
+      totalDocumentsProject:'',
+      totalCrawled:'',
+      sourceData: 'both'
     };
   }
-
   componentWillMount() {
     if (this.props.document_id !== undefined) {
       this.setState({document_id: this.props.document_id}, () => {
@@ -92,6 +94,24 @@ class DashboardInfo extends Component {
     } else {
       this.initializeCharts()
     }
+
+    this.setState({
+      loading: true
+    }, () => {
+      this.fetchTotalDocumentCount().then((status) => {
+        if (status === 'success') {
+          this.fetchCrawledDocumentsCount().then((status) => {
+            if (status === 'success') {
+              this.fetchTotalProjectDocuments().then((status) => {
+                if (status === 'success') {
+                  this.setState({loading: false})
+                }
+              })
+            }
+          })
+        }
+      })
+    });
   }
 
   initializeCharts() {
@@ -100,6 +120,8 @@ class DashboardInfo extends Component {
     this.fetchSentimentResponseData();
     this.fetchTotalDocumentCount();
     this.fetchTagResponseData();
+    this.fetchCrawledDocumentsCount();
+    this.fetchTotalProjectDocuments();
   }
 
   fetchNerResponseData(){
@@ -108,12 +130,12 @@ class DashboardInfo extends Component {
                                   this.state.amountBar,
                                   undefined,
                                   undefined,
-                                  this.state.document_id).then((response) => {
+                                  this.state.document_id,
+                                  this.state.sourceData).then((response) => {
         this.setState({
           nerData: response,
           maxTicks: Math.max(...response.counts) + 2
         }, () => {
-          console.log(this.state.maxTicks);
           resolve('success')
         });
       });
@@ -126,7 +148,8 @@ class DashboardInfo extends Component {
                                      this.state.amountDoughnut,
                                     undefined,
                                     undefined,
-                                     this.state.document_id).then((response) => {
+                                     this.state.document_id,
+                                      this.state.sourceData).then((response) => {
         this.setState({
           labelData: response
         },() => {
@@ -141,7 +164,8 @@ class DashboardInfo extends Component {
       DocumentService.getSentimentCount(this.props.projectUUID,
                                         undefined,
                                         undefined,
-                                        this.state.document_id).then((response) => {
+                                        this.state.document_id,
+                                        this.state.sourceData).then((response) => {
         this.setState({
           sentimentData: response
         }, () => {
@@ -155,7 +179,8 @@ class DashboardInfo extends Component {
     return new Promise((resolve) => {
       DocumentService.getTagsCount(this.props.projectUUID,
                                   undefined,
-                                  undefined,).then((response) => {
+                                  undefined,
+                                  this.state.sourceData).then((response) => {
         this.setState({
           tagsData: response
         },() => {
@@ -167,7 +192,7 @@ class DashboardInfo extends Component {
 
   fetchTotalDocumentCount(){
     return new Promise((resolve) => {
-      DocumentService.getDocumentsCount(this.props.projectUUID).then((response) => {
+      DocumentService.getUploadDocumentsCount(this.props.projectUUID).then((response) => {
         this.setState({
           totalDocuments: response
         }, () => {
@@ -175,8 +200,31 @@ class DashboardInfo extends Component {
         });
       });
     });
-
   }
+
+  fetchCrawledDocumentsCount(){
+    return new Promise((resolve) => {
+      DocumentService.getCrawledDocumentsCount(this.props.projectUUID).then((response) => {
+        this.setState({
+          totalCrawled: response
+        }, () => {
+          resolve('success')
+        });
+      });
+    });
+  }
+
+  fetchTotalProjectDocuments(){
+    return new Promise((resolve) => {
+      this.setState({
+        totalDocumentsProject: (this.state.totalCrawled + this.state.totalDocuments)
+      },() => {
+        resolve('success')
+      });
+    });
+  }
+
+
 
   render() {
 
@@ -188,23 +236,23 @@ class DashboardInfo extends Component {
               <CellDiv>
                 <Card>
                   <StyledCardContent>
-                    <label>Uploaded data</label>
+                    <label>Uploaded files</label>
                     <Icon icon="upload" style={{float:"right"}}/>
                   </StyledCardContent>
                   <CardContent style={{textAlign: "center"}}>
                     <InputText  value={this.state.totalDocuments}/>
-                    <label style={{display: "block", fontSize: "10px"}}>files were locally uploaded </label>
+                    <label style={{display: "block", fontSize: "10px"}}>files were uploaded </label>
                   </CardContent>
                 </Card>
               </CellDiv>
               <CellDiv>
                 <Card>
                   <StyledCardContent>
-                    <label>Crawled data</label>
+                    <label>Crawled files</label>
                     <Icon icon="upload" style={{float:"right"}}/>
                   </StyledCardContent>
                   <CardContent style={{textAlign: "center"}}>
-                    <InputText  value={this.state.totalDocuments}/>
+                    <InputText  value={this.state.totalCrawled}/>
                     <label style={{display: "block", fontSize: "10px"}}>links were crawled </label>
                   </CardContent>
                 </Card>
@@ -212,12 +260,12 @@ class DashboardInfo extends Component {
               <CellDiv>
                 <Card>
                   <StyledCardContent>
-                    <label>Total Documents</label>
+                    <label>Total of Documents</label>
                     <Icon icon="upload" style={{float:"right"}}/>
                   </StyledCardContent>
                   <CardContent style={{textAlign: "center"}}>
-                    <InputText  value={this.state.totalDocuments}/>
-                    <label style={{display: "block", fontSize: "10px"}}>stored in this project</label>
+                    <InputText  value={this.state.totalDocumentsProject}/>
+                    <label style={{display: "block", fontSize: "10px"}}>files were analyzed</label>
                   </CardContent>
                 </Card>
               </CellDiv>
