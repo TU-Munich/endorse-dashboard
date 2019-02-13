@@ -113,12 +113,6 @@ class ResultListItem extends Component {
     this.setState({ chartsViewOpen: false });
   };
 
-  handleOpenVisualizations = () => {
-    window.localStorage.removeItem('document_id');
-    window.localStorage.setItem('document_id', this.props.document._id);
-    this.props.history.push('/dashboard/visualization_charts');
-  };
-
   render() {
     let download_link = this.props.document._source.file_path;
     let document_name = this.props.document._source.file_path.match(/[(_\-)a-zA-Z0-9]+(\.)+([a-zA-Z]{3,})/g);
