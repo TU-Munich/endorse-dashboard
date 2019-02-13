@@ -34,6 +34,14 @@ class Tag extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.existingTags !== undefined) {
+      this.setState({
+        tags: this.props.existingTags
+      })
+    }
+  }
+
   handleDelete (i) {
     const tags = this.state.tags.slice(0);
     tags.splice(i, 1);

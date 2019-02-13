@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import DocumentService from '../../../services/DocumentService';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Tag from "../UploadFiles/Tag/Tag";
 
 const ModalContent = styled.div`
   width: 80%;
@@ -16,6 +17,11 @@ const ModalContent = styled.div`
   max-height: 600px;
 `;
 
+const MetadataContainer = styled.div`
+  width: 50%; 
+  float: left;
+`;
+
 const PipelineDocument = styled.div`
   width: 50%; 
   float: right;
@@ -24,7 +30,7 @@ const PipelineDocument = styled.div`
 class DocumentDetailView extends Component {
   constructor(props) {
     super(props);
-    this.state = { document: {}, loading: true };
+    this.state = { document: {}, loading: true, suggestions: [], existingTags: [] };
   }
 
   componentWillMount() {
@@ -36,6 +42,18 @@ class DocumentDetailView extends Component {
       this.setState({
         document: response.data.hits.hits[0],
         loading: false
+      })
+    });
+
+    DocumentService.getAllTags(true, false).then((suggestions) => {
+      this.setState({
+        suggestions: suggestions
+      })
+    });
+
+    DocumentService.getTagsByDocument(this.props.document_id).then((existingTags) => {
+      this.setState({
+        existingTags: existingTags
       })
     })
   }
@@ -49,6 +67,17 @@ class DocumentDetailView extends Component {
 
     return (
       <ModalContent className={'modal-content'}>
+        <MetadataContainer>
+          <div>
+            <h3>Document details</h3>
+            <label><b>Filename:</b></label> Some nice name <br />
+            <label><b>Filename:</b></label> Some nice name
+          </div>
+          <div>
+            <h3>Document tags</h3>
+            <Tag suggestions={this.state.suggestions} document_id={this.props.document_id} existingTags={this.state.existingTags} />
+          </div>
+        </MetadataContainer>
         <PipelineDocument>
           <ReactJson src={this.state.document} collapsed={false} />
         </PipelineDocument>
