@@ -78,6 +78,7 @@ export default class DocumentService {
   }
 
   static async getNerCount(projectUUID, amountBar, unixDateFrom, unixDateTo, document_id, sourceData) {
+    console.log(document_id);
     let query ='';
     if (unixDateFrom === unixDateTo && document_id === undefined) {
       if(sourceData==='both'){
@@ -136,35 +137,9 @@ export default class DocumentService {
             "bool": {
               "must": [{
                 "match": {
-                  "project_uuid": projectUUID
+                  "_id": document_id
                 }
               }]
-            }
-          },
-          "aggs": {
-            "count": {
-              "terms": {
-                "field": "ner.text.keyword",
-                "size": amountBar
-              }
-            }
-          }
-        };
-      }else {
-        query = {
-          "size": "0",
-          "query": {
-            "bool": {
-              "must": [{
-                "match": {
-                  "project_uuid": projectUUID
-                }
-              },
-                {
-                  "match": {
-                    "origin": sourceData
-                  }
-                }]
             }
           },
           "aggs": {

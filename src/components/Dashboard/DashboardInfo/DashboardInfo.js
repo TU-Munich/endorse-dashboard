@@ -146,10 +146,10 @@ class DashboardInfo extends Component {
     return new Promise((resolve) => {
       DocumentService.getLabelsCount(this.props.projectUUID,
                                      this.state.amountDoughnut,
-                                    undefined,
-                                    undefined,
+                                     undefined,
+                                     undefined,
                                      this.state.document_id,
-                                      this.state.sourceData).then((response) => {
+                                     this.state.sourceData).then((response) => {
         this.setState({
           labelData: response
         },() => {
