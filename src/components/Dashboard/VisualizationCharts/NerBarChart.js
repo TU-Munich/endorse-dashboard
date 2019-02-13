@@ -4,6 +4,10 @@ import {Bar} from 'react-chartjs-2';
 
 const options = {
   responsive: true,
+  title:{
+    display: true,
+    text: "Most relevant data"
+  },
   scales: {
     yAxes: [{
       lineWidth: 1,
@@ -25,7 +29,6 @@ const options = {
         show: false
       },
       ticks: {
-        fontFamily: "Calibri",
         fontSize: 10,
         autoSkip: false,
         maxRotation: 90,
@@ -34,7 +37,7 @@ const options = {
     }]
   }
 };
-class SentimentBarChart extends Component{
+class NerBarChart extends Component{
   constructor(props) {
     super(props);
     if (this.props.document_id !== undefined) {
@@ -46,10 +49,9 @@ class SentimentBarChart extends Component{
     const chartKeyword = documentAnalysis.keyword;
     const chartCount = documentAnalysis.counts;
     return {
-
       labels: chartKeyword,
       datasets: [{
-        label:"Most relevant words",
+        label:"Count",
         data: chartCount,
         fill: false,
         lineTension: 0.1,
@@ -57,12 +59,9 @@ class SentimentBarChart extends Component{
         backgroundColor: ['rgba(75,192,192,0.4)', '#119DA4', '#91C3E0', '#907AD6', '#4273C3',
           '#FAF7DC', '#3066BE','#4241A3', '#155787', '#70AFA9'],
         borderColor: 'rgba(75,192,192,1)',
-        borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 2,
-        borderJoinStyle: 'miter',
         pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
         pointBorderWidth: 1,
         pointHoverRadius: 2,
         pointHoverBorderWidth: 2,
@@ -77,4 +76,4 @@ class SentimentBarChart extends Component{
     );
   }
 }
-export default SentimentBarChart;
+export default NerBarChart;
