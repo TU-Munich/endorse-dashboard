@@ -327,7 +327,8 @@ export default class DocumentService {
     });
     return {total}
   }
-  static async getDocumentsCount(projectUUID) {
+
+  static async getUploadDocumentsCount(projectUUID) {
     let query = {
       "size":"0",
       "query": {
@@ -352,6 +353,33 @@ export default class DocumentService {
     }
     return totalDocuments;
   }
+
+  static async getCrawledDocumentsCount(projectUUID) {
+    let query = {
+      "size":"0",
+      "query": {
+        "bool": {
+          "must": [{
+            "match": {
+              "project_uuid": projectUUID
+            }
+          }]}},
+      "aggs": {
+        "docsTotal":{
+          "terms": {
+            "field": "project_uuid.keyword"
+          }
+        }
+      }
+    };
+    let totalCrawled = 0;
+    let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
+    if (response.data.aggregations.docsTotal.buckets.length !== 0) {
+      totalCrawled = response.data.aggregations.docsTotal.buckets[0].doc_count;
+    }
+    return totalCrawled;
+  }
+
 
   static async getTagsCount(projectUUID, unixDateFrom, unixDateTo) {
     let query ='';
