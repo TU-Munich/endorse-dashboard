@@ -26,7 +26,6 @@ const options = (maxTicks) => {
           show: false
         },
         ticks: {
-          fontFamily: "Calibri",
           fontSize: 10,
           autoSkip: false,
           maxRotation: 90,
