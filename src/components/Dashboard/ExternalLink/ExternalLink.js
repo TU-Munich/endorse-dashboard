@@ -118,7 +118,7 @@ class ExternalLink extends Component {
     this.setState({crawling: false})
     CrawlerService.stopCrawling(this.state.projectUUID)
     socket.emit("close_crawler");
-    //socket.disconnect();
+    socket.disconnect();
     e.preventDefault() 
   }
 
