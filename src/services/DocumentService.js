@@ -77,79 +77,171 @@ export default class DocumentService {
     return tags;
   }
 
-  static async getNerCount(projectUUID, amountBar, unixDateFrom, unixDateTo, document_id) {
+  static async getNerCount(projectUUID, amountBar, unixDateFrom, unixDateTo, document_id, sourceData) {
     let query ='';
     if (unixDateFrom === unixDateTo && document_id === undefined) {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "project_uuid": projectUUID
-              }
-            }]
-          }
-        },
-        "aggs": {
-          "count": {
-            "terms": {
-              "field": "ner.text.keyword",
-              "size": amountBar
-            }
-          }
-        }
-      };
-    } else if (unixDateFrom === unixDateTo && document_id !== undefined) {
-       query = {
-         "size": "0",
-         "query": {
-           "bool": {
-             "must": [{
-               "match": {
-                 "_id": document_id
-               }
-             }]
-           }
-         },
-         "aggs": {
-           "count": {
-             "terms": {
-               "field": "ner.text.keyword",
-               "size": amountBar
-             }
-           }
-         }
-       };
-    } else {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "project_uuid": projectUUID
-              }
-            },
-              {
-                "range": {
-                  "timestamp": {
-                    "gte": unixDateFrom,
-                    "lt": unixDateTo
-                  }
+      if(sourceData==='both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
                 }
               }]
-          }
-        },
-        "aggs": {
-          "count": {
-            "terms": {
-              "field": "ner.text.keyword",
-              "size": amountBar
+            }
+          },
+          "aggs": {
+            "count": {
+              "terms": {
+                "field": "ner.text.keyword",
+                "size": amountBar
+              }
             }
           }
-        }
-      };
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "match": {
+                    "origin": sourceData
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "count": {
+              "terms": {
+                "field": "ner.text.keyword",
+                "size": amountBar
+              }
+            }
+          }
+        };
+      }
+    } else if (unixDateFrom === unixDateTo && document_id !== undefined ) {
+      if(sourceData==='both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "count": {
+              "terms": {
+                "field": "ner.text.keyword",
+                "size": amountBar
+              }
+            }
+          }
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "match": {
+                    "origin": sourceData
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "count": {
+              "terms": {
+                "field": "ner.text.keyword",
+                "size": amountBar
+              }
+            }
+          }
+        };
+      }
+    } else {
+      if(sourceData==='both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "range": {
+                    "timestamp": {
+                      "gte": unixDateFrom,
+                      "lt": unixDateTo
+                    }
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "count": {
+              "terms": {
+                "field": "ner.text.keyword",
+                "size": amountBar
+              }
+            }
+          }
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "range": {
+                    "timestamp": {
+                      "gte": unixDateFrom,
+                      "lt": unixDateTo
+                    }
+                  }
+                },
+                {
+                  "match": {
+                    "origin": sourceData
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "count": {
+              "terms": {
+                "field": "ner.text.keyword",
+                "size": amountBar
+              }
+            }
+          }
+        };
+      }
     }
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let keyword = [];
@@ -162,79 +254,168 @@ export default class DocumentService {
     return {keyword, counts}
   }
 
-  static async getLabelsCount(projectUUID, amountDoughnut, unixDateFrom, unixDateTo, document_id) {
+  static async getLabelsCount(projectUUID, amountDoughnut, unixDateFrom, unixDateTo, document_id,sourceData) {
     let query ='';
     if (unixDateFrom === unixDateTo && document_id === undefined) {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "project_uuid": projectUUID
-              }
-            }]
-          }
-        },
-        "aggs": {
-          "labels": {
-            "terms": {
-              "field": "ner.label.keyword",
-              "size": amountDoughnut
-            }
-          }
-        }
-      };
-    } else if (unixDateFrom === unixDateTo && document_id !== undefined) {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "_id": document_id
-              }
-            }]
-          }
-        },
-        "aggs": {
-        "labels": {
-          "terms": {
-            "field": "ner.label.keyword",
-              "size": amountDoughnut
-          }
-        }
-      }
-      };
-    }else {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "project_uuid": projectUUID
-              }
-            },
-              {
-                "range": {
-                  "timestamp": {
-                    "gte": unixDateFrom,
-                    "lt": unixDateTo
-                  }
+      if(sourceData==='both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
                 }
               }]
-          }
-        },
-        "aggs": {
-          "labels": {
-            "terms": {
-              "field": "ner.label.keyword",
-              "size": amountDoughnut
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "ner.label.keyword",
+                "size": amountDoughnut
+              }
             }
           }
-        }
-      };
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },{
+                "match": {
+                  "origin": sourceData
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "ner.label.keyword",
+                "size": amountDoughnut
+              }
+            }
+          }
+        };
+      }
+    } else if (unixDateFrom === unixDateTo && document_id !== undefined) {
+      if(sourceData==='both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "_id": document_id
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "ner.label.keyword",
+                "size": amountDoughnut
+              }
+            }
+          }
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "_id": document_id
+                }
+              },{
+                "match": {
+                  "origin": sourceData
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "ner.label.keyword",
+                "size": amountDoughnut
+              }
+            }
+          }
+        };
+      }
+    }else {
+      if(sourceData==='both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "range": {
+                    "timestamp": {
+                      "gte": unixDateFrom,
+                      "lt": unixDateTo
+                    }
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "ner.label.keyword",
+                "size": amountDoughnut
+              }
+            }
+          }
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "range": {
+                    "timestamp": {
+                      "gte": unixDateFrom,
+                      "lt": unixDateTo
+                    }
+                  }
+                },{
+                  "match": {
+                    "origin": sourceData
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "ner.label.keyword",
+                "size": amountDoughnut
+              }
+            }
+          }
+        };
+      }
     }
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let labelCounts = [];
@@ -247,76 +428,162 @@ export default class DocumentService {
     return {labels, labelCounts}
   }
 
-  static async getSentimentCount(projectUUID, unixDateFrom, unixDateTo, document_id) {
+  static async getSentimentCount(projectUUID, unixDateFrom, unixDateTo, document_id,sourceData) {
     let query ='';
     if (unixDateFrom === unixDateTo && document_id === undefined) {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "project_uuid": projectUUID
-              }
-            }]
-          }
-        },
-        "aggs": {
-          "total": {
-            "terms": {
-              "field": "sentiment.total.compound"
-            }
-          }
-        }
-      };
-    }else if (unixDateFrom === unixDateTo && document_id !== undefined) {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "_id": document_id
-              }
-            }]
-          }
-        },
-        "aggs": {
-          "total": {
-            "terms": {
-              "field": "sentiment.total.compound"
-            }
-          }
-        }
-      };
-    } else {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "project_uuid": projectUUID
-              }
-            },
-              {
-                "range": {
-                  "timestamp": {
-                    "gte": unixDateFrom,
-                    "lt": unixDateTo
-                  }
+      if(sourceData === 'both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
                 }
               }]
+            }
+          },
+          "aggs": {
+            "total": {
+              "terms": {
+                "field": "sentiment.total.compound"
+              }
+            }
           }
-        },
-        "aggs": {
-        "total": {
-          "terms": {
-            "field": "sentiment.total.compound"
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },{
+                "match": {
+                  "origin": sourceData
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "total": {
+              "terms": {
+                "field": "sentiment.total.compound"
+              }
+            }
           }
-        }
+        };
       }
-      };
+    }else if (unixDateFrom === unixDateTo && document_id !== undefined) {
+      if(sourceData === 'both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "_id": document_id
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "total": {
+              "terms": {
+                "field": "sentiment.total.compound"
+              }
+            }
+          }
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "_id": document_id
+                }
+              },{
+                "match": {
+                  "origin": "upload"
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "total": {
+              "terms": {
+                "field": "sentiment.total.compound"
+              }
+            }
+          }
+        };
+      }
+    } else {
+      if(sourceData === 'both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "range": {
+                    "timestamp": {
+                      "gte": unixDateFrom,
+                      "lt": unixDateTo
+                    }
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "total": {
+              "terms": {
+                "field": "sentiment.total.compound"
+              }
+            }
+          }
+        };
+      } else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "range": {
+                    "timestamp": {
+                      "gte": unixDateFrom,
+                      "lt": unixDateTo
+                    }
+                  }
+                },{
+                  "match": {
+                    "origin": sourceData
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "total": {
+              "terms": {
+                "field": "sentiment.total.compound"
+              }
+            }
+          }
+        };
+      }
     }
 
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
@@ -381,56 +648,116 @@ export default class DocumentService {
   }
 
 
-  static async getTagsCount(projectUUID, unixDateFrom, unixDateTo) {
+  static async getTagsCount(projectUUID, unixDateFrom, unixDateTo, sourceData) {
     let query ='';
     if (unixDateFrom === unixDateTo) {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "project_uuid": projectUUID
-              }
-            }]
-          }
-        },
-        "aggs": {
-          "labels": {
-            "terms": {
-              "field": "tags.tag.keyword"
-            }
-          }
-        }
-      };
-    }else {
-      query = {
-        "size": "0",
-        "query": {
-          "bool": {
-            "must": [{
-              "match": {
-                "project_uuid": projectUUID
-              }
-            },
-              {
-                "range": {
-                  "timestamp": {
-                    "gte": unixDateFrom,
-                    "lt": unixDateTo
-                  }
+      if(sourceData === 'both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
                 }
               }]
-          }
-        },
-        "aggs": {
-          "labels": {
-            "terms": {
-              "field": "tags.tag.keyword"
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "tags.tag.keyword"
+              }
             }
           }
-        }
-      };
+        };
+      }else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              }, {
+                "match": {
+                  "origin": sourceData
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "tags.tag.keyword"
+              }
+            }
+          }
+        };
+      }
+    }else {
+      if(sourceData ==='both'){
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "range": {
+                    "timestamp": {
+                      "gte": unixDateFrom,
+                      "lt": unixDateTo
+                    }
+                  }
+                }]
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "tags.tag.keyword"
+              }
+            }
+          }
+        };
+      } else {
+        query = {
+          "size": "0",
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "project_uuid": projectUUID
+                }
+              },
+                {
+                  "range": {
+                    "timestamp": {
+                      "gte": unixDateFrom,
+                      "lt": unixDateTo
+                    }
+                  }
+                },{
+                  "match": {
+                    "origin": sourceData
+                  }
+                } ]
+            }
+          },
+          "aggs": {
+            "labels": {
+              "terms": {
+                "field": "tags.tag.keyword"
+              }
+            }
+          }
+        };
+      }
     }
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let tagsCounts = [];
