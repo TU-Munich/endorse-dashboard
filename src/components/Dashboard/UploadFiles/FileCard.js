@@ -36,13 +36,11 @@ const styles = {
   card: {
     minHeight: 135,
     textAlign: 'left',
-    overflow: '-webkit-paged-y'
+    overflow: '-webkit-paged-y',
+    padding: 10
   },
   cardContent: {
-    paddingBottom: 0,
-    paddingLeft: 14,
-    paddingRight: 14,
-    paddingTop: 14
+    padding: 0
   },
   fileName: {
     fontSize: 15,
