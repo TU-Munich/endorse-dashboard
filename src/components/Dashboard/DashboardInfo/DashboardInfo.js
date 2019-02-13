@@ -136,7 +136,6 @@ class DashboardInfo extends Component {
           nerData: response,
           maxTicks: Math.max(...response.counts) + 2
         }, () => {
-          console.log(this.state.maxTicks);
           resolve('success')
         });
       });

@@ -10,7 +10,6 @@ import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SentimentRadarChart from "./SentimentRadarChart";
-import SimilarityBubbleChart from "./SimilarityBubbleChart";
 import DocumentService from "../../../services/DocumentService";
 import TagsPolarChart from "./TagsPolarChart";
 
@@ -50,8 +49,8 @@ class VisualizationCharts extends Component {
       startDate: new Date(),
       endDate: new Date(),
       sourceData: 'upload',
-      amountBar: '5',
-      amountDoughnut: '3',
+      amountBar: '15',
+      amountDoughnut: '5',
       nerData: '',
       labelData : '',
       sentimentData: '',

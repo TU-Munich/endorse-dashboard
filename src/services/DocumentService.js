@@ -417,6 +417,7 @@ export default class DocumentService {
         };
       }
     }
+
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let labelCounts = [];
     let labels = [];
