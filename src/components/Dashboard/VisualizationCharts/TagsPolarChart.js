@@ -7,10 +7,8 @@ class TagsPolarChart extends Component {
   }
 
   prepareChartData(documentAnalysis) {
-
     const chartLabels = documentAnalysis.tagsLabels;
     const chartData = documentAnalysis.tagsCounts;
-    console.log(chartLabels);
     return {
       labels: chartLabels,
       datasets: [{

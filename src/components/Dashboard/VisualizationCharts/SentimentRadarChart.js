@@ -9,7 +9,7 @@ class SentimentRadarChart extends Component{
   prepareChartData(documentAnalysis) {
     let chartData = documentAnalysis.total;
     return {
-      labels: ['Compound', 'Negative', 'Neutral','Positive'],
+      labels: ['Negative', 'Compound', 'Neutral','Positive'],
       datasets: [{
         scaleOverride: true,
         scaleSteps: 4,
