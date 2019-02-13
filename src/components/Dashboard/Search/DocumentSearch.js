@@ -62,7 +62,7 @@ class DocumentSearch extends Component {
   }
 
   handleTagsChange = event => {
-    this.setState({ search_tags: event.target.value });
+    this.setState({ search_tags: event.target.value }, () => this.handleDocumentSearch());
   };
 
   handleDocumentSearch() {
@@ -130,7 +130,7 @@ class DocumentSearch extends Component {
           <Divider className={classes.divider} />
           <InputBase
             className={classes.input}
-            placeholder="Search documents"
+            placeholder="Search"
             onChange={ this.onSearchChange }/>
           <Divider className={classes.divider} />
           <IconButton

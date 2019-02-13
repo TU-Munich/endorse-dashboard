@@ -18,9 +18,10 @@ const ModalContent = styled.div`
 `;
 
 const MetadataContainer = styled.div`
-  width: 40%; 
+  width: 30%;
   float: left;
   padding-right: 14px;
+  position: fixed;
 `;
 
 const PipelineDocument = styled.div`
