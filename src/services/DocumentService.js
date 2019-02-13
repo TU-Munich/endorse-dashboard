@@ -508,7 +508,7 @@ export default class DocumentService {
                 }
               },{
                 "match": {
-                  "origin": "upload"
+                  "origin": sourceData
                 }
               }]
             }
