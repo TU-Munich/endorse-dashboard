@@ -23,7 +23,7 @@ export default class DocumentService {
     return await this.documentService.post(this.documentsQueryEndpoint(), query);
   };
 
-  static async getAllTags(isAddTag, project_uuid) {
+  static async getAllTags(isAddTag, project_uuid,isChartView) {
     let tags = [];
     var body = {
       "_source": ["tags"],
@@ -40,7 +40,9 @@ export default class DocumentService {
     response.data.aggregations.tags.buckets.forEach((bucket) => {
       if (isAddTag === true) {
         tags.push({name: bucket.key});
-      } else {
+      } else if (isChartView === true) {
+        tags.push(bucket);
+      }else{
         tags.push(bucket.key);
       }
     });
@@ -260,18 +262,9 @@ export default class DocumentService {
           }
         },
         "aggs": {
-          "neg": {
+          "total": {
             "terms": {
-              "field": "sentiment.total.neg"
-            }
-          }, "pos": {
-            "terms": {
-              "field": "sentiment.total.pos"
-            }
-          },
-          "neu": {
-            "terms": {
-              "field": "sentiment.total.neu"
+              "field": "sentiment.total.compound"
             }
           }
         }
@@ -289,18 +282,9 @@ export default class DocumentService {
           }
         },
         "aggs": {
-          "neg": {
+          "total": {
             "terms": {
-              "field": "sentiment.total.neg"
-            }
-          }, "pos": {
-            "terms": {
-              "field": "sentiment.total.pos"
-            }
-          },
-          "neu": {
-            "terms": {
-              "field": "sentiment.total.neu"
+              "field": "sentiment.total.compound"
             }
           }
         }
@@ -326,34 +310,19 @@ export default class DocumentService {
           }
         },
         "aggs": {
-          "neg": {
-            "terms": {
-              "field": "sentiment.total.neg"
-            }
-          }, "pos": {
-            "terms": {
-              "field": "sentiment.total.pos"
-            }
-          },
-          "neu": {
-            "terms": {
-              "field": "sentiment.total.neu"
-            }
+        "total": {
+          "terms": {
+            "field": "sentiment.total.compound"
           }
         }
+      }
       };
     }
 
     let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
     let total =[];
 
-    response.data.aggregations.neg.buckets.forEach((bucket) => {
-      total.push(bucket.key);
-    });
-    response.data.aggregations.pos.buckets.forEach((bucket) => {
-      total.push(bucket.key);
-    });
-    response.data.aggregations.neu.buckets.forEach((bucket) => {
+    response.data.aggregations.total.buckets.forEach((bucket) => {
       total.push(bucket.key);
     });
     return {total}
@@ -382,5 +351,67 @@ export default class DocumentService {
       totalDocuments = response.data.aggregations.docsTotal.buckets[0].doc_count;
     }
     return totalDocuments;
+  }
+
+  static async getTagsCount(projectUUID, unixDateFrom, unixDateTo) {
+    let query ='';
+    if (unixDateFrom === unixDateTo) {
+      query = {
+        "size": "0",
+        "query": {
+          "bool": {
+            "must": [{
+              "match": {
+                "project_uuid": projectUUID
+              }
+            }]
+          }
+        },
+        "aggs": {
+          "labels": {
+            "terms": {
+              "field": "tags.tag.keyword"
+            }
+          }
+        }
+      };
+    }else {
+      query = {
+        "size": "0",
+        "query": {
+          "bool": {
+            "must": [{
+              "match": {
+                "project_uuid": projectUUID
+              }
+            },
+              {
+                "range": {
+                  "timestamp": {
+                    "gte": unixDateFrom,
+                    "lt": unixDateTo
+                  }
+                }
+              }]
+          }
+        },
+        "aggs": {
+          "labels": {
+            "terms": {
+              "field": "tags.tag.keyword"
+            }
+          }
+        }
+      };
+    }
+    let response = await this.documentService.post(this.documentsQueryEndpoint(), query);
+    let tagsCounts = [];
+    let tagsLabels = [];
+
+    response.data.aggregations.labels.buckets.forEach((bucket) => {
+      tagsLabels.push(bucket.key);
+      tagsCounts.push(bucket.doc_count);
+    });
+    return {tagsLabels, tagsCounts}
   }
 }
