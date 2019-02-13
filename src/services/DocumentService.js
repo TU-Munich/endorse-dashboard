@@ -699,7 +699,12 @@ export default class DocumentService {
             "match": {
               "project_uuid": projectUUID
             }
-          }]}},
+          },
+            {
+              "match": {
+                "origin": "upload"
+              }
+            }]}},
       "aggs": {
         "docsTotal":{
           "terms": {
@@ -724,6 +729,10 @@ export default class DocumentService {
           "must": [{
             "match": {
               "project_uuid": projectUUID
+            }
+          },{
+            "match": {
+              "origin": "crawl"
             }
           }]}},
       "aggs": {
