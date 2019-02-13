@@ -1,11 +1,10 @@
 import React, {Component} from "react";
-import SentimentDoughnutChart from './SentimentDoughnutChart';
-import SentimentBarChart from "./SentimentBarChart";
+import LabelsDoughnutChart from './LabelsDoughnutChart';
+import NerBarChart from "./NerBarChart";
 import styled from 'styled-components';
 import Card from "@material-ui/core/Card/Card";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import DatePicker from "react-datepicker";
@@ -13,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import SentimentRadarChart from "./SentimentRadarChart";
 import SimilarityBubbleChart from "./SimilarityBubbleChart";
 import DocumentService from "../../../services/DocumentService";
+import TagsPolarChart from "./TagsPolarChart";
 
 
 const OverviewWrapper = styled.div`
@@ -50,11 +50,12 @@ class VisualizationCharts extends Component {
       startDate: new Date(),
       endDate: new Date(),
       value: 'uploaded',
-      amountBar: '10',
-      amountDoughnut: '10',
+      amountBar: '5',
+      amountDoughnut: '3',
       nerData: '',
       labelData : '',
-      sentimentData: ''
+      sentimentData: '',
+      tagsData: ''
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -73,7 +74,11 @@ class VisualizationCharts extends Component {
             if (status === 'success') {
               this.fetchSentimentResponseData().then((status) => {
                 if (status === 'success') {
-                  this.setState({loading: false})
+                  this.fetchTagResponseData().then((status) => {
+                    if (status === 'success') {
+                      this.setState({loading: false})
+                    }
+                  })
                 }
               })
             }
@@ -88,6 +93,7 @@ class VisualizationCharts extends Component {
       this.fetchNerResponseData();
       this.fetchLabelsResponseData();
       this.fetchSentimentResponseData();
+      this.fetchTagResponseData();
     });
   }
 
@@ -96,6 +102,7 @@ class VisualizationCharts extends Component {
       this.fetchNerResponseData();
       this.fetchLabelsResponseData();
       this.fetchSentimentResponseData();
+      this.fetchTagResponseData();
     });
   }
 
@@ -157,6 +164,20 @@ class VisualizationCharts extends Component {
     });
   }
 
+  fetchTagResponseData(){
+    let unixDateFrom = Date.parse(this.state.startDate)/1000;
+    let unixDateTo = Date.parse(this.state.endDate)/1000;
+    return new Promise((resolve) => {
+      DocumentService.getTagsCount(this.props.projectUUID, unixDateFrom, unixDateTo).then((response) => {
+        this.setState({
+          tagsData: response
+        },() => {
+          resolve('success')
+        });
+      });
+    });
+  }
+
   render() {
     if (this.state.loading) {
       return <h2>Loading...</h2>
@@ -175,6 +196,7 @@ class VisualizationCharts extends Component {
                           onChange={this.handleSelectChange}>
                     <MenuItem value={"uploaded"}>Uploaded</MenuItem>
                     <MenuItem value={"crawled"}>Crawled</MenuItem>
+                    <MenuItem value={"both"}>Both</MenuItem>
                   </Select>
                 </FormCont>
                 <FormCont style={{padding:"0 5px"}}>
@@ -195,14 +217,14 @@ class VisualizationCharts extends Component {
         <CardsContainer>
             <DivCards>
               <Card>
-                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
-                  <SentimentBarChart projectUUID={this.props.projectUUID}  data={this.state.nerData}/>
-                </CardMedia>
+                <CardContent style={{backgroundColor:"#fbfbfb"}}>
+                  <NerBarChart data={this.state.nerData}/>
+                </CardContent>
                   <CardContent style={{fontSize:"medium"}}>
                     Document Name Entity Recognition:
                     <div style={{display:"-webkit-box"}}>
                     <FormCont>
-                      <InputLabel style={{fontSize:"small"}}>Amount: </InputLabel>
+                      <InputLabel style={{fontSize:"small"}}>Top: </InputLabel>
                       <Select style={{width:"40%", fontSize:"small"}}
                               value={this.state.amountBar}
                               onChange={this.handleAmountBarChange}>
@@ -218,9 +240,9 @@ class VisualizationCharts extends Component {
             </DivCards>
             <DivCards>
               <Card >
-                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
-                  <SentimentDoughnutChart projectUUID={this.props.projectUUID} data={this.state.labelData}/>
-                </CardMedia>
+                <CardContent style={{backgroundColor:"#fbfbfb"}}>
+                  <LabelsDoughnutChart data={this.state.labelData}/>
+                </CardContent>
                 <CardContent style={{fontSize:"medium"}}>
                   Project Documents Labels
                   <div style={{display:"-webkit-box"}}>
@@ -241,24 +263,26 @@ class VisualizationCharts extends Component {
             </DivCards>
         <DivCards>
           <Card >
-            <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
-              <SentimentRadarChart projectUUID={this.props.projectUUID} data={this.state.sentimentData}/>
-            </CardMedia>
+            <CardContent style={{backgroundColor:"#fbfbfb"}}>
+              <SentimentRadarChart data={this.state.sentimentData}/>
+            </CardContent>
             <CardContent>
               Document Sentiment Values
             </CardContent>
           </Card>
         </DivCards>
-            <DivCards>
-              <Card >
-                <CardMedia style={{backgroundColor:"#fbfbfb"}} image={""}>
-                  <SimilarityBubbleChart projectUUID={this.props.projectUUID}/>
-                </CardMedia>
-                <CardContent>
-                  Document Similarity
-                </CardContent>
-              </Card>
-            </DivCards>
+          {this.state.document_id === undefined &&
+          <DivCards>
+            <Card>
+              <CardContent style={{backgroundColor: "#fbfbfb"}}>
+                <TagsPolarChart data={this.state.tagsData}/>
+              </CardContent>
+              <CardContent>
+                Document Similarity
+              </CardContent>
+            </Card>
+          </DivCards>
+          }
         </CardsContainer>
       </OverviewWrapper>
     );
