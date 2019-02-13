@@ -92,8 +92,8 @@ class ExternalLink extends Component {
     this.state = {
       quote:'',
       author:'',
-      endpoint:"http://35.197.219.92:3002",
-      //endpoint:"http://localhost:3002",
+      //endpoint:"http://35.197.219.92:3002",
+      endpoint:"http://localhost:3002",
       loading: false,
       crawling: false,
       projectUUID: this.props.projectUUID,
