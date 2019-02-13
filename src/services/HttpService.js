@@ -47,6 +47,15 @@ class HttpService {
     })
   }
 
+  delete(path, params) {
+    return new Promise((resolve) => {
+      resolve(this.request(path, lodash.assign(
+        {method: 'DELETE'},
+        params ? { params } : {}
+      )))
+    })
+  }
+
   _buildHeaders() {
     const accessToken = this._accessToken;
     const authType = this._authType;

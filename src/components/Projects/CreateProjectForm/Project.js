@@ -35,7 +35,7 @@ class Project extends Component {
     return (
       <div>
         <ContainerDiv>
-          <ProjectForm/>
+          <ProjectForm history={this.props.history}/>
         </ContainerDiv>
         {/* <ContainerDiv> //For project overview
         </ContainerDiv> */}

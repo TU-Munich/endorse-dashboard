@@ -126,7 +126,7 @@ class VisualizationCharts extends Component {
     return new Promise((resolve) => {
       let unixDateFrom = Date.parse(this.state.startDate)/1000;
       let unixDateTo = Date.parse(this.state.endDate)/1000;
-      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar, unixDateFrom, unixDateTo).then((response) => {
+      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar, unixDateFrom, unixDateTo, this.state.document_id).then((response) => {
         this.setState({
           nerData: response
         }, () => {
@@ -140,7 +140,7 @@ class VisualizationCharts extends Component {
     let unixDateFrom = Date.parse(this.state.startDate)/1000;
     let unixDateTo = Date.parse(this.state.endDate)/1000;
     return new Promise((resolve) => {
-      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut, unixDateFrom, unixDateTo).then((response) => {
+      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut, unixDateFrom, unixDateTo, this.state.document_id).then((response) => {
         this.setState({
           labelData: response
         },() => {
@@ -154,7 +154,7 @@ class VisualizationCharts extends Component {
     let unixDateFrom = Date.parse(this.state.startDate)/1000;
     let unixDateTo = Date.parse(this.state.endDate)/1000;
     return new Promise((resolve) => {
-      DocumentService.getSentimentCount(this.props.projectUUID, unixDateFrom, unixDateTo).then((response) => {
+      DocumentService.getSentimentCount(this.props.projectUUID, unixDateFrom, unixDateTo, this.state.document_id).then((response) => {
         this.setState({
           sentimentData: response
         }, () => {

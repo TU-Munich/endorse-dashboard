@@ -7,6 +7,7 @@ import ChartsIcon from '@material-ui/icons/TrendingUp';
 import ViewIcon from '@material-ui/icons/Visibility';
 import Modal from "@material-ui/core/Modal/Modal";
 import DocumentDetailView from './DocumentDetailView'
+import DashboardInfo from "../DashboardInfo/DashboardInfo";
 import config from '../../../config';
 
 const Ribbon = styled.div`
@@ -87,17 +88,30 @@ const DeleteButton = styled(IconButton)`
 class ResultListItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: false };
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.state = {
+      documentViewOpen: false,
+      chartsViewOpen: false
+    };
+    this.handleOpenDocumentModal = this.handleOpenDocumentModal.bind(this);
+    this.handleCloseDocumentModal = this.handleCloseDocumentModal.bind(this);
+    this.handleOpenChartsModal = this.handleOpenChartsModal.bind(this);
+    this.handleCloseChartsModal = this.handleCloseChartsModal.bind(this);
   }
 
-  handleOpenModal = () => {
-    this.setState({ open: true });
+  handleOpenDocumentModal = () => {
+    this.setState({ documentViewOpen: true });
   };
 
-  handleCloseModal = () => {
-    this.setState({ open: false });
+  handleCloseDocumentModal = () => {
+    this.setState({ documentViewOpen: false });
+  };
+
+  handleOpenChartsModal = () => {
+    this.setState({ chartsViewOpen: true });
+  };
+
+  handleCloseChartsModal = () => {
+    this.setState({ chartsViewOpen: false });
   };
 
   render() {
@@ -117,17 +131,29 @@ class ResultListItem extends Component {
           </DownloadButton>
           <ViewButton aria-label="View"
                       style={{transition: 'none', borderRadius: 0}}
-                      onClick={this.handleOpenModal}>
+                      onClick={this.handleOpenDocumentModal}>
             <ViewIcon />
           </ViewButton>
-          <StatisticsButton aria-label="Statistics" style={{transition: 'none', borderRadius: 0}}>
+          <StatisticsButton aria-label="Statistics"
+                            style={{transition: 'none', borderRadius: 0}}
+                            onClick={this.handleOpenChartsModal}>
             <ChartsIcon />
           </StatisticsButton>
-          <DeleteButton aria-label="Delete" style={{transition: 'none', borderRadius: 0}}>
+          <DeleteButton aria-label="Delete"
+                        style={{transition: 'none', borderRadius: 0}}
+                        onClick={() => this.props.handleDocumentDelete(this.props.document._id)}>
             <DeleteIcon />
           </DeleteButton>
         </ListItemActions>
-        <Modal open={this.state.open} onClose={this.handleCloseModal} disableAutoFocus={true}>
+        <Modal open={this.state.chartsViewOpen}
+               onClose={this.handleCloseChartsModal}
+               style={{width: '80%', margin: 'auto'}}
+               disableAutoFocus={true}>
+          <DashboardInfo projectUUID={window.localStorage.getItem('projectUUID')} document_id={this.props.document._id} />
+        </Modal>
+        <Modal open={this.state.documentViewOpen}
+               onClose={this.handleCloseDocumentModal}
+               disableAutoFocus={true}>
           <DocumentDetailView document_id={this.props.document._id} />
         </Modal>
       </ListItem>

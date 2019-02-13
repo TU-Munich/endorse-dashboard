@@ -975,9 +975,6 @@
   cursor: default;
 }
 
-.h3 {
-  justify-content: center;
-}
 body.react-confirm-alert-body-element {
   overflow: hidden;
 }
@@ -1096,6 +1093,9 @@ body.react-confirm-alert-body-element {
   }
 }
 
+.h3 {
+  justify-content: center;
+}
 *, *:before, *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
