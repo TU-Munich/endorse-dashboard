@@ -10,7 +10,6 @@ import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SentimentRadarChart from "./SentimentRadarChart";
-import SimilarityBubbleChart from "./SimilarityBubbleChart";
 import DocumentService from "../../../services/DocumentService";
 import TagsPolarChart from "./TagsPolarChart";
 
@@ -49,9 +48,9 @@ class VisualizationCharts extends Component {
     this.state = {
       startDate: new Date(),
       endDate: new Date(),
-      value: 'uploaded',
-      amountBar: '5',
-      amountDoughnut: '3',
+      sourceData: 'upload',
+      amountBar: '15',
+      amountDoughnut: '5',
       nerData: '',
       labelData : '',
       sentimentData: '',
@@ -107,7 +106,12 @@ class VisualizationCharts extends Component {
   }
 
   handleSelectChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({sourceData: event.target.value}, () => {
+      this.fetchNerResponseData();
+      this.fetchLabelsResponseData();
+      this.fetchSentimentResponseData();
+      this.fetchTagResponseData();
+    });
   }
 
   handleAmountBarChange(event) {
@@ -126,7 +130,7 @@ class VisualizationCharts extends Component {
     return new Promise((resolve) => {
       let unixDateFrom = Date.parse(this.state.startDate)/1000;
       let unixDateTo = Date.parse(this.state.endDate)/1000;
-      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar, unixDateFrom, unixDateTo, this.state.document_id).then((response) => {
+      DocumentService.getNerCount(this.props.projectUUID, this.state.amountBar, unixDateFrom, unixDateTo, this.state.document_id, this.state.sourceData).then((response) => {
         this.setState({
           nerData: response
         }, () => {
@@ -140,7 +144,7 @@ class VisualizationCharts extends Component {
     let unixDateFrom = Date.parse(this.state.startDate)/1000;
     let unixDateTo = Date.parse(this.state.endDate)/1000;
     return new Promise((resolve) => {
-      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut, unixDateFrom, unixDateTo, this.state.document_id).then((response) => {
+      DocumentService.getLabelsCount(this.props.projectUUID, this.state.amountDoughnut, unixDateFrom, unixDateTo, this.state.document_id,this.state.sourceData).then((response) => {
         this.setState({
           labelData: response
         },() => {
@@ -154,7 +158,7 @@ class VisualizationCharts extends Component {
     let unixDateFrom = Date.parse(this.state.startDate)/1000;
     let unixDateTo = Date.parse(this.state.endDate)/1000;
     return new Promise((resolve) => {
-      DocumentService.getSentimentCount(this.props.projectUUID, unixDateFrom, unixDateTo, this.state.document_id).then((response) => {
+      DocumentService.getSentimentCount(this.props.projectUUID, unixDateFrom, unixDateTo, this.state.document_id,this.state.sourceData).then((response) => {
         this.setState({
           sentimentData: response
         }, () => {
@@ -168,7 +172,7 @@ class VisualizationCharts extends Component {
     let unixDateFrom = Date.parse(this.state.startDate)/1000;
     let unixDateTo = Date.parse(this.state.endDate)/1000;
     return new Promise((resolve) => {
-      DocumentService.getTagsCount(this.props.projectUUID, unixDateFrom, unixDateTo).then((response) => {
+      DocumentService.getTagsCount(this.props.projectUUID, unixDateFrom, unixDateTo,this.state.sourceData).then((response) => {
         this.setState({
           tagsData: response
         },() => {
@@ -192,10 +196,10 @@ class VisualizationCharts extends Component {
                 <FormCont>
                   <InputLabel htmlFor="filter_id">Source data: </InputLabel>
                   <Select style={{width:"100px", fontSize:"small", padding:"0 5px", maxHeight:"17px"}}
-                          value={this.state.value}
+                          value={this.state.sourceData}
                           onChange={this.handleSelectChange}>
-                    <MenuItem value={"uploaded"}>Uploaded</MenuItem>
-                    <MenuItem value={"crawled"}>Crawled</MenuItem>
+                    <MenuItem value={"upload"}>Upload</MenuItem>
+                    <MenuItem value={"crawl"}>Crawl</MenuItem>
                     <MenuItem value={"both"}>Both</MenuItem>
                   </Select>
                 </FormCont>
@@ -221,7 +225,7 @@ class VisualizationCharts extends Component {
                   <NerBarChart data={this.state.nerData}/>
                 </CardContent>
                   <CardContent style={{fontSize:"medium"}}>
-                    Document Name Entity Recognition:
+                    Project Most Relevant Data:
                     <div style={{display:"-webkit-box"}}>
                     <FormCont>
                       <InputLabel style={{fontSize:"small"}}>Top: </InputLabel>
@@ -244,7 +248,7 @@ class VisualizationCharts extends Component {
                   <LabelsDoughnutChart data={this.state.labelData}/>
                 </CardContent>
                 <CardContent style={{fontSize:"medium"}}>
-                  Project Documents Labels
+                  Project Entities
                   <div style={{display:"-webkit-box"}}>
                     <FormCont>
                       <InputLabel style={{fontSize:"small"}}>Amount: </InputLabel>
@@ -267,7 +271,7 @@ class VisualizationCharts extends Component {
               <SentimentRadarChart data={this.state.sentimentData}/>
             </CardContent>
             <CardContent>
-              Document Sentiment Values
+              Project Sentiment Analysis
             </CardContent>
           </Card>
         </DivCards>
@@ -278,7 +282,7 @@ class VisualizationCharts extends Component {
                 <TagsPolarChart data={this.state.tagsData}/>
               </CardContent>
               <CardContent>
-                Document Similarity
+                Project Tags Classification
               </CardContent>
             </Card>
           </DivCards>
