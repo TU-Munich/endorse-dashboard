@@ -225,7 +225,7 @@ class VisualizationCharts extends Component {
                   <NerBarChart data={this.state.nerData}/>
                 </CardContent>
                   <CardContent style={{fontSize:"medium"}}>
-                    Document Name Entity Recognition:
+                    Project Most Relevant Data:
                     <div style={{display:"-webkit-box"}}>
                     <FormCont>
                       <InputLabel style={{fontSize:"small"}}>Top: </InputLabel>
@@ -248,7 +248,7 @@ class VisualizationCharts extends Component {
                   <LabelsDoughnutChart data={this.state.labelData}/>
                 </CardContent>
                 <CardContent style={{fontSize:"medium"}}>
-                  Project Documents Labels
+                  Project Entities
                   <div style={{display:"-webkit-box"}}>
                     <FormCont>
                       <InputLabel style={{fontSize:"small"}}>Amount: </InputLabel>
@@ -271,7 +271,7 @@ class VisualizationCharts extends Component {
               <SentimentRadarChart data={this.state.sentimentData}/>
             </CardContent>
             <CardContent>
-              Document Sentiment Values
+              Project Sentiment Analysis
             </CardContent>
           </Card>
         </DivCards>
@@ -282,7 +282,7 @@ class VisualizationCharts extends Component {
                 <TagsPolarChart data={this.state.tagsData}/>
               </CardContent>
               <CardContent>
-                Document Similarity
+                Project Tags Classification
               </CardContent>
             </Card>
           </DivCards>
