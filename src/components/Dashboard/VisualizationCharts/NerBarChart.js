@@ -56,6 +56,7 @@ class NerBarChart extends Component{
         lineTension: 0.1,
         beginAtZero: true,
         backgroundColor: ['rgba(75,192,192,0.4)', '#119DA4', '#91C3E0', '#907AD6', '#4273C3',
+          '#FAF7DC', '#3066BE','#4241A3', '#155787', '#70AFA9','rgba(75,192,192,0.4)', '#119DA4', '#91C3E0', '#907AD6', '#4273C3',
           '#FAF7DC', '#3066BE','#4241A3', '#155787', '#70AFA9'],
         borderColor: 'rgba(75,192,192,1)',
         borderDash: [],
