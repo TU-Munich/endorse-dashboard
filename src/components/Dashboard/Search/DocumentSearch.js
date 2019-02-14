@@ -19,6 +19,7 @@ import SearchService from '../../../services/SearchService'
 import ColorPalette from '../../../constants/ColorPalette'
 import {confirmAlert} from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import ResultsListSimilarity from "./Similarity/ResultsListSimilarity";
 
 
 const ResultsTitle = styled.h2`
@@ -44,8 +45,9 @@ class DocumentSearch extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { name: [], search_term: '', search_tags: [], results: [], tags: [], loading: true, open: false };
+    this.state = { name: [], search_term: '', search_tags: [], results: [], similarity_results: [], tags: [], loading: true, open: false, similaritySearch: false };
     this.onSearchChange = this.onSearchChange.bind(this);
+    this.onSearchTypeSwitchChange = this.onSearchTypeSwitchChange.bind(this);
     this.handleDocumentSearch = this.handleDocumentSearch.bind(this);
     this.handleDocumentDelete = this.handleDocumentDelete.bind(this);
     this.deleteDocument = this.deleteDocument.bind(this);
@@ -63,16 +65,40 @@ class DocumentSearch extends Component {
     this.setState({search_term: event.target.value});
   }
 
+  onSearchTypeSwitchChange() {
+    this.setState({
+      similaritySearch: !this.state.similaritySearch
+    }, () => {
+      if (this.state.similaritySearch) {
+        this.setState({ results: []})
+      } else {
+        this.handleDocumentSearch()
+      }
+    })
+  }
+
   handleTagsChange = event => {
     this.setState({ search_tags: event.target.value }, () => this.handleDocumentSearch());
   };
 
   handleDocumentSearch() {
-    this.searchService.documentSearch(this.state.search_term, this.state.search_tags, '2019-01-01T00:00:00+00:00', '2019-31-03T00:00:00+00:00').then((results) => {
-      this.setState({
-        results: results.data.hits.hits
+    console.log(this.state.search_term === '');
+    if (this.state.similaritySearch) {
+      this.state.search_term === 'Tengo hambre!' ? this.setState({ similarity_results: ["I'm hungry!", "Ich habe Hunger!"]}) : '';
+      this.state.search_term === 'Estoy aburrido!' ? this.setState({ similarity_results: ["I'm bored!", "Ich langweile mich!"]}) : '';
+      this.state.search_term === 'Buenos dias' ? this.setState({ similarity_results: ["I'm hungry!", "Ich habe Hunger!"]}) : '';
+      this.state.search_term === 'Tengo un gato en mis pantalones' ? this.setState({ similarity_results: ["I'm hungry!", "Ich habe Hunger!"]}) : '';
+      this.state.search_term === 'Me gustan los perros' ? this.setState({ similarity_results: ["I like dogs", "Mir gefällt Hunde"]}) : '';
+      this.state.search_term === 'Saludos' ? this.setState({ similarity_results: ["I'm hungry!", "Ich habe Hunger!"]}) : '';
+      this.state.search_term === 'Adios' ? this.setState({ similarity_results: ["Good bye", "Tschuss"]}) : '';
+    } else if (!this.state.similaritySearch) {
+      this.searchService.documentSearch(this.state.search_term, this.state.search_tags, '2019-01-01T00:00:00+00:00', '2019-31-03T00:00:00+00:00').then((results) => {
+        this.setState({
+          results: results.data.hits.hits,
+          similarity_results: []
+        });
       });
-    });
+    }
   }
 
   handleDocumentDelete(document_id) {
@@ -113,6 +139,7 @@ class DocumentSearch extends Component {
               style={{margin: 0}}
               multiple
               displayEmpty
+              disabled={this.state.similaritySearch}
               value={this.state.search_tags}
               onChange={this.handleTagsChange}
               input={<Input id="select-multiple-placeholder" disableUnderline={true}/>}
@@ -126,9 +153,9 @@ class DocumentSearch extends Component {
             classes={{label: classes.label}}
             control={
               <Switch
-                checked={this.state.sensitivitySearch}
-                onChange={this.handleSearchType}
-                value="checkedB"
+                checked={this.state.similaritySearch}
+                onChange={this.onSearchTypeSwitchChange}
+                value="checked"
                 color="primary"/>
             }
             label="Similarity"/>
@@ -145,12 +172,22 @@ class DocumentSearch extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-        {this.state.results.length > 0 &&
+        {this.state.results.length > 0  &&
           <ResultsTitle>Search results:</ResultsTitle>
         }
-        <Results>
-          <ResultsList data={this.state.results} handleDocumentDelete={this.handleDocumentDelete} history={this.props.history} />
-        </Results>
+        { this.state.similarity_results.length > 0 &&
+        <ResultsTitle>Similarity results:</ResultsTitle>
+        }
+        {this.state.similaritySearch &&
+          <Results>
+            <ResultsListSimilarity data={this.state.similarity_results} />
+          </Results>
+        }
+        {!this.state.similaritySearch &&
+          <Results>
+            <ResultsList data={this.state.results} handleDocumentDelete={this.handleDocumentDelete} history={this.props.history} similarity={this.state.similaritySearch} />
+          </Results>
+        }
       </div>
     )
   }
