@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import ResultListItem from './ResultListItem'
+import ResultListItemSimilarity from './ResultListItemSimilarity'
 
 const ResultsListComponent = styled.ul`
   list-style: none;
@@ -13,17 +13,17 @@ const ResultsListComponent = styled.ul`
   }
 `;
 
-class ResultsList extends Component {
+class ResultsListSimilarity extends Component {
 
   render() {
     return (
       <ResultsListComponent>
         {this.props.data.map((result, i) =>
-            <ResultListItem key={i} document={result} handleDocumentDelete={this.props.handleDocumentDelete} history={this.props.history}/>
+            <ResultListItemSimilarity key={i} result={result} />
         )}
       </ResultsListComponent>
     );
   }
 }
 
-export default ResultsList
+export default ResultsListSimilarity

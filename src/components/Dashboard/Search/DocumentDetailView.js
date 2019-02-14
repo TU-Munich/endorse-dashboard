@@ -18,13 +18,30 @@ const ModalContent = styled.div`
 `;
 
 const MetadataContainer = styled.div`
-  width: 50%; 
+  width: 30%;
   float: left;
+  padding-right: 14px;
+  position: fixed;
 `;
 
 const PipelineDocument = styled.div`
-  width: 50%; 
+  width: 60%; 
   float: right;
+`;
+
+const DetailHeadline = styled.h2`
+  margin-bottom: 5px;
+  margin-top: 10px;
+`;
+
+const DetailTitle = styled.h4`
+  margin-bottom: 3px;
+  margin-top: 10px;
+  font-weight: bold;
+`;
+
+const MetadataSubsection = styled.div`
+  height: 50%;
 `;
 
 class DocumentDetailView extends Component {
@@ -68,17 +85,19 @@ class DocumentDetailView extends Component {
     return (
       <ModalContent className={'modal-content'}>
         <MetadataContainer>
-          <div>
-            <h3>Document details</h3>
-            <label><b>Filename:</b></label> Some nice name <br />
-            <label><b>Filename:</b></label> Some nice name
-          </div>
-          <div>
-            <h3>Document tags</h3>
+          <MetadataSubsection>
+            <DetailHeadline>Document details:</DetailHeadline>
+            <DetailTitle><b>File Name:</b></DetailTitle> { this.state.document._source.file_name } <br />
+            <DetailTitle><b>File Language:</b></DetailTitle> { this.state.document._source.lang } <br />
+            <DetailTitle><b>Origin:</b></DetailTitle> { this.state.document._source.origin } <br />
+          </MetadataSubsection>
+          <MetadataSubsection style={{marginTop: 50}}>
+            <DetailHeadline>Edit document tags:</DetailHeadline>
             <Tag suggestions={this.state.suggestions} document_id={this.props.document_id} existingTags={this.state.existingTags} />
-          </div>
+          </MetadataSubsection>
         </MetadataContainer>
         <PipelineDocument>
+          <DetailHeadline style={{marginBottom: 15}}>Pipeline document:</DetailHeadline>
           <ReactJson src={this.state.document} collapsed={false} />
         </PipelineDocument>
       </ModalContent>

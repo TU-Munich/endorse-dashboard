@@ -146,10 +146,10 @@ class DashboardInfo extends Component {
     return new Promise((resolve) => {
       DocumentService.getLabelsCount(this.props.projectUUID,
                                      this.state.amountDoughnut,
-                                    undefined,
-                                    undefined,
+                                     undefined,
+                                     undefined,
                                      this.state.document_id,
-                                      this.state.sourceData).then((response) => {
+                                     this.state.sourceData).then((response) => {
         this.setState({
           labelData: response
         },() => {
@@ -241,7 +241,7 @@ class DashboardInfo extends Component {
                   </StyledCardContent>
                   <CardContent style={{textAlign: "center"}}>
                     <InputText  value={this.state.totalDocuments}/>
-                    <label style={{display: "block", fontSize: "10px"}}>files were uploaded </label>
+                    <label style={{display: "block", fontSize: "10px"}}>files were stored </label>
                   </CardContent>
                 </Card>
               </CellDiv>
@@ -249,11 +249,11 @@ class DashboardInfo extends Component {
                 <Card>
                   <StyledCardContent>
                     <label>Crawled files</label>
-                    <Icon icon="upload" style={{float:"right"}}/>
+                    <Icon icon="cloud-upload-alt" style={{float:"right"}}/>
                   </StyledCardContent>
                   <CardContent style={{textAlign: "center"}}>
                     <InputText  value={this.state.totalCrawled}/>
-                    <label style={{display: "block", fontSize: "10px"}}>links were crawled </label>
+                    <label style={{display: "block", fontSize: "10px"}}> from external sources </label>
                   </CardContent>
                 </Card>
               </CellDiv>
@@ -261,7 +261,7 @@ class DashboardInfo extends Component {
                 <Card>
                   <StyledCardContent>
                     <label>Total of Documents</label>
-                    <Icon icon="upload" style={{float:"right"}}/>
+                    <Icon icon="info" style={{float:"right"}}/>
                   </StyledCardContent>
                   <CardContent style={{textAlign: "center"}}>
                     <InputText  value={this.state.totalDocumentsProject}/>
