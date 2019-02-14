@@ -34,7 +34,7 @@ class SimilarityBubbleChart extends Component {
                         }
                     ],
                     "hoverBackgroundColor": "#FF6384",
-                    "label": "Mobile-sensors.pdf"
+                    "label": "Information Security 1.pptx"
                 },
                 {
                     "backgroundColor": "#FF6384",
@@ -48,7 +48,7 @@ class SimilarityBubbleChart extends Component {
                         }
                     ],
                     "hoverBackgroundColor": "#FF6384",
-                    "label": "Mobile-sensors.pdf"
+                    "label": "Information Security 9.pptx"
                 },
                 {
                     "backgroundColor": "#FF6384",
@@ -62,7 +62,7 @@ class SimilarityBubbleChart extends Component {
                         }
                     ],
                     "hoverBackgroundColor": "#FF6384",
-                    "label": "Exercises_Introduction_2018.pdf"
+                    "label": "Information Security 8.pptx"
                 },
                 {
                     "backgroundColor": "#FF6384",
@@ -76,7 +76,7 @@ class SimilarityBubbleChart extends Component {
                         }
                     ],
                     "hoverBackgroundColor": "#FF6384",
-                    "label": "IoTS_2.1.pdf"
+                    "label": "Information Security 3.pptx"
                 },
                 {
                     "backgroundColor": "#FF6384",
@@ -90,7 +90,7 @@ class SimilarityBubbleChart extends Component {
                         }
                     ],
                     "hoverBackgroundColor": "#FF6384",
-                    "label": "2018_CDTM_Factsheet.pdf"
+                    "label": "Information Security 4.pptx"
                 },
                 {
                     "backgroundColor": "#FF6384",
@@ -118,7 +118,7 @@ class SimilarityBubbleChart extends Component {
                         }
                     ],
                     "hoverBackgroundColor": "#FF6384",
-                    "label": "sample_proposal.pdf"
+                    "label": "Information Security 7.pptx"
                 }
             ],
             "labels": [
