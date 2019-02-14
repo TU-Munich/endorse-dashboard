@@ -4,7 +4,7 @@ import config from "../config";
 //`/files/project/${this.state.projectUUID}/file`
 
 export default class CrawlerService {
-  static endorseNLPService = new HttpService(config.nlpServiceBaseUrl, 'application/json', '', '', '');
+  static endorseNLPService = new HttpService('http://35.197.219.92:3002', 'application/json', '', '', '');
   static crawlerEndpoint(projectUUID) { return `/crawl/project/${projectUUID}/crawl` }
 
   static executeCrawling(newCrawlingRequest) {
