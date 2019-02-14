@@ -11,6 +11,7 @@ import ProjectService from '../../../services/ProjectService'
 class createProjectForm extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       name: '',
       owner: '',
@@ -54,7 +55,7 @@ class createProjectForm extends React.Component {
         buttons: [
           {
             label: 'Continue',
-            onClick: () => window.location.replace('/projects-overview')
+            onClick: () => this.props.history.push('/projects-overview')
           }
         ]
       });

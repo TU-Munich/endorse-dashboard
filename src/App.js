@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import { createHashHistory } from 'history'
 import 'filepond/dist/filepond.min.css';
 import Home from './containers/Home/HomeContainer';
 import Dashboard from './containers/Dashboard/DashboardContainer';
 import Projects from './containers/Projects/ProjectsContainer';
 import Contact from './containers/Contact/Contact';
 import Login from './containers/Login/LoginContainer';
+
+
+const history = createHashHistory();
 
 class App extends Component {
   componentWillMount() {
@@ -14,7 +18,7 @@ class App extends Component {
 
 	render() {
 		return (
-		  <Router>
+		  <Router history={history}>
         <Switch>
           <Route path={"/contact"} component = {Contact}/>
           <Route path={"/dashboard/:projectUUID"} component = {Dashboard}/>

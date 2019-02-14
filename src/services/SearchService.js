@@ -14,7 +14,7 @@ class SearchService {
 
   queryBuilder = (search_term, tags, dateFrom, dateTo) => {
     let query = {
-      "_source": ["file_path","_id"],
+      "_source": ["file_path","file_name","project_uuid","_id", "origin"],
       "query" : {"bool": {"must": [{ "match": { "project_uuid": this._project_uuid } }]}}
     };
 

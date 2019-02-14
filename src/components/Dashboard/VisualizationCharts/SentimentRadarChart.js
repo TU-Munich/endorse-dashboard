@@ -9,19 +9,16 @@ class SentimentRadarChart extends Component{
   prepareChartData(documentAnalysis) {
     let chartData = documentAnalysis.total;
     return {
-      labels: ['Positive', 'Negative', 'Neutral'],
+      labels: ['Negative', 'Compound', 'Neutral','Positive'],
       datasets: [{
         scaleOverride: true,
         scaleSteps: 4,
+        label:"Total Sentiment Analysis",
         scaleStepWidth: 5,
-        label: "Sentiment Data",
         data: chartData,
-        backgroundColor: 'rgba(179,181,198,0.2)',
-        borderColor: 'rgba(179,181,198,1)',
-        pointBackgroundColor: 'rgba(179,181,198,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(179,181,198,1)',
+        backgroundColor: ['rgba(129,181,180,0.2)', "rgba(75,192,192,0.4)"],
+        borderColor: '#00b3b3',
+        pointBackgroundColor: '#00b3b3'
       }]
     }
   };
